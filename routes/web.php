@@ -14,5 +14,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
+});
+
+Route::get('/mahasiswa', function () {
+    return view('mahasiswa.dashboard');
+});
+
+Route::get('/booking', function () {
+    return view('mahasiswa.booking_ruangan');
+});
+
+Route::get('/krs', function () {
+    return view('mahasiswa.krs');
+});
+
+Route::get('/dosen', function () {
+    return view('dosen.dashboard');
+});
+
+Route::get('/matakuliah', function () {
+    return view('dosen.matakuliah');
 });
