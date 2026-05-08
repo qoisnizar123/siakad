@@ -125,7 +125,7 @@ body{
         SIAKAD
     </h5>
 
-    <a href="#">
+    <a href="/dashboard_dosen">
         <i class="fa fa-home me-2"></i>
         Dashboard
     </a>
@@ -135,12 +135,12 @@ body{
         Mata Kuliah
     </a>
 
-    <a href="#">
+    <a href="/data_mahasiswa">
         <i class="fa fa-users me-2"></i>
         Mahasiswa
     </a>
 
-    <a href="#">
+    <a href="/absensi_mahasiswa">
         <i class="fa fa-clipboard-check me-2"></i>
         Absensi
     </a>

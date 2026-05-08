@@ -168,7 +168,7 @@ body {
                     <div class="login-subtitle">Silakan login sesuai peran Anda</div>
                 </div>
 
-                <form action="/mahasiswa" method="GET">
+                <form action="/dashboard_mahasiswa" method="GET">
 
                     <div class="mb-3">
                         <label class="small">Login Sebagai</label>

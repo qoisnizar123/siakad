@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/mahasiswa', function () {
+Route::get('/dashboard_mahasiswa', function () {
     return view('mahasiswa.dashboard');
 });
 
@@ -29,10 +29,26 @@ Route::get('/krs', function () {
     return view('mahasiswa.krs');
 });
 
-Route::get('/dosen', function () {
+Route::get('/dashboard_dosen', function () {
     return view('dosen.dashboard');
 });
 
 Route::get('/matakuliah', function () {
     return view('dosen.matakuliah');
+});
+
+Route::get('/data_mahasiswa', function () {
+    return view('dosen.data_mahasiswa');
+});
+
+Route::get('/absensi_mahasiswa', function () {
+    return view('dosen.absensi_mahasiswa');
+});
+
+Route::get('/nilai', function () {
+    return view('dosen.nilai');
+});
+
+Route::get('/jadwal_mengajar', function () {
+    return view('dosen.jadwal_mengajar');
 });

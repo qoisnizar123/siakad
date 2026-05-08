@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mata Kuliah | SIAKAD</title>
+<title>Data Mahasiswa | SIAKAD</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -80,6 +80,20 @@ body{
 .table td{
     font-size: 13px;
     vertical-align: middle;
+}
+
+/* AVATAR */
+.avatar{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #1e3a8a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 /* BUTTON */
@@ -161,9 +175,9 @@ body{
     <div class="topbar">
 
         <div>
-            <strong>Data Mata Kuliah</strong><br>
+            <strong>Data Mahasiswa</strong><br>
             <small class="text-muted">
-                Semester Ganjil 2026/2027
+                Daftar mahasiswa kelas
             </small>
         </div>
 
@@ -175,43 +189,51 @@ body{
         <div class="d-flex justify-content-between align-items-center mb-3">
 
             <h6>
-                Daftar Mata Kuliah
+                Daftar Mahasiswa
             </h6>
 
             <button class="btn btn-primary btn-sm">
                 <i class="fa fa-plus me-1"></i>
-                Tambah Mata Kuliah
+                Tambah Mahasiswa
             </button>
 
         </div>
 
-        <!-- SEARCH -->
+        <!-- FILTER -->
         <div class="row mb-3">
 
             <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="Cari mata kuliah...">
+                <input type="text" class="form-control" placeholder="Cari nama / NIM mahasiswa">
             </div>
 
             <div class="col-md-3">
                 <select class="form-control">
-                    <option>Semua Semester</option>
-                    <option>Semester 1</option>
-                    <option>Semester 3</option>
-                    <option>Semester 5</option>
+                    <option>Semua Kelas</option>
+                    <option>IF-3A</option>
+                    <option>IF-3B</option>
+                    <option>IF-2A</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option>Semua Status</option>
+                    <option>Aktif</option>
+                    <option>Nonaktif</option>
                 </select>
             </div>
 
         </div>
 
         <!-- TABLE -->
-        <table class="table table-bordered">
+        <table class="table table-bordered align-middle">
 
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Kode</th>
-                    <th>Mata Kuliah</th>
-                    <th>SKS</th>
+                    <th>Mahasiswa</th>
+                    <th>NIM</th>
+                    <th>Program Studi</th>
                     <th>Kelas</th>
                     <th>Semester</th>
                     <th>Status</th>
@@ -223,17 +245,41 @@ body{
 
                 <tr>
                     <td>1</td>
-                    <td>IF101</td>
-                    <td>Pemrograman Web</td>
-                    <td>3</td>
+
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+
+                            <div class="avatar">
+                                H
+                            </div>
+
+                            <div>
+                                <strong>Hendra</strong><br>
+                                <small class="text-muted">
+                                    hendra@student.ac.id
+                                </small>
+                            </div>
+
+                        </div>
+                    </td>
+
+                    <td>22012345</td>
+                    <td>Informatika</td>
                     <td>IF-3A</td>
                     <td>Semester 3</td>
+
                     <td>
                         <span class="badge badge-active text-white">
                             Aktif
                         </span>
                     </td>
+
                     <td>
+
+                        <button class="btn btn-info btn-sm text-white">
+                            <i class="fa fa-eye"></i>
+                        </button>
+
                         <button class="btn btn-warning btn-sm">
                             <i class="fa fa-edit"></i>
                         </button>
@@ -241,22 +287,47 @@ body{
                         <button class="btn btn-danger btn-sm">
                             <i class="fa fa-trash"></i>
                         </button>
+
                     </td>
                 </tr>
 
                 <tr>
                     <td>2</td>
-                    <td>IF102</td>
-                    <td>Basis Data</td>
-                    <td>3</td>
+
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+
+                            <div class="avatar">
+                                A
+                            </div>
+
+                            <div>
+                                <strong>Andi Saputra</strong><br>
+                                <small class="text-muted">
+                                    andi@student.ac.id
+                                </small>
+                            </div>
+
+                        </div>
+                    </td>
+
+                    <td>22012346</td>
+                    <td>Informatika</td>
                     <td>IF-3B</td>
                     <td>Semester 3</td>
+
                     <td>
                         <span class="badge badge-active text-white">
                             Aktif
                         </span>
                     </td>
+
                     <td>
+
+                        <button class="btn btn-info btn-sm text-white">
+                            <i class="fa fa-eye"></i>
+                        </button>
+
                         <button class="btn btn-warning btn-sm">
                             <i class="fa fa-edit"></i>
                         </button>
@@ -264,22 +335,47 @@ body{
                         <button class="btn btn-danger btn-sm">
                             <i class="fa fa-trash"></i>
                         </button>
+
                     </td>
                 </tr>
 
                 <tr>
                     <td>3</td>
-                    <td>IF103</td>
-                    <td>Algoritma</td>
-                    <td>2</td>
-                    <td>IF-2A</td>
+
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+
+                            <div class="avatar">
+                                S
+                            </div>
+
+                            <div>
+                                <strong>Siti Nurhaliza</strong><br>
+                                <small class="text-muted">
+                                    siti@student.ac.id
+                                </small>
+                            </div>
+
+                        </div>
+                    </td>
+
+                    <td>22012347</td>
+                    <td>Sistem Informasi</td>
+                    <td>SI-2A</td>
                     <td>Semester 2</td>
+
                     <td>
                         <span class="badge badge-nonactive text-white">
                             Nonaktif
                         </span>
                     </td>
+
                     <td>
+
+                        <button class="btn btn-info btn-sm text-white">
+                            <i class="fa fa-eye"></i>
+                        </button>
+
                         <button class="btn btn-warning btn-sm">
                             <i class="fa fa-edit"></i>
                         </button>
@@ -287,6 +383,7 @@ body{
                         <button class="btn btn-danger btn-sm">
                             <i class="fa fa-trash"></i>
                         </button>
+
                     </td>
                 </tr>
 
@@ -298,26 +395,34 @@ body{
         <div class="d-flex justify-content-between align-items-center mt-3">
 
             <small class="text-muted">
-                Menampilkan 1 sampai 3 data
+                Menampilkan 1 sampai 3 data mahasiswa
             </small>
 
             <nav>
                 <ul class="pagination pagination-sm mb-0">
 
                     <li class="page-item disabled">
-                        <a class="page-link" href="#">Previous</a>
+                        <a class="page-link" href="#">
+                            Previous
+                        </a>
                     </li>
 
                     <li class="page-item active">
-                        <a class="page-link" href="#">1</a>
+                        <a class="page-link" href="#">
+                            1
+                        </a>
                     </li>
 
                     <li class="page-item">
-                        <a class="page-link" href="#">2</a>
+                        <a class="page-link" href="#">
+                            2
+                        </a>
                     </li>
 
                     <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
+                        <a class="page-link" href="#">
+                            Next
+                        </a>
                     </li>
 
                 </ul>

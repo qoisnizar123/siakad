@@ -78,10 +78,10 @@ body {
 <div class="sidebar">
     <h5><i class="fa-solid fa-graduation-cap me-2"></i> SIAKAD</h5>
 
-    <a href="/mahasiswa"><i class="fa fa-home me-2"></i> Dashboard</a>
+    <a href="/dashboard_mahasiswa"><i class="fa fa-home me-2"></i> Dashboard</a>
     <a href="/krs"><i class="fa fa-book me-2"></i> KRS</a>
-    <a href="#"><i class="fa fa-chart-line me-2"></i> KHS</a>
-    <a href="#"><i class="fa fa-calendar me-2"></i> Jadwal</a>
+    <a href="/khs"><i class="fa fa-chart-line me-2"></i> KHS</a>
+    <a href="/jadwal_kuliah"><i class="fa fa-calendar me-2"></i> Jadwal</a>
     <a href="/booking"><i class="fa fa-door-open me-2"></i> Booking Ruangan</a>
     <a href="/"><i class="fa fa-sign-out-alt me-2"></i>Logout</a>
 
