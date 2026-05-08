@@ -29,6 +29,15 @@ Route::get('/krs', function () {
     return view('mahasiswa.krs');
 });
 
+Route::get('/khs', function () {
+    return view('mahasiswa.khs');
+});
+
+Route::get('/jadwal_kuliah', function () {
+    return view('mahasiswa.jadwal_kuliah');
+});
+
+
 Route::get('/dashboard_dosen', function () {
     return view('dosen.dashboard');
 });

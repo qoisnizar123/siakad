@@ -145,12 +145,12 @@ body{
         Absensi
     </a>
 
-    <a href="#">
+    <a href="/nilai">
         <i class="fa fa-pen-to-square me-2"></i>
         Input Nilai
     </a>
 
-    <a href="#">
+    <a href="/jadwal_mengajar">
         <i class="fa fa-calendar me-2"></i>
         Jadwal Mengajar
     </a>

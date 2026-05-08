@@ -156,7 +156,7 @@ body{
         Input Nilai
     </a>
 
-    <a href="/jadwal">
+    <a href="/jadwal_mengajar">
         <i class="fa fa-calendar me-2"></i>
         Jadwal Mengajar
     </a>
