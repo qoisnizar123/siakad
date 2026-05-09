@@ -61,3 +61,7 @@ Route::get('/nilai', function () {
 Route::get('/jadwal_mengajar', function () {
     return view('dosen.jadwal_mengajar');
 });
+
+Route::get('/admin', function () {
+    return view('admin.dashboard');
+});
