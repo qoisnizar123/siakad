@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreignId('mata_kuliah_id')->constrained('mata_kuliahs');
             $table->foreignId('dosen_id')->constrained('dosens');
             $table->foreignId('ruangan_id')->constrained('ruangans');
-            $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']);
+            $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat']);
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->string('semester'); // Contoh: Ganjil 2024/2025
