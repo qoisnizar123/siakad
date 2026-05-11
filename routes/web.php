@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function () {
 
     // Group MAHASISWA
     Route::middleware('role:mahasiswa')->prefix('mahasiswa')->group(function () {
-        Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+        Route::get('/dashboard_mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
         Route::get('/krs', [MahasiswaController::class, 'krs'])->name('mahasiswa.krs');
         Route::get('/khs', [MahasiswaController::class, 'khs'])->name('mahasiswa.khs');
         Route::get('/jadwal', [MahasiswaController::class, 'jadwal'])->name('mahasiswa.jadwal');

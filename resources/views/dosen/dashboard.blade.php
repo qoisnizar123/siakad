@@ -3,104 +3,104 @@
 @section('title', 'Dashboard Dosen')
 
 @section('sidebar')
-    <div class="col-md-3">
-        <div class="sidebar">
-            <h6 class="mb-3 fw-bold text-primary">Menu Dosen</h6>
-            <a href="/dashboard_dosen" class="sidebar-item active">
-                <i class="fa-solid fa-chart-line me-2"></i>Dashboard
-            </a>
-            <a href="/matakuliah" class="sidebar-item">
-                <i class="fa-solid fa-book me-2"></i>Mata Kuliah
-            </a>
-            <a href="/data_mahasiswa" class="sidebar-item">
-                <i class="fa-solid fa-users me-2"></i>Data Mahasiswa
-            </a>
-            <a href="/absensi_mahasiswa" class="sidebar-item">
-                <i class="fa-solid fa-clipboard-list me-2"></i>Absensi
-            </a>
-            <a href="/nilai" class="sidebar-item">
-                <i class="fa-solid fa-star me-2"></i>Input Nilai
-            </a>
-            <a href="/jadwal_mengajar" class="sidebar-item">
-                <i class="fa-solid fa-calendar me-2"></i>Jadwal Mengajar
-            </a>
-        </div>
+<div class="col-md-3">
+    <div class="sidebar">
+        <h6 class="mb-3 fw-bold text-primary">Menu Dosen</h6>
+        <a href="/dashboard_dosen" class="sidebar-item active">
+            <i class="fa-solid fa-chart-line me-2"></i>Dashboard
+        </a>
+        <a href="/matakuliah" class="sidebar-item">
+            <i class="fa-solid fa-book me-2"></i>Mata Kuliah
+        </a>
+        <a href="/data_mahasiswa" class="sidebar-item">
+            <i class="fa-solid fa-users me-2"></i>Data Mahasiswa
+        </a>
+        <a href="/absensi_mahasiswa" class="sidebar-item">
+            <i class="fa-solid fa-clipboard-list me-2"></i>Absensi
+        </a>
+        <a href="/nilai" class="sidebar-item">
+            <i class="fa-solid fa-star me-2"></i>Input Nilai
+        </a>
+        <a href="/jadwal_mengajar" class="sidebar-item">
+            <i class="fa-solid fa-calendar me-2"></i>Jadwal Mengajar
+        </a>
     </div>
+</div>
 @endsection
 
 @section('page-title', 'Dashboard Dosen')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <h6 class="text-muted">Matakuliah Aktif</h6>
-                    <h3 class="text-primary">3</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <h6 class="text-muted">Total Mahasiswa</h6>
-                    <h3 class="text-success">87</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <h6 class="text-muted">Nilai Belum Input</h6>
-                    <h3 class="text-warning">12</h3>
-                </div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h6 class="text-muted">Matakuliah Aktif</h6>
+                <h3 class="text-primary">3</h3>
             </div>
         </div>
     </div>
-
-    <hr class="my-4">
-
-    <h5 class="mb-3">Matakuliah Yang Diampu</h5>
-    <div class="table-responsive">
-        <table class="table table-hover">
-            <thead class="table-light">
-                <tr>
-                    <th>Kode</th>
-                    <th>Matakuliah</th>
-                    <th>Kelas</th>
-                    <th>SKS</th>
-                    <th>Jumlah Mahasiswa</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>INF101</td>
-                    <td>Pemrograman Dasar</td>
-                    <td>A</td>
-                    <td>3</td>
-                    <td>30</td>
-                    <td><a href="#" class="btn btn-sm btn-primary">Lihat</a></td>
-                </tr>
-                <tr>
-                    <td>INF102</td>
-                    <td>Algoritma & Struktur Data</td>
-                    <td>A</td>
-                    <td>4</td>
-                    <td>28</td>
-                    <td><a href="#" class="btn btn-sm btn-primary">Lihat</a></td>
-                </tr>
-                <tr>
-                    <td>INF103</td>
-                    <td>Database</td>
-                    <td>B</td>
-                    <td>3</td>
-                    <td>29</td>
-                    <td><a href="#" class="btn btn-sm btn-primary">Lihat</a></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="col-md-4">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h6 class="text-muted">Total Mahasiswa</h6>
+                <h3 class="text-success">87</h3>
+            </div>
+        </div>
     </div>
+    <div class="col-md-4">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h6 class="text-muted">Nilai Belum Input</h6>
+                <h3 class="text-warning">12</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="my-4">
+
+<h5 class="mb-3">Matakuliah Yang Diampu</h5>
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Kode</th>
+                <th>Matakuliah</th>
+                <th>Kelas</th>
+                <th>SKS</th>
+                <th>Jumlah Mahasiswa</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>INF101</td>
+                <td>Pemrograman Dasar</td>
+                <td>A</td>
+                <td>3</td>
+                <td>30</td>
+                <td><a href="#" class="btn btn-sm btn-primary">Lihat</a></td>
+            </tr>
+            <tr>
+                <td>INF102</td>
+                <td>Algoritma & Struktur Data</td>
+                <td>A</td>
+                <td>4</td>
+                <td>28</td>
+                <td><a href="#" class="btn btn-sm btn-primary">Lihat</a></td>
+            </tr>
+            <tr>
+                <td>INF103</td>
+                <td>Database</td>
+                <td>B</td>
+                <td>3</td>
+                <td>29</td>
+                <td><a href="#" class="btn btn-sm btn-primary">Lihat</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 @endsection
 
 
@@ -210,9 +210,13 @@ background: #16a34a;
             Jadwal Mengajar
         </a>
 
-        <a href="/">
-            <i class="fa fa-sign-out-alt me-2"></i>
-            Logout
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+
+        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fa-solid fa-right-from-bracket me-2"></i>
+            <span>Logout</span>
         </a>
 
     </div>

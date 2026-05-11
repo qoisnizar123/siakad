@@ -21,14 +21,13 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                // Redirect berdasarkan role user
-                $redirectPath = match(Auth::user()->role) {
-                    'mahasiswa' => '/dashboard_mahasiswa',
-                    'dosen' => '/dashboard_dosen',
-                    'admin' => '/admin',
-                    default => '/'
-                };
-                return redirect($redirectPath);
+                $user = Auth::user();
+
+                // Redirect cerdas: Jika sudah login, lempar ke dashboard masing-masing
+                if ($user->role === 'admin') return redirect('/admin/dashboard');
+                if ($user->role === 'dosen') return redirect('/dosen/dashboard');
+
+                return redirect('/mahasiswa/dashboard');
             }
         }
 

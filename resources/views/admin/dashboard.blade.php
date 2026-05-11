@@ -335,9 +335,13 @@
             Pengaturan Sistem
         </a>
 
-        <a href="/">
-            <i class="fa fa-sign-out-alt"></i>
-            Logout
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+
+        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fa-solid fa-right-from-bracket me-2"></i>
+            <span>Logout</span>
         </a>
 
     </div>
