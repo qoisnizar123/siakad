@@ -166,19 +166,10 @@
                     <div class="text-center mb-4">
                         <i class="fa-solid fa-building-columns fs-2 text-primary"></i>
                         <div class="login-title mt-2">Portal Sistem</div>
-                        <div class="login-subtitle">Silakan login sesuai peran Anda</div>
                     </div>
 
                     <form action="{{ route('login.post') }}" method="POST">
-                        @csrf <div class="mb-3">
-                            <label class="small">Login Sebagai</label>
-                            <select class="form-control" name="role_view">
-                                <option value="mahasiswa">Mahasiswa</option>
-                                <option value="dosen">Dosen</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-
+                        @csrf
                         <div class="mb-3">
                             <label class="small">Email</label>
                             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus>
@@ -217,16 +208,6 @@
         © 2026 - Sistem Informasi Akademik
     </div>
     </div>
-
-    function togglePassword() {
-    pass.type = "text";
-    icon.classList.replace("fa-eye-slash", "fa-eye");
-    } else {
-    pass.type = "password";
-    icon.classList.replace("fa-eye", "fa-eye-slash");
-    }
-    }
-    </script>
 
 </body>
 
