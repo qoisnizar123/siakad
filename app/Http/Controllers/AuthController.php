@@ -11,7 +11,7 @@ class AuthController extends Controller
     // Tampilkan halaman login
     public function showLogin()
     {
-        return view('auth.login');
+        return view('login');
     }
 
     // Proses login
@@ -28,11 +28,11 @@ class AuthController extends Controller
             // Logic redirect berdasarkan role
             $user = Auth::user();
             if ($user->role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
+                return redirect()->route('admin.dashboard');
             } elseif ($user->role === 'dosen') {
-                return redirect()->intended('/dosen/dashboard');
+                return redirect()->route('dosen.dashboard');
             } elseif ($user->role === 'mahasiswa') {
-                return redirect()->intended('/mahasiswa/dashboard');
+                return redirect()->route('mahasiswa.dashboard');
             }
         }
 

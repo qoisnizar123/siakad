@@ -3,269 +3,267 @@
 @section('title', 'Dashboard Admin')
 
 @section('sidebar')
-    <div class="col-md-3">
-        <div class="sidebar">
-            <h6 class="mb-3 fw-bold text-primary">Menu Admin</h6>
-            <a href="/admin" class="sidebar-item active">
-                <i class="fa-solid fa-chart-bar me-2"></i>Dashboard
-            </a>
-            <a href="#" class="sidebar-item">
-                <i class="fa-solid fa-users me-2"></i>Manajemen User
-            </a>
-            <a href="#" class="sidebar-item">
-                <i class="fa-solid fa-book me-2"></i>Manajemen Matakuliah
-            </a>
-            <a href="#" class="sidebar-item">
-                <i class="fa-solid fa-building me-2"></i>Manajemen Ruangan
-            </a>
-            <a href="#" class="sidebar-item">
-                <i class="fa-solid fa-cog me-2"></i>Pengaturan Sistem
-            </a>
-            <a href="#" class="sidebar-item">
-                <i class="fa-solid fa-file-csv me-2"></i>Laporan
-            </a>
-        </div>
+<div class="col-md-3">
+    <div class="sidebar">
+        <h6 class="mb-3 fw-bold text-primary">Menu Admin</h6>
+        <a href="/admin" class="sidebar-item active">
+            <i class="fa-solid fa-chart-bar me-2"></i>Dashboard
+        </a>
+        <a href="#" class="sidebar-item">
+            <i class="fa-solid fa-users me-2"></i>Manajemen User
+        </a>
+        <a href="#" class="sidebar-item">
+            <i class="fa-solid fa-book me-2"></i>Manajemen Matakuliah
+        </a>
+        <a href="#" class="sidebar-item">
+            <i class="fa-solid fa-building me-2"></i>Manajemen Ruangan
+        </a>
+        <a href="#" class="sidebar-item">
+            <i class="fa-solid fa-cog me-2"></i>Pengaturan Sistem
+        </a>
+        <a href="#" class="sidebar-item">
+            <i class="fa-solid fa-file-csv me-2"></i>Laporan
+        </a>
     </div>
+</div>
 @endsection
 
 @section('page-title', 'Dashboard Admin')
 
 @section('content')
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <h6 class="text-muted">Total Pengguna</h6>
-                    <h3 class="text-primary">245</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <h6 class="text-muted">Mahasiswa Aktif</h6>
-                    <h3 class="text-success">180</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <h6 class="text-muted">Dosen Aktif</h6>
-                    <h3 class="text-info">45</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <h6 class="text-muted">Matakuliah</h6>
-                    <h3 class="text-warning">62</h3>
-                </div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h6 class="text-muted">Total Pengguna</h6>
+                <h3 class="text-primary">245</h3>
             </div>
         </div>
     </div>
-
-    <hr class="my-4">
-
-    <h5 class="mb-3">Statistik Sistem</h5>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <h6 class="mb-3">Status Pengguna</h6>
-                    <table class="table table-sm">
-                        <tr>
-                            <td>Pengguna Aktif</td>
-                            <td class="text-end"><strong>240</strong></td>
-                        </tr>
-                        <tr>
-                            <td>Pengguna Nonaktif</td>
-                            <td class="text-end"><strong>5</strong></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card card-custom">
-                <div class="card-body">
-                    <h6 class="mb-3">Distribusi Pengguna</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <i class="fa-solid fa-user-graduate text-primary me-2"></i>
-                            Mahasiswa: 180 orang
-                        </li>
-                        <li class="mb-2">
-                            <i class="fa-solid fa-chalkboard-teacher text-info me-2"></i>
-                            Dosen: 45 orang
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-user-cog text-warning me-2"></i>
-                            Admin: 20 orang
-                        </li>
-                    </ul>
-                </div>
+    <div class="col-md-3">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h6 class="text-muted">Mahasiswa Aktif</h6>
+                <h3 class="text-success">180</h3>
             </div>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h6 class="text-muted">Dosen Aktif</h6>
+                <h3 class="text-info">45</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h6 class="text-muted">Matakuliah</h6>
+                <h3 class="text-warning">62</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="my-4">
+
+<h5 class="mb-3">Statistik Sistem</h5>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h6 class="mb-3">Status Pengguna</h6>
+                <table class="table table-sm">
+                    <tr>
+                        <td>Pengguna Aktif</td>
+                        <td class="text-end"><strong>240</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Pengguna Nonaktif</td>
+                        <td class="text-end"><strong>5</strong></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-custom">
+            <div class="card-body">
+                <h6 class="mb-3">Distribusi Pengguna</h6>
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fa-solid fa-user-graduate text-primary me-2"></i>
+                        Mahasiswa: 180 orang
+                    </li>
+                    <li class="mb-2">
+                        <i class="fa-solid fa-chalkboard-teacher text-info me-2"></i>
+                        Dosen: 45 orang
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-user-cog text-warning me-2"></i>
+                        Admin: 20 orang
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
-transition: .3s;
-}
+<style>
+    .sidebar a:hover {
+        background: rgba(255, 255, 255, 0.12);
+    }
 
-.sidebar a:hover{
-background: rgba(255,255,255,0.12);
-}
+    .sidebar a.active {
+        background: rgba(255, 255, 255, 0.18);
+    }
 
-.sidebar a.active{
-background: rgba(255,255,255,0.18);
-}
+    .sidebar i {
+        width: 20px;
+    }
 
-.sidebar i{
-width: 20px;
-}
+    /* MAIN */
+    .main {
+        margin-left: 250px;
+        padding: 25px;
+    }
 
-/* MAIN */
-.main{
-margin-left: 250px;
-padding: 25px;
-}
+    /* TOPBAR */
+    .topbar {
+        background: white;
+        border-radius: 14px;
+        padding: 18px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
 
-/* TOPBAR */
-.topbar{
-background: white;
-border-radius: 14px;
-padding: 18px 22px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 25px;
-box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-}
+    .search-box {
+        position: relative;
+        width: 320px;
+    }
 
-.search-box{
-position: relative;
-width: 320px;
-}
+    .search-box input {
+        border: 1px solid #dbe3ef;
+        border-radius: 10px;
+        padding: 10px 15px 10px 40px;
+        width: 100%;
+        font-size: 14px;
+    }
 
-.search-box input{
-border: 1px solid #dbe3ef;
-border-radius: 10px;
-padding: 10px 15px 10px 40px;
-width: 100%;
-font-size: 14px;
-}
+    .search-box i {
+        position: absolute;
+        top: 12px;
+        left: 14px;
+        color: #64748b;
+    }
 
-.search-box i{
-position: absolute;
-top: 12px;
-left: 14px;
-color: #64748b;
-}
+    /* CARD */
+    .dashboard-card {
+        background: white;
+        border-radius: 14px;
+        padding: 22px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
 
-/* CARD */
-.dashboard-card{
-background: white;
-border-radius: 14px;
-padding: 22px;
-box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-margin-bottom: 20px;
-}
+    .stat-card {
+        position: relative;
+        overflow: hidden;
+    }
 
-.stat-card{
-position: relative;
-overflow: hidden;
-}
+    .stat-card .icon {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        width: 55px;
+        height: 55px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
 
-.stat-card .icon{
-position: absolute;
-right: 20px;
-top: 20px;
-width: 55px;
-height: 55px;
-border-radius: 12px;
-display: flex;
-align-items: center;
-justify-content: center;
-font-size: 22px;
-}
+    .bg-blue {
+        background: rgba(59, 130, 246, 0.15);
+        color: #2563eb;
+    }
 
-.bg-blue{
-background: rgba(59,130,246,0.15);
-color: #2563eb;
-}
+    .bg-green {
+        background: rgba(34, 197, 94, 0.15);
+        color: #16a34a;
+    }
 
-.bg-green{
-background: rgba(34,197,94,0.15);
-color: #16a34a;
-}
+    .bg-orange {
+        background: rgba(249, 115, 22, 0.15);
+        color: #ea580c;
+    }
 
-.bg-orange{
-background: rgba(249,115,22,0.15);
-color: #ea580c;
-}
+    .bg-purple {
+        background: rgba(168, 85, 247, 0.15);
+        color: #9333ea;
+    }
 
-.bg-purple{
-background: rgba(168,85,247,0.15);
-color: #9333ea;
-}
+    /* TABLE */
+    .table thead {
+        background: #1e3a8a;
+        color: white;
+        font-size: 13px;
+    }
 
-/* TABLE */
-.table thead{
-background: #1e3a8a;
-color: white;
-font-size: 13px;
-}
+    .table td {
+        font-size: 13px;
+        vertical-align: middle;
+    }
 
-.table td{
-font-size: 13px;
-vertical-align: middle;
-}
+    /* ACTIVITY */
+    .activity-item {
+        display: flex;
+        align-items: start;
+        margin-bottom: 18px;
+    }
 
-/* ACTIVITY */
-.activity-item{
-display: flex;
-align-items: start;
-margin-bottom: 18px;
-}
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        font-size: 14px;
+    }
 
-.activity-icon{
-width: 40px;
-height: 40px;
-border-radius: 10px;
-display: flex;
-align-items: center;
-justify-content: center;
-margin-right: 12px;
-font-size: 14px;
-}
+    /* BUTTON */
+    .btn-primary {
+        background: #1e3a8a;
+        border: none;
+    }
 
-/* BUTTON */
-.btn-primary{
-background: #1e3a8a;
-border: none;
-}
+    .btn-primary:hover {
+        background: #172554;
+    }
 
-.btn-primary:hover{
-background: #172554;
-}
+    /* BADGE */
+    .badge-status {
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 11px;
+    }
 
-/* BADGE */
-.badge-status{
-padding: 6px 10px;
-border-radius: 6px;
-font-size: 11px;
-}
+    .badge-active {
+        background: #dcfce7;
+        color: #166534;
+    }
 
-.badge-active{
-background: #dcfce7;
-color: #166534;
-}
-
-.badge-pending{
-background: #fef3c7;
-color: #92400e;
-}
+    .badge-pending {
+        background: #fef3c7;
+        color: #92400e;
+    }
 </style>
 </head>
 

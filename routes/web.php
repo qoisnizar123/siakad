@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
 
     // Group ADMIN
     Route::middleware('role:admin')->prefix('admin')->group(function () {
+        Route::get('/', function () {
+            return redirect()->route('admin.dashboard');
+        });
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     });
 });

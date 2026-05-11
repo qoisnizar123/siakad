@@ -169,7 +169,7 @@
                         <div class="login-subtitle">Silakan login sesuai peran Anda</div>
                     </div>
 
-                    <form action="{{ route('login') }}" method="POST">
+                    <form action="{{ route('login.post') }}" method="POST">
                         @csrf <div class="mb-3">
                             <label class="small">Login Sebagai</label>
                             <select class="form-control" name="role_view">
@@ -197,34 +197,35 @@
                             </div>
                             @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
-                                <input type="checkbox" name="remember"> <small>Ingat saya</small>
-                            </div>
-                            <small><a href="#">Lupa password?</a></small>
-                        </div>
-
-                        <button type="submit" class="btn btn-login w-100 text-white">
-                            Login
-                        </button>
-                    </form>
+                        <input type="checkbox" name="remember"> <small>Ingat saya</small>
                 </div>
+                <small><a href="#">Lupa password?</a></small>
             </div>
 
-        </div>
-
-        <div class="footer">
-            © 2026 - Sistem Informasi Akademik
+            <button type="submit" class="btn btn-login w-100 text-white">
+                Login
+            </button>
+            </form>
         </div>
     </div>
 
-        function togglePassword() {
-                pass.type = "text";
-                icon.classList.replace("fa-eye-slash", "fa-eye");
-            } else {
-                pass.type = "password";
-                icon.classList.replace("fa-eye", "fa-eye-slash");
-            }
-        }
+    </div>
+
+    <div class="footer">
+        © 2026 - Sistem Informasi Akademik
+    </div>
+    </div>
+
+    function togglePassword() {
+    pass.type = "text";
+    icon.classList.replace("fa-eye-slash", "fa-eye");
+    } else {
+    pass.type = "password";
+    icon.classList.replace("fa-eye", "fa-eye-slash");
+    }
+    }
     </script>
 
 </body>
