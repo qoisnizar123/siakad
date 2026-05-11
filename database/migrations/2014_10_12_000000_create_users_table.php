@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('npm')->nullable()->unique();
+            $table->string('nidn')->nullable()->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'dosen', 'mahasiswa']);
+            $table->rememberToken();
             $table->timestamps();
         });
     }
