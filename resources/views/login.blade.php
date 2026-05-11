@@ -193,11 +193,12 @@
                         <input type="checkbox" name="remember"> <small>Ingat saya</small>
                 </div>
                 <small><a href="#">Lupa password?</a></small>
-            </div>
-
-            <button type="submit" class="btn btn-login w-100 text-white">
+                <button type="submit" class="btn btn-login w-100 text-white">
                 Login
             </button>
+            </div>
+
+            
             </form>
         </div>
     </div>
