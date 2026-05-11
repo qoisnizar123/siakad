@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -14,24 +15,24 @@ class UserSeeder extends Seeder
     {
         // Admin
         \App\Models\User::create([
-            'name' => 'Admin Utama',
-            'email' => 'admin@test.com',
+            'name' => 'Admin Siakad',
+            'email' => 'admin@siakad.com',
             'password' => bcrypt('password'),
             'role' => 'admin',
         ]);
 
         // Dosen
-        $userDosen = \App\Models\User::create([
-            'name' => 'Dr. Alfa, M.T.',
-            'email' => 'dosen@test.com',
+        \App\Models\User::create([
+            'name' => 'Dosen Teknik',
+            'email' => 'dosen@siakad.com',
             'password' => bcrypt('password'),
             'role' => 'dosen',
         ]);
 
         // Mahasiswa
-        $userMhs = \App\Models\User::create([
-            'name' => 'Muhamad Hanif',
-            'email' => 'mahasiswa@test.com',
+        \App\Models\User::create([
+            'name' => 'Hanif Mahasiswa',
+            'email' => 'hanif@siakad.com',
             'password' => bcrypt('password'),
             'role' => 'mahasiswa',
         ]);

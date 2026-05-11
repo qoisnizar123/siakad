@@ -197,11 +197,7 @@
                             </div>
                             @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
-
-                        <div class="d-flex justify-content-between mb-3">
-                            <div>
                                 <input type="checkbox" name="remember"> <small>Ingat saya</small>
                             </div>
                             <small><a href="#">Lupa password?</a></small>
@@ -221,12 +217,7 @@
         </div>
     </div>
 
-    <script>
         function togglePassword() {
-            const pass = document.getElementById("password");
-            const icon = document.getElementById("eyeIcon");
-
-            if (pass.type === "password") {
                 pass.type = "text";
                 icon.classList.replace("fa-eye-slash", "fa-eye");
             } else {
