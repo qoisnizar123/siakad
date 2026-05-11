@@ -172,33 +172,39 @@
                         @csrf
                         <div class="mb-3">
                             <label class="small">Email</label>
-                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" required autofocus>
+                            <input type="email" name="email"
+                                class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"
+                                required autofocus>
                             @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="mb-3">
                             <label class="small">Password</label>
                             <div class="input-group">
-                                <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" required>
+                                <input type="password" name="password" id="password"
+                                    class="form-control @error('password') is-invalid @enderror" required>
                                 <span class="input-group-text" onclick="togglePassword()" style="cursor:pointer;">
                                     <i id="eyeIcon" class="fa fa-eye-slash"></i>
                                 </span>
                             </div>
                             @error('password')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <input type="checkbox" name="remember"> <small>Ingat saya</small>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <input type="checkbox" name="remember">
+                                <small>Ingat saya</small>
+                            </div>
+                            <small><a href="#">Lupa password?</a></small>
+                        </div>
                 </div>
-                <small><a href="#">Lupa password?</a></small>
                 <button type="submit" class="btn btn-login w-100 text-white">
-                Login
-            </button>
+                    Login
+                </button>
             </div>
-
-            
             </form>
         </div>
     </div>
