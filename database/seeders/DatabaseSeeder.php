@@ -2,35 +2,43 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
-{
-    // Buat User Admin
-    \App\Models\User::create([
-        'name' => 'Admin Siakad',
-        'email' => 'admin@siakad.com',
-        'password' => bcrypt('password'),
-        'role' => 'admin',
-    ]);
+    {
+        // Admin
+        User::create([
+            'name' => 'Admin Siakad',
+            'email' => 'admin@siakad.com',
+            'password' => Hash::make('password'),
+            'role' => 'admin',
+        ]);
 
-    // Buat Data Fakultas & Prodi
-    $fakultas = \App\Models\Fakultas::create(['nama_fakultas' => 'Teknik']);
-    \App\Models\Prodi::create([
-        'fakultas_id' => $fakultas->id,
-        'nama_prodi' => 'Informatika'
-    ]);
+        // Dosen
+        User::create([
+            'name' => 'Dosen Teknik',
+            'email' => 'dosen@siakad.com',
+            'password' => Hash::make('password'),
+            'role' => 'dosen',
+        ]);
 
-    // Tambahkan Ruangan untuk Testing Booking
-    \App\Models\Ruangan::create([
-        'nama_ruangan' => 'Lab Komp 1',
-        'kapasitas' => 30
+        // Mahasiswa
+        User::create([
+            'name' => 'Hanif Mahasiswa',
+            'email' => 'hanif@siakad.com',
+            'password' => Hash::make('password'),
+            'role' => 'mahasiswa',
+        ]);
+
+        $this->call([
+        UserSeeder::class,
+        AcademicSeeder::class,
+        RoomSeeder::class,
     ]);
-}
+    }
 }
