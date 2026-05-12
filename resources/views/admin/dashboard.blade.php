@@ -626,7 +626,7 @@
 
         <a href="#">
             <i class="fa fa-gear"></i>
-            Pengaturan Sistem
+            Pengaturan Sistem siakad
         </a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
