@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/khs', [MahasiswaController::class, 'khs'])->name('mahasiswa.khs');
         Route::get('/jadwal', [MahasiswaController::class, 'jadwal'])->name('mahasiswa.jadwal');
         Route::get('/booking', [MahasiswaController::class, 'booking'])->name('mahasiswa.booking');
+        Route::post('/booking', [MahasiswaController::class, 'storeBooking'])->name('mahasiswa.booking.store');
     });
 
     // Group DOSEN
