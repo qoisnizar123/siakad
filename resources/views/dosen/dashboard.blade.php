@@ -1,74 +1,119 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
 
-@section('title', 'Dashboard Dosen')
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Dosen | SIAKAD</title>
 
-@section('sidebar')
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<style>
-/* TOPBAR */
-.topbar{
-background: white;
-border-radius: 10px;
-padding: 15px 20px;
-margin-bottom: 20px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+        }
 
-/* CARD */
-.card-box{
-background: white;
-border-radius: 10px;
-padding: 20px;
-margin-bottom: 20px;
-box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            position: fixed;
+            background: #1e3a8a;
+            color: white;
+            padding: 20px;
+        }
 
-.stat-card{
-text-align: center;
-}
+        .sidebar h5 {
+            margin-bottom: 30px;
+        }
 
-.stat-icon{
-font-size: 25px;
-color: #1e3a8a;
-margin-bottom: 10px;
-}
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
 
-.stat-number{
-font-size: 22px;
-font-weight: 600;
-color: #1e3a8a;
-}
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
 
-/* TABLE */
-.table thead{
-background: #1e3a8a;
-color: white;
-font-size: 13px;
-}
+        /* MAIN */
+        .main {
+            margin-left: 240px;
+            padding: 20px;
+        }
 
-.table td{
-font-size: 13px;
-vertical-align: middle;
-}
+        /* TOPBAR */
+        .topbar {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
 
-/* BUTTON */
-.btn-primary{
-background: #1e3a8a;
-border: none;
-}
+        /* CARD */
+        .card-box {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
 
-.btn-primary:hover{
-background: #162d6b;
-}
+        .stat-card {
+            text-align: center;
+        }
 
-/* BADGE */
-.badge-active{
-background: #16a34a;
-}
-</style>
+        .stat-icon {
+            font-size: 25px;
+            color: #1e3a8a;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        /* TABLE */
+        .table thead {
+            background: #1e3a8a;
+            color: white;
+            font-size: 13px;
+        }
+
+        .table td {
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        /* BUTTON */
+        .btn-primary {
+            background: #1e3a8a;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #162d6b;
+        }
+
+        /* BADGE */
+        .badge-active {
+            background: #16a34a;
+        }
+    </style>
 </head>
 
 <body>
@@ -81,43 +126,42 @@ background: #16a34a;
             SIAKAD
         </h5>
 
-        <a href="/dashboard_dosen">
+        <a href="#">
             <i class="fa fa-home me-2"></i>
             Dashboard
         </a>
 
-        <a href="/matakuliah">
+        <a href="#">
             <i class="fa fa-book me-2"></i>
             Mata Kuliah
         </a>
 
-        <a href="/data_mahasiswa">
+        <a href="#">
             <i class="fa fa-users me-2"></i>
             Mahasiswa
         </a>
 
-        <a href="/absensi_mahasiswa">
+        <a href="#">
             <i class="fa fa-clipboard-check me-2"></i>
             Absensi
         </a>
 
-        <a href="/nilai">
+        <a href="#">
             <i class="fa fa-pen-to-square me-2"></i>
             Input Nilai
         </a>
 
-        <a href="/jadwal_mengajar">
+        <a href="#">
             <i class="fa fa-calendar me-2"></i>
             Jadwal Mengajar
         </a>
-
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
 
         <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fa-solid fa-right-from-bracket me-2"></i>
-            <span>Logout</span>
+            <i class="fa fa-sign-out-alt me-2"></i>
+            Logout
         </a>
 
     </div>
@@ -133,6 +177,11 @@ background: #16a34a;
                 <small class="text-muted">
                     Semester Ganjil 2026/2027
                 </small>
+            </div>
+
+            <div>
+                <i class="fa fa-user-circle me-1"></i>
+                Dr. Ahmad Fauzi
             </div>
 
         </div>
@@ -261,6 +310,30 @@ background: #16a34a;
             </table>
 
         </div>
+
+        <!-- AKTIVITAS -->
+        <div class="card-box">
+
+            <h6 class="mb-3">Aktivitas Terbaru</h6>
+
+            <ul class="list-group">
+
+                <li class="list-group-item">
+                    Input nilai Pemrograman Web berhasil diperbarui.
+                </li>
+
+                <li class="list-group-item">
+                    Absensi kelas IF-3A telah disimpan.
+                </li>
+
+                <li class="list-group-item">
+                    Jadwal mengajar semester ganjil telah diperbarui.
+                </li>
+
+            </ul>
+
+        </div>
+
     </div>
 
 </body>
