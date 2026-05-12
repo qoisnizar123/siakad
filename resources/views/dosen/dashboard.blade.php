@@ -126,34 +126,28 @@
             SIAKAD
         </h5>
 
-        <a href="#">
-            <i class="fa fa-home me-2"></i>
-            Dashboard
+        <a href="{{ route('dosen.dashboard') }}">
+            <i class="fa fa-home me-2"></i> Dashboard
         </a>
 
-        <a href="#">
-            <i class="fa fa-book me-2"></i>
-            Mata Kuliah
+        <a href="{{ route('dosen.matakuliah') }}">
+            <i class="fa fa-book-open me-2"></i> Mata Kuliah
         </a>
 
-        <a href="#">
-            <i class="fa fa-users me-2"></i>
-            Mahasiswa
+        <a href="{{ route('dosen.mahasiswa') }}">
+            <i class="fa fa-users me-2"></i> Mahasiswa
         </a>
 
-        <a href="#">
-            <i class="fa fa-clipboard-check me-2"></i>
-            Absensi
+        <a href="{{ route('dosen.absensi') }}">
+            <i class="fa fa-clipboard-check me-2"></i> Absensi
         </a>
 
-        <a href="#">
-            <i class="fa fa-pen-to-square me-2"></i>
-            Input Nilai
+        <a href="{{ route('dosen.nilai') }}">
+            <i class="fa fa-graduation-cap me-2"></i> Input Nilai
         </a>
 
-        <a href="#">
-            <i class="fa fa-calendar me-2"></i>
-            Jadwal Mengajar
+        <a href="{{ route('dosen.jadwal') }}">
+            <i class="fa fa-calendar-day me-2"></i> Jadwal Mengajar
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
