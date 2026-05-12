@@ -16,7 +16,6 @@
             background: #f1f5f9;
         }
 
-        /* HEADER */
         .topbar {
             background: #1e3a8a;
             color: white;
@@ -25,13 +24,12 @@
             font-weight: 500;
         }
 
-        /* MAIN */
         .main-box {
             margin-top: 50px;
         }
 
-        /* LEFT PANEL */
-        .info-panel {
+        .info-panel,
+        .login-panel {
             background: white;
             border-radius: 10px;
             padding: 30px;
@@ -56,14 +54,6 @@
             border-bottom: none;
         }
 
-        /* LOGIN PANEL */
-        .login-panel {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            border: 1px solid #e5e7eb;
-        }
-
         .login-title {
             font-weight: 600;
         }
@@ -74,7 +64,6 @@
             margin-bottom: 20px;
         }
 
-        /* INPUT */
         .form-control {
             border-radius: 8px;
             padding: 10px;
@@ -85,7 +74,6 @@
             box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
         }
 
-        /* BUTTON */
         .btn-login {
             background: #1e3a8a;
             border: none;
@@ -98,7 +86,6 @@
             background: #162d6b;
         }
 
-        /* FOOTER */
         .footer {
             text-align: center;
             margin-top: 40px;
@@ -124,6 +111,7 @@
             <!-- LEFT INFO -->
             <div class="col-md-7">
                 <div class="info-panel">
+
                     <div class="info-title">🔐 Akses Sistem</div>
 
                     <div class="info-item">
@@ -156,6 +144,7 @@
                             Gunakan akun sesuai peran Anda untuk mengakses sistem.
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -170,11 +159,14 @@
 
                     <form action="{{ route('login.post') }}" method="POST">
                         @csrf
+
                         <div class="mb-3">
                             <label class="small">Email</label>
                             <input type="email" name="email"
-                                class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"
+                                class="form-control @error('email') is-invalid @enderror"
+                                value="{{ old('email') }}"
                                 required autofocus>
+
                             @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -182,39 +174,72 @@
 
                         <div class="mb-3">
                             <label class="small">Password</label>
+
                             <div class="input-group">
-                                <input type="password" name="password" id="password"
-                                    class="form-control @error('password') is-invalid @enderror" required>
-                                <span class="input-group-text" onclick="togglePassword()" style="cursor:pointer;">
+                                <input type="password"
+                                    name="password"
+                                    id="password"
+                                    class="form-control @error('password') is-invalid @enderror"
+                                    required>
+
+                                <span class="input-group-text"
+                                    onclick="togglePassword()"
+                                    style="cursor:pointer;">
                                     <i id="eyeIcon" class="fa fa-eye-slash"></i>
                                 </span>
                             </div>
+
                             @error('password')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
+
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <div>
                                 <input type="checkbox" name="remember">
                                 <small>Ingat saya</small>
                             </div>
-                            <small><a href="#">Lupa password?</a></small>
+
+                            <small>
+                                <a href="#">Lupa password?</a>
+                            </small>
                         </div>
+
+                        <button type="submit"
+                            class="btn btn-login w-100 text-white">
+                            Login
+                        </button>
+
+                    </form>
+
                 </div>
-                <button type="submit" class="btn btn-login w-100 text-white">
-                    Login
-                </button>
             </div>
-            </form>
+
+        </div>
+
+        <div class="footer">
+            © 2026 - Sistem Informasi Akademik
         </div>
     </div>
 
-    </div>
+    <script>
+        function togglePassword() {
+            const password = document.getElementById("password");
+            const eyeIcon = document.getElementById("eyeIcon");
 
-    <div class="footer">
-        © 2026 - Sistem Informasi Akademik
-    </div>
-    </div>
+            if (password.type === "password") {
+                password.type = "text";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            } else {
+                password.type = "password";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            }
+        }
+    </script>
 
 </body>
 
