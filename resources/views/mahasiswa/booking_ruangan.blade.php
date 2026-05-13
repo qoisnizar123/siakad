@@ -221,6 +221,19 @@
                                         <span class="badge bg-danger">Ditolak</span>
                                         @endif
                                     </td>
+                                    <td>
+                                        @if($booking->status == 'menunggu' || $booking->status == 'dipesan')
+                                        <form action="{{ route('mahasiswa.booking.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Yakin ingin membatalkan booking ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="fa fa-trash-can"></i> Batal
+                                            </button>
+                                        </form>
+                                        @else
+                                        <span class="text-muted small">-</span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @empty
                                 <tr>
@@ -235,7 +248,8 @@
         </div>
 
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </body>
 
 </html>

@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/jadwal', [MahasiswaController::class, 'jadwal'])->name('mahasiswa.jadwal');
         Route::get('/booking', [MahasiswaController::class, 'booking'])->name('mahasiswa.booking');
         Route::post('/booking', [MahasiswaController::class, 'storeBooking'])->name('mahasiswa.booking.store');
+        Route::delete('/booking/{id}/cancel', [MahasiswaController::class, 'cancelBooking'])->name('mahasiswa.booking.cancel');
     });
 
     // Group DOSEN
@@ -50,5 +51,7 @@ Route::middleware('auth')->group(function () {
             return redirect()->route('admin.dashboard');
         });
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/booking', [AdminController::class, 'bookingIndex'])->name('admin.booking.index');
+        Route::patch('/booking/{id}/update', [AdminController::class, 'updateStatus'])->name('admin.booking.update');
     });
 });

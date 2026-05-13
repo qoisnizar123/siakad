@@ -46,7 +46,7 @@ class MahasiswaController extends Controller
         // Kita cari apakah ada booking yang jamnya bersinggungan
         $isBentrok = Booking::where('ruangan_id', $request->ruangan_id)
             ->where('tanggal', $request->tanggal)
-            ->where('status', '!=', 'ditolak') // Booking yang sudah ditolak abaikan saja
+            ->where('status', '!=', 'ditolak') 
             ->where(function ($query) use ($request) {
                 $query->where('jam_mulai', '<', $request->jam_selesai)
                     ->where('jam_selesai', '>', $request->jam_mulai);
@@ -65,9 +65,30 @@ class MahasiswaController extends Controller
             'jam_mulai'   => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
             'keperluan'   => $request->keperluan,
-            'status'      => 'menunggu', // Default awal
+            'status'      => 'menunggu',
         ]);
 
         return redirect()->route('mahasiswa.booking')->with('success', 'Permintaan booking berhasil dikirim! Silakan cek statusnya secara berkala.');
     }
+
+    public function cancelBooking($id)
+{
+    // 1. Cari data booking berdasarkan ID
+    $booking = Booking::findOrFail($id);
+
+    // 2. Security Check: Pastikan yang menghapus adalah pemilik booking tersebut
+    if ($booking->user_id !== auth()->id()) {
+        return back()->with('error', 'Waduh, kamu tidak punya akses untuk membatalkan booking ini!');
+    }
+
+    // 3. Opsional: Hanya izinkan batal jika statusnya masih 'menunggu' atau 'dipesan'
+    if ($booking->status !== 'menunggu' && $booking->status !== 'dipesan') {
+        return back()->with('error', 'Booking yang sudah disetujui/ditolak tidak bisa dibatalkan secara sepihak.');
+    }
+
+    // 4. Hapus data
+    $booking->delete();
+
+    return back()->with('success', 'Booking berhasil dibatalkan dan dihapus.');
+}
 }
