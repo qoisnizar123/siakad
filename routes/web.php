@@ -37,10 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:dosen')->prefix('dosen')->group(function () {
         Route::get('/dashboard', [DosenController::class, 'index'])->name('dosen.dashboard');
         Route::get('/matakuliah', [DosenController::class, 'matakuliah'])->name('dosen.matakuliah');
-        Route::get('/data-mahasiswa', [DosenController::class, 'dataMahasiswa'])->name('dosen.mahasiswa');
+        Route::get('/data_mahasiswa', [DosenController::class, 'dataMahasiswa'])->name('dosen.mahasiswa');
         Route::get('/absensi', [DosenController::class, 'absensi'])->name('dosen.absensi');
         Route::get('/nilai', [DosenController::class, 'nilai'])->name('dosen.nilai');
-        Route::get('/jadwal-mengajar', [DosenController::class, 'jadwalMengajar'])->name('dosen.jadwal');
+        Route::get('/jadwal_mengajar', [DosenController::class, 'jadwalMengajar'])->name('dosen.jadwal');
     });
 
     // Group ADMIN
@@ -49,5 +49,14 @@ Route::middleware('auth')->group(function () {
             return redirect()->route('admin.dashboard');
         });
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/data_mahasiswa', [AdminController::class, 'dataMahasiswa'])->name('admin.data_mahasiswa');
+        Route::get('/data_dosen', [AdminController::class, 'dataDosen'])->name('admin.data_dosen');
+        Route::get('/matakuliah', [AdminController::class, 'mataKuliah'])->name('admin.matakuliah');
+        Route::get('/jadwal_kuliah', [AdminController::class, 'jadwalKuliah'])->name('admin.jadwal_kuliah');
+        Route::get('/krs_mahasiswa', [AdminController::class, 'krsMahasiswa'])->name('admin.krs_mahasiswa');
+        Route::get('/nilai_khs', [AdminController::class, 'nilaiKHS'])->name('admin.nilai_khs');
+        Route::get('/booking_ruangan', [AdminController::class, 'bookingRuangan'])->name('admin.booking_ruangan');
+        Route::get('/manajemen_user', [AdminController::class, 'manajemenUser'])->name('admin.manajemen_user');
+        Route::get('/pengaturan_sistem', [AdminController::class, 'pengaturanSistem'])->name('admin.pengaturan_sistem');
     });
 });

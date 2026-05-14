@@ -222,42 +222,42 @@
             Main Menu
         </div>
 
-        <a href="#" class="active">
+        <a href="{{ route('admin.dashboard') }}" class="active">
             <i class="fa fa-home"></i>
             Dashboard
         </a>
 
-        <a href="#">
+        <a href="{{ route('admin.data_mahasiswa') }}">
             <i class="fa fa-users"></i>
             Data Mahasiswa
         </a>
 
-        <a href="#">
+        <a href="{{ route('admin.data_dosen') }}">
             <i class="fa fa-chalkboard-teacher"></i>
             Data Dosen
         </a>
 
-        <a href="#">
+        <a href="{{ route('admin.matakuliah') }}">
             <i class="fa fa-book"></i>
             Mata Kuliah
         </a>
 
-        <a href="#">
+        <a href="{{ route('admin.jadwal_kuliah') }}">
             <i class="fa fa-calendar-days"></i>
             Jadwal Kuliah
         </a>
 
-        <a href="#">
+        <a href="{{ route('admin.krs_mahasiswa') }}">
             <i class="fa fa-file-signature"></i>
             KRS Mahasiswa
         </a>
 
-        <a href="#">
+        <a href="{{ route('admin.nilai_khs') }}">
             <i class="fa fa-chart-column"></i>
             Nilai & KHS
         </a>
 
-        <a href="#">
+        <a href="{{ route('admin.booking_ruangan') }}">
             <i class="fa fa-door-open"></i>
             Booking Ruangan
         </a>
@@ -266,14 +266,14 @@
             Pengaturan
         </div>
 
-        <a href="#">
+        <a href="{{ route('admin.manajemen_user') }}">
             <i class="fa fa-user-gear"></i>
             Manajemen User
         </a>
 
-        <a href="#">
+        <a href="{{ route('admin.pengaturan_sistem') }}">
             <i class="fa fa-gear"></i>
-            Pengaturan Sistem siakad
+            Pengaturan Sistem
         </a>
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
@@ -615,75 +615,105 @@
 
             <div class="row text-center">
 
-                <div class="col-md-2">
+                <div class="col-md-2 mb-3">
 
-                    <button class="btn btn-light border w-100 py-3">
+                    <a href="{{ route('admin.data_mahasiswa') }}"
+                    class="text-decoration-none">
 
-                        <i class="fa fa-users fs-4 text-primary mb-2"></i><br>
+                        <button class="btn btn-light border w-100 py-3">
 
-                        Mahasiswa
+                            <i class="fa fa-users fs-4 text-primary mb-2"></i><br>
 
-                    </button>
+                            Mahasiswa
 
-                </div>
+                        </button>
 
-                <div class="col-md-2">
-
-                    <button class="btn btn-light border w-100 py-3">
-
-                        <i class="fa fa-chalkboard-teacher fs-4 text-success mb-2"></i><br>
-
-                        Dosen
-
-                    </button>
+                    </a>
 
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-2 mb-3">
 
-                    <button class="btn btn-light border w-100 py-3">
+                    <a href="{{ route('admin.data_dosen') }}"
+                    class="text-decoration-none">
 
-                        <i class="fa fa-book fs-4 text-warning mb-2"></i><br>
+                        <button class="btn btn-light border w-100 py-3">
 
-                        Mata Kuliah
+                            <i class="fa fa-chalkboard-teacher fs-4 text-success mb-2"></i><br>
 
-                    </button>
+                            Dosen
 
-                </div>
+                        </button>
 
-                <div class="col-md-2">
-
-                    <button class="btn btn-light border w-100 py-3">
-
-                        <i class="fa fa-calendar-days fs-4 text-danger mb-2"></i><br>
-
-                        Jadwal
-
-                    </button>
+                    </a>
 
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-2 mb-3">
 
-                    <button class="btn btn-light border w-100 py-3">
+                    <a href="{{ route('admin.matakuliah') }}"
+                    class="text-decoration-none">
 
-                        <i class="fa fa-chart-column fs-4 text-info mb-2"></i><br>
+                        <button class="btn btn-light border w-100 py-3">
 
-                        Nilai
+                            <i class="fa fa-book fs-4 text-warning mb-2"></i><br>
 
-                    </button>
+                            Mata Kuliah
+
+                        </button>
+
+                    </a>
 
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-2 mb-3">
 
-                    <button class="btn btn-light border w-100 py-3">
+                    <a href="{{ route('admin.jadwal_kuliah') }}"
+                    class="text-decoration-none">
 
-                        <i class="fa fa-gear fs-4 text-secondary mb-2"></i><br>
+                        <button class="btn btn-light border w-100 py-3">
 
-                        Pengaturan
+                            <i class="fa fa-calendar-days fs-4 text-danger mb-2"></i><br>
 
-                    </button>
+                            Jadwal
+
+                        </button>
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-2 mb-3">
+
+                    <a href="{{ route('admin.nilai_khs') }}"
+                    class="text-decoration-none">
+
+                        <button class="btn btn-light border w-100 py-3">
+
+                            <i class="fa fa-chart-column fs-4 text-info mb-2"></i><br>
+
+                            Nilai
+
+                        </button>
+
+                    </a>
+
+                </div>
+
+                <div class="col-md-2 mb-3">
+
+                    <a href="{{ route('admin.pengaturan_sistem') }}"
+                    class="text-decoration-none">
+
+                        <button class="btn btn-light border w-100 py-3">
+
+                            <i class="fa fa-gear fs-4 text-secondary mb-2"></i><br>
+
+                            Pengaturan
+
+                        </button>
+
+                    </a>
 
                 </div>
 
