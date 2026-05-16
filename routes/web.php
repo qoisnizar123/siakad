@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\Admin\RuanganController;
+use App\Http\Controllers\Admin\MatakuliahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,5 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::get('/booking', [AdminController::class, 'bookingIndex'])->name('admin.booking.index');
         Route::patch('/booking/{id}/update', [AdminController::class, 'updateStatus'])->name('admin.booking.update');
+        Route::resource('ruangan', RuanganController::class);
+        Route::post('admin/matakuliah', [MatakuliahController::class, 'store'])->name('admin.matakuliah.store');
     });
 });
