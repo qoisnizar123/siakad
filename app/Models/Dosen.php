@@ -8,10 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Dosen extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'nidn', 'nama_dosen'];
+    protected $table = 'dosens';
 
-    public function user()
+    protected $fillable = [
+        'user_id',
+        'nidn',
+        'nama_dosen',
+        'email',
+        'prodi_id',
+        'jabatan',
+        'status'
+    ];
+
+    // Relasi ke tabel prodis
+    public function prodi()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Prodi::class, 'prodi_id');
     }
 }

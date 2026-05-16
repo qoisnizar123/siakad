@@ -14,26 +14,26 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Admin
-        \App\Models\User::create([
+        User::create([
             'name' => 'Admin Siakad',
             'email' => 'admin@siakad.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('12345678'),
             'role' => 'admin',
         ]);
 
         // Dosen
-        \App\Models\User::create([
+        User::create([
             'name' => 'Dosen Teknik',
             'email' => 'dosen@siakad.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('12345678'),
             'role' => 'dosen',
         ]);
 
         // Mahasiswa
-        \App\Models\User::create([
-            'name' => 'Hanif Mahasiswa',
-            'email' => 'hanif@siakad.com',
-            'password' => bcrypt('password'),
+        User::create([
+            'name' => 'Mahasiswa',
+            'email' => 'mahasiswa@siakad.com',
+            'password' => bcrypt('12345678'),
             'role' => 'mahasiswa',
         ]);
     }

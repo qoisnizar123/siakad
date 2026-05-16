@@ -6,13 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jadwal Kuliah | SIAKAD</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -225,9 +222,13 @@
             color: #1d4ed8;
         }
 
+        .badge-nonactive {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
         /* RESPONSIVE */
         @media(max-width: 991px) {
-
             .sidebar {
                 width: 220px;
             }
@@ -238,7 +239,6 @@
         }
 
         @media(max-width: 768px) {
-
             .sidebar {
                 position: relative;
                 width: 100%;
@@ -265,231 +265,93 @@
 
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
+        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <div class="menu-title">Main Menu</div>
+        <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
+        <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>
+        <a href="{{ route('admin.data_dosen') }}"><i class="fa fa-chalkboard-teacher"></i>Data Dosen</a>
+        <a href="{{ route('admin.matakuliah.index') }}" class="{{ Request::is('admin/matakuliah*') ? 'active' : '' }}"><i class="fa fa-book"></i>Mata Kuliah</a>
+        <a href="{{ route('admin.jadwal_kuliah') }}" class="active"><i class="fa fa-calendar-days"></i>Jadwal Kuliah</a>
+        <a href="{{ route('admin.krs_mahasiswa') }}"><i class="fa fa-file-signature"></i>KRS Mahasiswa</a>
+        <a href="{{ route('admin.nilai_khs') }}"><i class="fa fa-chart-column"></i>Nilai & KHS</a>
+        <a href="{{ route('admin.booking.index') }}"><i class="fa fa-door-open"></i>Booking Ruangan</a>
 
-        <h4>
-            <i class="fa-solid fa-graduation-cap me-2"></i>
-            SIAKAD
-        </h4>
+        <div class="menu-title">Pengaturan</div>
+        <a href="{{ route('admin.manajemen_user') }}"><i class="fa fa-user-gear"></i>Manajemen User</a>
+        <a href="{{ route('admin.pengaturan_sistem') }}"><i class="fa fa-gear"></i>Pengaturan Sistem</a>
 
-        <div class="menu-title">
-            Main Menu
-        </div>
-
-        <a href="{{ route('admin.dashboard') }}">
-            <i class="fa fa-home"></i>
-            Dashboard
-        </a>
-
-        <a href="{{ route('admin.data_mahasiswa') }}">
-            <i class="fa fa-users"></i>
-            Data Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.data_dosen') }}">
-            <i class="fa fa-chalkboard-teacher"></i>
-            Data Dosen
-        </a>
-
-        <a href="{{ route('admin.matakuliah.index') }}" class="{{ Request::is('admin/matakuliah*') ? 'active' : '' }}">
-            <i class="fa fa-book"></i>
-            Mata Kuliah
-        </a>
-
-        <a href="{{ route('admin.jadwal_kuliah') }}" class="active">
-            <i class="fa fa-calendar-days"></i>
-            Jadwal Kuliah
-        </a>
-
-        <a href="{{ route('admin.krs_mahasiswa') }}">
-            <i class="fa fa-file-signature"></i>
-            KRS Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.nilai_khs') }}">
-            <i class="fa fa-chart-column"></i>
-            Nilai & KHS
-        </a>
-
-        <a href="{{ route('admin.booking.index') }}">
-            <i class="fa fa-door-open"></i>
-            Booking Ruangan
-        </a>
-
-        <div class="menu-title">
-            Pengaturan
-        </div>
-
-        <a href="{{ route('admin.manajemen_user') }}">
-            <i class="fa fa-user-gear"></i>
-            Manajemen User
-        </a>
-
-        <a href="{{ route('admin.pengaturan_sistem') }}">
-            <i class="fa fa-gear"></i>
-            Pengaturan Sistem
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fa fa-sign-out-alt"></i>
-            Logout
-        </a>
-
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt"></i>Logout</a>
     </div>
 
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- TOPBAR -->
         <div class="topbar">
-
             <div>
-                <h5 class="mb-1">
-                    Jadwal Kuliah
-                </h5>
-
-                <small class="text-muted">
-                    Manajemen jadwal perkuliahan mahasiswa
-                </small>
+                <h5 class="mb-1">Jadwal Kuliah</h5>
+                <small class="text-muted">Manajemen jadwal perkuliahan mahasiswa</small>
             </div>
-
             <div class="d-flex align-items-center gap-3">
-
                 <div class="search-box">
-
                     <i class="fa fa-search"></i>
-
                     <input type="text" placeholder="Cari jadwal kuliah...">
-
                 </div>
-
-                <button class="btn btn-primary">
-
-                    <i class="fa fa-plus me-2"></i>
-                    Tambah Jadwal
-
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                    <i class="fa fa-plus me-2"></i>Tambah Jadwal
                 </button>
-
             </div>
-
         </div>
 
-        <!-- STATISTIC -->
+        @if(session('success'))
+        <div class="alert alert-success border-0 shadow-sm rounded-3 mb-4 d-flex align-items-center">
+            <i class="fa-solid fa-check-circle me-2"></i>
+            <div>{{ session('success') }}</div>
+        </div>
+        @endif
+
         <div class="row">
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Total Jadwal
-                    </small>
-
-                    <h3 class="mt-2">
-                        245
-                    </h3>
-
-                    <div class="icon bg-blue">
-                        <i class="fa fa-calendar-days"></i>
-                    </div>
-
+                    <small class="text-muted">Total Jadwal</small>
+                    <h3 class="mt-2 fw-bold">{{ $totalJadwal }}</h3>
+                    <div class="icon bg-blue"><i class="fa fa-calendar-days"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Kelas Aktif
-                    </small>
-
-                    <h3 class="mt-2">
-                        78
-                    </h3>
-
-                    <div class="icon bg-green">
-                        <i class="fa fa-school"></i>
-                    </div>
-
+                    <small class="text-muted">Kelas Aktif</small>
+                    <h3 class="mt-2 fw-bold text-success">{{ $kelasAktif }}</h3>
+                    <div class="icon bg-green"><i class="fa fa-school"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Ruangan Digunakan
-                    </small>
-
-                    <h3 class="mt-2">
-                        24
-                    </h3>
-
-                    <div class="icon bg-orange">
-                        <i class="fa fa-door-open"></i>
-                    </div>
-
+                    <small class="text-muted">Ruangan Digunakan</small>
+                    <h3 class="mt-2 fw-bold text-warning">{{ $ruanganDigunakan }}</h3>
+                    <div class="icon bg-orange"><i class="fa fa-door-open"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Jadwal Hari Ini
-                    </small>
-
-                    <h3 class="mt-2">
-                        32
-                    </h3>
-
-                    <div class="icon bg-purple">
-                        <i class="fa fa-clock"></i>
-                    </div>
-
+                    <small class="text-muted">Jadwal Hari Ini</small>
+                    <h3 class="mt-2 fw-bold text-purple">{{ $jadwalHariIni }}</h3>
+                    <div class="icon bg-purple"><i class="fa fa-clock"></i></div>
                 </div>
-
             </div>
-
         </div>
 
-        <!-- TABLE -->
         <div class="dashboard-card">
-
             <div class="d-flex justify-content-between align-items-center mb-4">
-
                 <div>
-
-                    <h6 class="mb-1">
-                        Daftar Jadwal Kuliah
-                    </h6>
-
-                    <small class="text-muted">
-                        Jadwal perkuliahan semester aktif
-                    </small>
-
+                    <h6 class="mb-1 fw-bold">Daftar Jadwal Kuliah</h6>
+                    <small class="text-muted">Jadwal perkuliahan semester aktif</small>
                 </div>
-
-                <button class="btn btn-outline-primary btn-sm">
-                    Export Jadwal
-                </button>
-
+                <button class="btn btn-outline-primary btn-sm rounded-3">Export Jadwal</button>
             </div>
 
             <div class="table-responsive">
-
                 <table class="table table-hover align-middle">
-
                     <thead>
                         <tr>
                             <th>No</th>
@@ -499,121 +361,202 @@
                             <th>Jam</th>
                             <th>Ruangan</th>
                             <th>Status</th>
-                            <th width="120">Aksi</th>
+                            <th width="120" class="text-center">Aksi</th>
                         </tr>
                     </thead>
-
                     <tbody>
-
+                        @forelse($jadwal as $index => $j)
                         <tr>
-
-                            <td>1</td>
-                            <td>Pemrograman Web</td>
-                            <td>Dr. Andi Saputra</td>
-                            <td>Senin</td>
-                            <td>08:00 - 10:00</td>
-                            <td>Lab Komputer 1</td>
-
+                            <td>{{ $index + 1 }}</td>
+                            <td class="fw-semibold text-dark">{{ $j->matakuliah->nama_mk ?? 'N/A' }}</td>
+                            <td>{{ $j->dosen->name ?? $j->dosen->nama ?? 'N/A' }}</td>
+                            <td><span class="badge bg-light text-dark border px-2 py-1">{{ $j->hari }}</span></td>
+                            <td class="text-primary fw-medium">{{ \Carbon\Carbon::parse($j->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($j->jam_selesai)->format('H:i') }}</td>
+                            <td><span class="fw-medium text-dark">{{ $j->ruangan->nama_ruangan ?? 'N/A' }}</span></td>
                             <td>
-                                <span class="badge-status badge-active">
-                                    Aktif
-                                </span>
+                                @if($j->status == 'Aktif')
+                                <span class="badge-status badge-active">Aktif</span>
+                                @elseif($j->status == 'Penuh')
+                                <span class="badge-status badge-info">Penuh</span>
+                                @else
+                                <span class="badge-status badge-warning">Pending</span>
+                                @endif
                             </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-1">
+                                    <button class="btn-action btn btn-light border" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $j->id }}" title="Edit">
+                                        <i class="fa fa-pen text-warning"></i>
+                                    </button>
+                                    <form action="{{ route('admin.jadwal_kuliah.destroy', $j->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal kuliah ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-action btn btn-light border" title="Hapus">
+                                            <i class="fa fa-trash text-danger"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
-
                         </tr>
 
+                        <div class="modal fade" id="modalEdit{{ $j->id }}" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content border-0 rounded-4 shadow">
+                                    <div class="modal-header border-0 bg-light px-4 pt-4">
+                                        <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-pen-to-square text-warning me-2"></i>Edit Jadwal Kuliah</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="{{ route('admin.jadwal_kuliah.update', $j->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body p-4">
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Mata Kuliah</label>
+                                                <select name="matakuliah_id" class="form-select rounded-3" required>
+                                                    @foreach($master_mk as $mk)
+                                                    <option value="{{ $mk->id }}" {{ $j->matakuliah_id == $mk->id ? 'selected' : '' }}>{{ $mk->nama_mk }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Dosen Pengajar</label>
+                                                <select name="dosen_id" class="form-select rounded-3" required>
+                                                    @foreach($master_dosen as $ds)
+                                                    <option value="{{ $ds->id }}" {{ $j->dosen_id == $ds->id ? 'selected' : '' }}>{{ $ds->name ?? $ds->nama }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Ruangan Kelas</label>
+                                                <select name="ruangan_id" class="form-select rounded-3" required>
+                                                    @foreach($master_ruangan as $rg)
+                                                    <option value="{{ $rg->id }}" {{ $j->ruangan_id == $rg->id ? 'selected' : '' }}>{{ $rg->nama_ruangan }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Hari</label>
+                                                <select name="hari" class="form-select rounded-3" required>
+                                                    @foreach(['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'] as $hari)
+                                                    <option value="{{ $hari }}" {{ $j->hari == $hari ? 'selected' : '' }}>{{ $hari }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label small fw-semibold text-muted">Jam Mulai</label>
+                                                    <input type="time" name="jam_mulai" class="form-control rounded-3" value="{{ $j->jam_mulai }}" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label small fw-semibold text-muted">Jam Selesai</label>
+                                                    <input type="time" name="jam_selesai" class="form-control rounded-3" value="{{ $j->jam_selesai }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Status</label>
+                                                <select name="status" class="form-select rounded-3" required>
+                                                    <option value="Aktif" {{ $j->status == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                                                    <option value="Penuh" {{ $j->status == 'Penuh' ? 'selected' : '' }}>Penuh</option>
+                                                    <option value="Pending" {{ $j->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer border-0 px-4 pb-4 bg-light rounded-bottom-4">
+                                            <button type="button" class="btn btn-light rounded-3 px-3 border" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary rounded-3 px-4">Simpan Perubahan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        @empty
                         <tr>
-
-                            <td>2</td>
-                            <td>Basis Data</td>
-                            <td>Siti Rahmawati</td>
-                            <td>Selasa</td>
-                            <td>10:00 - 12:00</td>
-                            <td>Ruang A203</td>
-
-                            <td>
-                                <span class="badge-status badge-info">
-                                    Penuh
-                                </span>
-                            </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
-                            </td>
-
+                            <td colspan="8" class="text-center py-4 text-muted">Belum ada jadwal perkuliahan yang dibuat saat ini.</td>
                         </tr>
-
-                        <tr>
-
-                            <td>3</td>
-                            <td>Jaringan Komputer</td>
-                            <td>Rudi Hartono</td>
-                            <td>Rabu</td>
-                            <td>13:00 - 15:00</td>
-                            <td>Lab Jaringan</td>
-
-                            <td>
-                                <span class="badge-status badge-warning">
-                                    Pending
-                                </span>
-                            </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
-                            </td>
-
-                        </tr>
-
+                        @endforelse
                     </tbody>
-
                 </table>
-
             </div>
-
         </div>
-
     </div>
 
+    <div class="modal fade" id="modalTambah" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header border-0 bg-light px-4 pt-4">
+                    <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-circle-plus text-primary me-2"></i>Tambah Jadwal Kuliah</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('admin.jadwal_kuliah.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Mata Kuliah</label>
+                            <select name="matakuliah_id" class="form-select rounded-3" required>
+                                <option value="">-- Pilih Mata Kuliah --</option>
+                                @foreach($master_mk as $mk)
+                                <option value="{{ $mk->id }}">{{ $mk->nama_mk }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Dosen Pengajar</label>
+                            <select name="dosen_id" class="form-select rounded-3" required>
+                                <option value="">-- Pilih Dosen --</option>
+                                @foreach($master_dosen as $ds)
+                                <option value="{{ $ds->id }}">{{ $ds->name ?? $ds->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Ruangan Kelas</label>
+                            <select name="ruangan_id" class="form-select rounded-3" required>
+                                <option value="">-- Pilih Ruangan --</option>
+                                @foreach($master_ruangan as $rg)
+                                <option value="{{ $rg->id }}">{{ $rg->nama_ruangan }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Hari</label>
+                            <select name="hari" class="form-select rounded-3" required>
+                                <option value="">-- Pilih Hari --</option>
+                                <option value="Senin">Senin</option>
+                                <option value="Selasa">Selasa</option>
+                                <option value="Rabu">Rabu</option>
+                                <option value="Kamis">Kamis</option>
+                                <option value="Jumat">Jumat</option>
+                                <option value="Sabtu">Sabtu</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-semibold text-muted">Jam Mulai</label>
+                                <input type="time" name="jam_mulai" class="form-control rounded-3" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-semibold text-muted">Jam Selesai</label>
+                                <input type="time" name="jam_selesai" class="form-control rounded-3" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Status</label>
+                            <select name="status" class="form-select rounded-3" required>
+                                <option value="Aktif">Aktif</option>
+                                <option value="Penuh">Penuh</option>
+                                <option value="Pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 px-4 pb-4 bg-light rounded-bottom-4">
+                        <button type="button" class="btn btn-light rounded-3 px-3 border" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary rounded-3 px-4">Simpan Jadwal</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

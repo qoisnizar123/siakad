@@ -14,8 +14,12 @@ return new class extends Migration
         Schema::create('dosens', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->char('nidn', 10)->unique();
+            $table->char('nidn', 25)->unique();
             $table->string('nama_dosen');
+            $table->string('email', 100)->unique();
+            $table->foreignId('prodi_id')->constrained('prodis');
+            $table->string('jabatan');
+            $table->string('status');
             $table->timestamps();
         });
 
