@@ -326,7 +326,7 @@
             Nilai & KHS
         </a>
 
-        <a href="{{ route('admin.booking_ruangan') }}">
+        <a href="{{ route('admin.booking.index') }}">
             <i class="fa fa-door-open"></i>
             Booking Ruangan
         </a>
