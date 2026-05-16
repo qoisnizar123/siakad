@@ -12,6 +12,8 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        '/admin/ruangan',     // Izinkan akses POST tanpa token CSRF
+        '/admin/ruangan/*', // Izinkan PATCH/DELETE juga
+        'admin/matakuliah',
     ];
 }

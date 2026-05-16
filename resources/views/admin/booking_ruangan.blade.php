@@ -6,13 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Ruangan | SIAKAD</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -61,11 +56,11 @@
         }
 
         .sidebar a:hover {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .sidebar a.active {
-            background: rgba(255,255,255,0.18);
+            background: rgba(255, 255, 255, 0.18);
         }
 
         .sidebar i {
@@ -88,7 +83,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .search-box {
@@ -107,7 +102,7 @@
 
         .search-box input:focus {
             border-color: #1e3a8a;
-            box-shadow: 0 0 0 4px rgba(30,58,138,0.1);
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
         }
 
         .search-box i {
@@ -122,7 +117,7 @@
             background: white;
             border-radius: 14px;
             padding: 22px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
         }
 
@@ -145,22 +140,22 @@
         }
 
         .bg-blue {
-            background: rgba(59,130,246,0.15);
+            background: rgba(59, 130, 246, 0.15);
             color: #2563eb;
         }
 
         .bg-green {
-            background: rgba(34,197,94,0.15);
+            background: rgba(34, 197, 94, 0.15);
             color: #16a34a;
         }
 
         .bg-orange {
-            background: rgba(249,115,22,0.15);
+            background: rgba(249, 115, 22, 0.15);
             color: #ea580c;
         }
 
         .bg-purple {
-            background: rgba(168,85,247,0.15);
+            background: rgba(168, 85, 247, 0.15);
             color: #9333ea;
         }
 
@@ -229,6 +224,7 @@
             border-radius: 6px;
             font-size: 11px;
             font-weight: 600;
+            display: inline-block;
         }
 
         .badge-approved {
@@ -246,9 +242,7 @@
             color: #991b1b;
         }
 
-        /* RESPONSIVE */
         @media(max-width: 991px) {
-
             .sidebar {
                 width: 220px;
             }
@@ -259,7 +253,6 @@
         }
 
         @media(max-width: 768px) {
-
             .sidebar {
                 position: relative;
                 width: 100%;
@@ -286,237 +279,91 @@
 
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
+        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <div class="menu-title">Main Menu</div>
+        <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
+        <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>
+        <a href="{{ route('admin.data_dosen') }}"><i class="fa fa-chalkboard-teacher"></i>Data Dosen</a>
+        <a href="{{ route('admin.matakuliah') }}"><i class="fa fa-book"></i>Mata Kuliah</a>
+        <a href="{{ route('admin.jadwal_kuliah') }}"><i class="fa fa-calendar-days"></i>Jadwal Kuliah</a>
+        <a href="{{ route('admin.krs_mahasiswa') }}"><i class="fa fa-file-signature"></i>KRS Mahasiswa</a>
+        <a href="{{ route('admin.nilai_khs') }}"><i class="fa fa-chart-column"></i>Nilai & KHS</a>
+        <a href="{{ route('admin.booking.index') }}" class="active"><i class="fa fa-door-open"></i>Booking Ruangan</a>
 
-        <h4>
-            <i class="fa-solid fa-graduation-cap me-2"></i>
-            SIAKAD
-        </h4>
+        <div class="menu-title">Pengaturan</div>
+        <a href="{{ route('admin.manajemen_user') }}"><i class="fa fa-user-gear"></i>Manajemen User</a>
+        <a href="{{ route('admin.pengaturan_sistem') }}"><i class="fa fa-gear"></i>Pengaturan Sistem</a>
 
-        <div class="menu-title">
-            Main Menu
-        </div>
-
-        <a href="{{ route('admin.dashboard') }}">
-            <i class="fa fa-home"></i>
-            Dashboard
-        </a>
-
-        <a href="{{ route('admin.data_mahasiswa') }}">
-            <i class="fa fa-users"></i>
-            Data Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.data_dosen') }}">
-            <i class="fa fa-chalkboard-teacher"></i>
-            Data Dosen
-        </a>
-
-        <a href="{{ route('admin.matakuliah') }}">
-            <i class="fa fa-book"></i>
-            Mata Kuliah
-        </a>
-
-        <a href="{{ route('admin.jadwal_kuliah') }}">
-            <i class="fa fa-calendar-days"></i>
-            Jadwal Kuliah
-        </a>
-
-        <a href="{{ route('admin.krs_mahasiswa') }}">
-            <i class="fa fa-file-signature"></i>
-            KRS Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.nilai_khs') }}">
-            <i class="fa fa-chart-column"></i>
-            Nilai & KHS
-        </a>
-
-        <a href="{{ route('admin.booking.index') }}" class="active">
-            <i class="fa fa-door-open"></i>
-            Booking Ruangan
-        </a>
-
-        <div class="menu-title">
-            Pengaturan
-        </div>
-
-        <a href="{{ route('admin.manajemen_user') }}">
-            <i class="fa fa-user-gear"></i>
-            Manajemen User
-        </a>
-
-        <a href="{{ route('admin.pengaturan_sistem') }}">
-            <i class="fa fa-gear"></i>
-            Pengaturan Sistem
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fa fa-sign-out-alt"></i>
-            Logout
-        </a>
-
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt"></i>Logout</a>
     </div>
 
-
-    <!-- MAIN -->
     <div class="main">
-
-        <!-- TOPBAR -->
         <div class="topbar">
-
             <div>
-                <h5 class="mb-1">
-                    Booking Ruangan
-                </h5>
-
-                <small class="text-muted">
-                    Manajemen peminjaman dan booking ruangan kampus
-                </small>
+                <h5 class="mb-1">Booking Ruangan</h5>
+                <small class="text-muted">Manajemen peminjaman dan booking ruangan kampus</small>
             </div>
-
             <div class="d-flex align-items-center gap-3">
-
                 <div class="search-box">
-
                     <i class="fa fa-search"></i>
-
-                    <input type="text"
-                           placeholder="Cari ruangan atau peminjam...">
-
+                    <input type="text" placeholder="Cari ruangan atau peminjam...">
                 </div>
-
-                <button class="btn btn-primary">
-
-                    <i class="fa fa-plus me-2"></i>
-                    Booking Baru
-
-                </button>
-
+                <button class="btn btn-primary"><i class="fa fa-plus me-2"></i>Booking Baru</button>
             </div>
-
         </div>
 
-        <!-- STATISTIC -->
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show mb-4 rounded-3 border-0 shadow-sm" role="alert">
+            <i class="fa fa-check-circle me-2"></i>{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
         <div class="row">
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Total Booking
-                    </small>
-
-                    <h3 class="mt-2">
-                        156
-                    </h3>
-
-                    <div class="icon bg-blue">
-                        <i class="fa fa-door-open"></i>
-                    </div>
-
+                    <small class="text-muted">Total Booking</small>
+                    <h3 class="mt-2 fw-bold">{{ $bookings->count() }}</h3>
+                    <div class="icon bg-blue"><i class="fa fa-door-open"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Ruangan Tersedia
-                    </small>
-
-                    <h3 class="mt-2">
-                        24
-                    </h3>
-
-                    <div class="icon bg-green">
-                        <i class="fa fa-check-circle"></i>
-                    </div>
-
+                    <small class="text-muted">Booking Disetujui</small>
+                    <h3 class="mt-2 fw-bold text-success">{{ $bookings->where('status', 'disetujui')->count() }}</h3>
+                    <div class="icon bg-green"><i class="fa fa-check-circle"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Menunggu Approval
-                    </small>
-
-                    <h3 class="mt-2">
-                        12
-                    </h3>
-
-                    <div class="icon bg-orange">
-                        <i class="fa fa-clock"></i>
-                    </div>
-
+                    <small class="text-muted">Menunggu Approval</small>
+                    <h3 class="mt-2 fw-bold text-warning">{{ $bookings->where('status', 'menunggu')->count() }}</h3>
+                    <div class="icon bg-orange"><i class="fa fa-clock"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Booking Hari Ini
-                    </small>
-
-                    <h3 class="mt-2">
-                        18
-                    </h3>
-
-                    <div class="icon bg-purple">
-                        <i class="fa fa-calendar-check"></i>
-                    </div>
-
+                    <small class="text-muted">Booking Ditolak</small>
+                    <h3 class="mt-2 fw-bold text-danger">{{ $bookings->where('status', 'ditolak')->count() }}</h3>
+                    <div class="icon bg-purple"><i class="fa fa-ban"></i></div>
                 </div>
-
             </div>
-
         </div>
 
-        <!-- TABLE -->
         <div class="dashboard-card">
-
             <div class="d-flex justify-content-between align-items-center mb-4">
-
                 <div>
-
-                    <h6 class="mb-1">
-                        Daftar Booking Ruangan
-                    </h6>
-
-                    <small class="text-muted">
-                        Data booking ruangan perkuliahan dan kegiatan kampus
-                    </small>
-
+                    <h6 class="mb-1 fw-bold">Daftar Booking Ruangan</h6>
+                    <small class="text-muted">Data booking ruangan perkuliahan dan kegiatan kampus</small>
                 </div>
-
-                <button class="btn btn-outline-primary btn-sm">
-
-                    Export Data
-
-                </button>
-
+                <button class="btn btn-outline-primary btn-sm rounded-3">Export Data</button>
             </div>
 
             <div class="table-responsive">
-
                 <table class="table table-hover align-middle">
-
                     <thead>
-
                         <tr>
                             <th>No</th>
                             <th>Ruangan</th>
@@ -524,197 +371,74 @@
                             <th>Tanggal</th>
                             <th>Waktu</th>
                             <th>Status</th>
-                            <th width="120">Aksi</th>
+                            <th width="140" class="text-center">Aksi</th>
                         </tr>
-
                     </thead>
-
                     <tbody>
-
+                        @forelse($bookings as $index => $b)
                         <tr>
-
-                            <td>1</td>
-
+                            <td>{{ $index + 1 }}</td>
                             <td>
-
                                 <div class="room-info">
-
                                     <div class="room-icon">
-                                        A1
+                                        {{ strtoupper(substr($b->ruangan->nama_ruangan ?? 'R', 0, 2)) }}
                                     </div>
-
                                     <div>
-
-                                        <div class="fw-semibold">
-                                            Ruang Lab Komputer 1
-                                        </div>
-
-                                        <small class="text-muted">
-                                            Gedung Teknologi Lt.2
-                                        </small>
-
+                                        <div class="fw-semibold text-dark">{{ $b->ruangan->nama_ruangan ?? 'N/A' }}</div>
+                                        <small class="text-muted">Kapasitas: {{ $b->ruangan->kapasitas ?? '-' }} Mhs</small>
                                     </div>
-
                                 </div>
-
                             </td>
-
-                            <td>Hendra</td>
-                            <td>13 Mei 2026</td>
-                            <td>08:00 - 10:00</td>
-
                             <td>
-
-                                <span class="badge-status badge-approved">
-                                    Disetujui
-                                </span>
-
+                                <span class="fw-medium">{{ $b->user->name }}</span>
+                                <small class="d-block text-muted" style="font-size: 11px;">{{ $b->user->email }}</small>
                             </td>
-
+                            <td>{{ \Carbon\Carbon::parse($b->tanggal)->format('d M Y') }}</td>
+                            <td><span class="badge bg-light text-dark border">{{ $b->jam_mulai }} - {{ $b->jam_selesai }}</span></td>
                             <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
+                                @if($b->status == 'disetujui')
+                                <span class="badge-status badge-approved">Disetujui</span>
+                                @elseif($b->status == 'ditolak')
+                                <span class="badge-status badge-rejected">Ditolak</span>
+                                @else
+                                <span class="badge-status badge-pending">Menunggu</span>
+                                @endif
                             </td>
-
+                            <td class="text-center">
+                                @if($b->status == 'menunggu' || $b->status == 'dipesan')
+                                <div class="d-flex justify-content-center gap-1">
+                                    <form action="{{ route('admin.booking.update', $b->id) }}" method="POST" class="d-inline">
+                                        @csrf @method('PATCH')
+                                        <input type="hidden" name="status" value="disetujui">
+                                        <button type="submit" class="btn-action btn btn-light border" title="Setujui">
+                                            <i class="fa fa-check text-success"></i>
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('admin.booking.update', $b->id) }}" method="POST" class="d-inline">
+                                        @csrf @method('PATCH')
+                                        <input type="hidden" name="status" value="ditolak">
+                                        <button type="submit" class="btn-action btn btn-light border" title="Tolak">
+                                            <i class="fa fa-times text-danger"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                @else
+                                <span class="text-muted small">- Selesai -</span>
+                                @endif
+                            </td>
                         </tr>
-
+                        @empty
                         <tr>
-
-                            <td>2</td>
-
-                            <td>
-
-                                <div class="room-info">
-
-                                    <div class="room-icon">
-                                        B2
-                                    </div>
-
-                                    <div>
-
-                                        <div class="fw-semibold">
-                                            Aula Seminar
-                                        </div>
-
-                                        <small class="text-muted">
-                                            Gedung Utama Lt.1
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-                            <td>Salsa Putri</td>
-                            <td>14 Mei 2026</td>
-                            <td>13:00 - 15:00</td>
-
-                            <td>
-
-                                <span class="badge-status badge-pending">
-                                    Menunggu
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
-                            </td>
-
+                            <td colspan="7" class="text-center py-4 text-muted">Belum ada data pengajuan booking ruangan saat ini.</td>
                         </tr>
-
-                        <tr>
-
-                            <td>3</td>
-
-                            <td>
-
-                                <div class="room-info">
-
-                                    <div class="room-icon">
-                                        C3
-                                    </div>
-
-                                    <div>
-
-                                        <div class="fw-semibold">
-                                            Ruang Multimedia
-                                        </div>
-
-                                        <small class="text-muted">
-                                            Gedung Multimedia Lt.3
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-                            <td>Ahmad Fauzi</td>
-                            <td>15 Mei 2026</td>
-                            <td>09:00 - 12:00</td>
-
-                            <td>
-
-                                <span class="badge-status badge-rejected">
-                                    Ditolak
-                                </span>
-
-                            </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
-                            </td>
-
-                        </tr>
-
+                        @endforelse
                     </tbody>
-
                 </table>
-
             </div>
-
         </div>
-
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
