@@ -125,93 +125,131 @@
         </div>
 
         <div class="row">
+            <div class="col-12">
+                @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
 
-            <!-- FORM -->
+                @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                @endif
+            </div>
+
             <div class="col-md-5">
-                <div class="card-box">
-                    <h6 class="mb-3">Form Booking</h6>
+                <div class="card-box shadow-sm border-0 p-4">
+                    <h6 class="mb-3 fw-bold text-primary">Form Booking</h6>
 
-                    <form>
+                    <form action="{{ route('mahasiswa.booking.store') }}" method="POST">
+                        @csrf
                         <div class="mb-3">
-                            <label>Tanggal</label>
-                            <input type="date" class="form-control">
+                            <label class="form-label">Tanggal</label>
+                            <input type="date" name="tanggal" class="form-control @error('tanggal') is-invalid @enderror" value="{{ old('tanggal') }}" required>
+                            @error('tanggal') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jam Mulai</label>
+                                <input type="time" name="jam_mulai" class="form-control @error('jam_mulai') is-invalid @enderror" value="{{ old('jam_mulai') }}" required>
+                                @error('jam_mulai') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Jam Selesai</label>
+                                <input type="time" name="jam_selesai" class="form-control @error('jam_selesai') is-invalid @enderror" value="{{ old('jam_selesai') }}" required>
+                                @error('jam_selesai') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
                         </div>
 
                         <div class="mb-3">
-                            <label>Jam Mulai</label>
-                            <input type="time" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Jam Selesai</label>
-                            <input type="time" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Ruangan</label>
-                            <select class="form-control">
-                                <option>Lab Komputer 1</option>
-                                <option>Lab Komputer 2</option>
-                                <option>Ruang Kelas A</option>
-                                <option>Ruang Kelas B</option>
+                            <label class="form-label">Ruangan</label>
+                            <select name="ruangan_id" class="form-select @error('ruangan_id') is-invalid @enderror" required>
+                                <option value="" selected disabled>-- Pilih Ruangan --</option>
+                                @foreach($ruangan as $r)
+                                <option value="{{ $r->id }}" {{ old('ruangan_id') == $r->id ? 'selected' : '' }}>
+                                    {{ $r->nama_ruangan }}
+                                </option>
+                                @endforeach
                             </select>
+                            @error('ruangan_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
                         <div class="mb-3">
-                            <label>Keperluan</label>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <label class="form-label">Keperluan</label>
+                            <textarea name="keperluan" class="form-control @error('keperluan') is-invalid @enderror" rows="3" placeholder="Contoh: Kerja kelompok Pemrograman Web" required>{{ old('keperluan') }}</textarea>
+                            @error('keperluan') <div class="invalid-feedback">{{ $message }}</div> @enderror
                         </div>
 
-                        <button class="btn btn-primary w-100">
-                            Ajukan Booking
+                        <button type="submit" class="btn btn-primary w-100 shadow-sm">
+                            <i class="fa fa-paper-plane me-2"></i> Ajukan Booking
                         </button>
                     </form>
                 </div>
             </div>
 
-            <!-- TABLE -->
             <div class="col-md-7">
-                <div class="card-box">
-                    <h6 class="mb-3">Riwayat Booking</h6>
+                <div class="card-box shadow-sm border-0 p-4">
+                    <h6 class="mb-3 fw-bold text-primary">Riwayat Booking</h6>
 
-                    <table class="table table-bordered">
-                        <thead class="table-primary">
-                            <tr>
-                                <th>Tanggal</th>
-                                <th>Ruangan</th>
-                                <th>Jam</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>10-08-2026</td>
-                                <td>Lab Komputer 1</td>
-                                <td>08:00 - 10:00</td>
-                                <td><span class="badge bg-warning">Menunggu</span></td>
-                            </tr>
-                            <tr>
-                                <td>12-08-2026</td>
-                                <td>Ruang Kelas A</td>
-                                <td>13:00 - 15:00</td>
-                                <td><span class="badge bg-success">Disetujui</span></td>
-                            </tr>
-                            <tr>
-                                <td>14-08-2026</td>
-                                <td>Lab Komputer 2</td>
-                                <td>10:00 - 12:00</td>
-                                <td><span class="badge bg-danger">Ditolak</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light text-secondary">
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Ruangan</th>
+                                    <th>Jam</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($bookings as $booking)
+                                <tr>
+                                    <td>{{ \Carbon\Carbon::parse($booking->tanggal)->format('d-m-Y') }}</td>
+                                    <td>{{ $booking->ruangan->nama_ruangan }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($booking->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($booking->jam_selesai)->format('H:i') }}</td>
+                                    <td>
+                                        @if($booking->status == 'menunggu')
+                                        <span class="badge bg-warning text-dark">Menunggu</span>
+                                        @elseif($booking->status == 'disetujui')
+                                        <span class="badge bg-success">Disetujui</span>
+                                        @else
+                                        <span class="badge bg-danger">Ditolak</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($booking->status == 'menunggu' || $booking->status == 'dipesan')
+                                        <form action="{{ route('mahasiswa.booking.cancel', $booking->id) }}" method="POST" onsubmit="return confirm('Yakin ingin membatalkan booking ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="fa fa-trash-can"></i> Batal
+                                            </button>
+                                        </form>
+                                        @else
+                                        <span class="text-muted small">-</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">Belum ada riwayat booking.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
         </div>
 
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </body>
 
 </html>

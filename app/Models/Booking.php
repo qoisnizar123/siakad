@@ -14,8 +14,8 @@ class Booking extends Model
         'tanggal',
         'jam_mulai',
         'jam_selesai',
-        'keperluan',
-        'status'
+        'status',
+        'keperluan'
     ];
 
     public function user()
