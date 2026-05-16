@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/khs', [MahasiswaController::class, 'khs'])->name('mahasiswa.khs');
         Route::get('/jadwal', [MahasiswaController::class, 'jadwal'])->name('mahasiswa.jadwal');
         Route::get('/booking', [MahasiswaController::class, 'booking'])->name('mahasiswa.booking');
+        Route::post('/booking', [MahasiswaController::class, 'storeBooking'])->name('mahasiswa.booking.store');
+        Route::delete('/booking/{id}/cancel', [MahasiswaController::class, 'cancelBooking'])->name('mahasiswa.booking.cancel');
     });
 
     // Group DOSEN
@@ -55,8 +57,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/jadwal_kuliah', [AdminController::class, 'jadwalKuliah'])->name('admin.jadwal_kuliah');
         Route::get('/krs_mahasiswa', [AdminController::class, 'krsMahasiswa'])->name('admin.krs_mahasiswa');
         Route::get('/nilai_khs', [AdminController::class, 'nilaiKHS'])->name('admin.nilai_khs');
-        Route::get('/booking_ruangan', [AdminController::class, 'bookingRuangan'])->name('admin.booking_ruangan');
-        Route::get('/manajemen_user', [AdminController::class, 'manajemenUser'])->name('admin.manajemen_user');
+        Route::get('/booking', [AdminController::class, 'bookingIndex'])->name('admin.booking.index');
+        Route::patch('/booking/{id}/update', [AdminController::class, 'updateStatus'])->name('admin.booking.update');
         Route::get('/pengaturan_sistem', [AdminController::class, 'pengaturanSistem'])->name('admin.pengaturan_sistem');
     });
 });
