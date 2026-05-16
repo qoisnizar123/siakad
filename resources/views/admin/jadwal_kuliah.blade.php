@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Ruangan | SIAKAD</title>
+    <title>Jadwal Kuliah | SIAKAD</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -50,7 +50,6 @@
         .sidebar a {
             display: flex;
             align-items: center;
-            gap: 10px;
             color: white;
             text-decoration: none;
             padding: 12px 14px;
@@ -61,16 +60,15 @@
         }
 
         .sidebar a:hover {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .sidebar a.active {
-            background: rgba(255,255,255,0.18);
+            background: rgba(255, 255, 255, 0.18);
         }
 
         .sidebar i {
             width: 20px;
-            text-align: center;
         }
 
         /* MAIN */
@@ -88,7 +86,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .search-box {
@@ -107,7 +105,7 @@
 
         .search-box input:focus {
             border-color: #1e3a8a;
-            box-shadow: 0 0 0 4px rgba(30,58,138,0.1);
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
         }
 
         .search-box i {
@@ -122,7 +120,7 @@
             background: white;
             border-radius: 14px;
             padding: 22px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
         }
 
@@ -145,22 +143,22 @@
         }
 
         .bg-blue {
-            background: rgba(59,130,246,0.15);
+            background: rgba(59, 130, 246, 0.15);
             color: #2563eb;
         }
 
         .bg-green {
-            background: rgba(34,197,94,0.15);
+            background: rgba(34, 197, 94, 0.15);
             color: #16a34a;
         }
 
         .bg-orange {
-            background: rgba(249,115,22,0.15);
+            background: rgba(249, 115, 22, 0.15);
             color: #ea580c;
         }
 
         .bg-purple {
-            background: rgba(168,85,247,0.15);
+            background: rgba(168, 85, 247, 0.15);
             color: #9333ea;
         }
 
@@ -204,25 +202,6 @@
             background: #f8fafc;
         }
 
-        /* ROOM */
-        .room-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .room-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: #dbeafe;
-            color: #2563eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-
         /* BADGE */
         .badge-status {
             padding: 6px 10px;
@@ -231,19 +210,19 @@
             font-weight: 600;
         }
 
-        .badge-approved {
+        .badge-active {
             background: #dcfce7;
             color: #166534;
         }
 
-        .badge-pending {
+        .badge-warning {
             background: #fef3c7;
             color: #92400e;
         }
 
-        .badge-rejected {
-            background: #fee2e2;
-            color: #991b1b;
+        .badge-info {
+            background: #dbeafe;
+            color: #1d4ed8;
         }
 
         /* RESPONSIVE */
@@ -318,7 +297,7 @@
             Mata Kuliah
         </a>
 
-        <a href="{{ route('admin.jadwal_kuliah') }}">
+        <a href="{{ route('admin.jadwal_kuliah') }}" class="active">
             <i class="fa fa-calendar-days"></i>
             Jadwal Kuliah
         </a>
@@ -333,7 +312,7 @@
             Nilai & KHS
         </a>
 
-        <a href="{{ route('admin.booking_ruangan') }}" class="active">
+        <a href="{{ route('admin.booking_ruangan') }}">
             <i class="fa fa-door-open"></i>
             Booking Ruangan
         </a>
@@ -362,7 +341,6 @@
 
     </div>
 
-
     <!-- MAIN -->
     <div class="main">
 
@@ -371,11 +349,11 @@
 
             <div>
                 <h5 class="mb-1">
-                    Booking Ruangan
+                    Jadwal Kuliah
                 </h5>
 
                 <small class="text-muted">
-                    Manajemen peminjaman dan booking ruangan kampus
+                    Manajemen jadwal perkuliahan mahasiswa
                 </small>
             </div>
 
@@ -385,15 +363,14 @@
 
                     <i class="fa fa-search"></i>
 
-                    <input type="text"
-                           placeholder="Cari ruangan atau peminjam...">
+                    <input type="text" placeholder="Cari jadwal kuliah...">
 
                 </div>
 
                 <button class="btn btn-primary">
 
                     <i class="fa fa-plus me-2"></i>
-                    Booking Baru
+                    Tambah Jadwal
 
                 </button>
 
@@ -409,14 +386,54 @@
                 <div class="dashboard-card stat-card">
 
                     <small class="text-muted">
-                        Total Booking
+                        Total Jadwal
                     </small>
 
                     <h3 class="mt-2">
-                        156
+                        245
                     </h3>
 
                     <div class="icon bg-blue">
+                        <i class="fa fa-calendar-days"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="dashboard-card stat-card">
+
+                    <small class="text-muted">
+                        Kelas Aktif
+                    </small>
+
+                    <h3 class="mt-2">
+                        78
+                    </h3>
+
+                    <div class="icon bg-green">
+                        <i class="fa fa-school"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="dashboard-card stat-card">
+
+                    <small class="text-muted">
+                        Ruangan Digunakan
+                    </small>
+
+                    <h3 class="mt-2">
+                        24
+                    </h3>
+
+                    <div class="icon bg-orange">
                         <i class="fa fa-door-open"></i>
                     </div>
 
@@ -429,55 +446,15 @@
                 <div class="dashboard-card stat-card">
 
                     <small class="text-muted">
-                        Ruangan Tersedia
+                        Jadwal Hari Ini
                     </small>
 
                     <h3 class="mt-2">
-                        24
-                    </h3>
-
-                    <div class="icon bg-green">
-                        <i class="fa fa-check-circle"></i>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Menunggu Approval
-                    </small>
-
-                    <h3 class="mt-2">
-                        12
-                    </h3>
-
-                    <div class="icon bg-orange">
-                        <i class="fa fa-clock"></i>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Booking Hari Ini
-                    </small>
-
-                    <h3 class="mt-2">
-                        18
+                        32
                     </h3>
 
                     <div class="icon bg-purple">
-                        <i class="fa fa-calendar-check"></i>
+                        <i class="fa fa-clock"></i>
                     </div>
 
                 </div>
@@ -494,19 +471,17 @@
                 <div>
 
                     <h6 class="mb-1">
-                        Daftar Booking Ruangan
+                        Daftar Jadwal Kuliah
                     </h6>
 
                     <small class="text-muted">
-                        Data booking ruangan perkuliahan dan kegiatan kampus
+                        Jadwal perkuliahan semester aktif
                     </small>
 
                 </div>
 
                 <button class="btn btn-outline-primary btn-sm">
-
-                    Export Data
-
+                    Export Jadwal
                 </button>
 
             </div>
@@ -516,17 +491,16 @@
                 <table class="table table-hover align-middle">
 
                     <thead>
-
                         <tr>
                             <th>No</th>
+                            <th>Mata Kuliah</th>
+                            <th>Dosen</th>
+                            <th>Hari</th>
+                            <th>Jam</th>
                             <th>Ruangan</th>
-                            <th>Peminjam</th>
-                            <th>Tanggal</th>
-                            <th>Waktu</th>
                             <th>Status</th>
                             <th width="120">Aksi</th>
                         </tr>
-
                     </thead>
 
                     <tbody>
@@ -534,41 +508,16 @@
                         <tr>
 
                             <td>1</td>
-
-                            <td>
-
-                                <div class="room-info">
-
-                                    <div class="room-icon">
-                                        A1
-                                    </div>
-
-                                    <div>
-
-                                        <div class="fw-semibold">
-                                            Ruang Lab Komputer 1
-                                        </div>
-
-                                        <small class="text-muted">
-                                            Gedung Teknologi Lt.2
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-                            <td>Hendra</td>
-                            <td>13 Mei 2026</td>
+                            <td>Pemrograman Web</td>
+                            <td>Dr. Andi Saputra</td>
+                            <td>Senin</td>
                             <td>08:00 - 10:00</td>
+                            <td>Lab Komputer 1</td>
 
                             <td>
-
-                                <span class="badge-status badge-approved">
-                                    Disetujui
+                                <span class="badge-status badge-active">
+                                    Aktif
                                 </span>
-
                             </td>
 
                             <td>
@@ -592,41 +541,16 @@
                         <tr>
 
                             <td>2</td>
+                            <td>Basis Data</td>
+                            <td>Siti Rahmawati</td>
+                            <td>Selasa</td>
+                            <td>10:00 - 12:00</td>
+                            <td>Ruang A203</td>
 
                             <td>
-
-                                <div class="room-info">
-
-                                    <div class="room-icon">
-                                        B2
-                                    </div>
-
-                                    <div>
-
-                                        <div class="fw-semibold">
-                                            Aula Seminar
-                                        </div>
-
-                                        <small class="text-muted">
-                                            Gedung Utama Lt.1
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-                            <td>Salsa Putri</td>
-                            <td>14 Mei 2026</td>
-                            <td>13:00 - 15:00</td>
-
-                            <td>
-
-                                <span class="badge-status badge-pending">
-                                    Menunggu
+                                <span class="badge-status badge-info">
+                                    Penuh
                                 </span>
-
                             </td>
 
                             <td>
@@ -650,41 +574,16 @@
                         <tr>
 
                             <td>3</td>
+                            <td>Jaringan Komputer</td>
+                            <td>Rudi Hartono</td>
+                            <td>Rabu</td>
+                            <td>13:00 - 15:00</td>
+                            <td>Lab Jaringan</td>
 
                             <td>
-
-                                <div class="room-info">
-
-                                    <div class="room-icon">
-                                        C3
-                                    </div>
-
-                                    <div>
-
-                                        <div class="fw-semibold">
-                                            Ruang Multimedia
-                                        </div>
-
-                                        <small class="text-muted">
-                                            Gedung Multimedia Lt.3
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-                            <td>Ahmad Fauzi</td>
-                            <td>15 Mei 2026</td>
-                            <td>09:00 - 12:00</td>
-
-                            <td>
-
-                                <span class="badge-status badge-rejected">
-                                    Ditolak
+                                <span class="badge-status badge-warning">
+                                    Pending
                                 </span>
-
                             </td>
 
                             <td>

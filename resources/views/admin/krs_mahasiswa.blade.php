@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Ruangan | SIAKAD</title>
+    <title>KRS Mahasiswa | SIAKAD</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -50,7 +50,6 @@
         .sidebar a {
             display: flex;
             align-items: center;
-            gap: 10px;
             color: white;
             text-decoration: none;
             padding: 12px 14px;
@@ -61,16 +60,15 @@
         }
 
         .sidebar a:hover {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .sidebar a.active {
-            background: rgba(255,255,255,0.18);
+            background: rgba(255, 255, 255, 0.18);
         }
 
         .sidebar i {
             width: 20px;
-            text-align: center;
         }
 
         /* MAIN */
@@ -88,7 +86,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .search-box {
@@ -107,7 +105,7 @@
 
         .search-box input:focus {
             border-color: #1e3a8a;
-            box-shadow: 0 0 0 4px rgba(30,58,138,0.1);
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
         }
 
         .search-box i {
@@ -122,7 +120,7 @@
             background: white;
             border-radius: 14px;
             padding: 22px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
         }
 
@@ -145,22 +143,22 @@
         }
 
         .bg-blue {
-            background: rgba(59,130,246,0.15);
+            background: rgba(59, 130, 246, 0.15);
             color: #2563eb;
         }
 
         .bg-green {
-            background: rgba(34,197,94,0.15);
+            background: rgba(34, 197, 94, 0.15);
             color: #16a34a;
         }
 
         .bg-orange {
-            background: rgba(249,115,22,0.15);
+            background: rgba(249, 115, 22, 0.15);
             color: #ea580c;
         }
 
         .bg-purple {
-            background: rgba(168,85,247,0.15);
+            background: rgba(168, 85, 247, 0.15);
             color: #9333ea;
         }
 
@@ -204,25 +202,6 @@
             background: #f8fafc;
         }
 
-        /* ROOM */
-        .room-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .room-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: #dbeafe;
-            color: #2563eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-        }
-
         /* BADGE */
         .badge-status {
             padding: 6px 10px;
@@ -231,19 +210,38 @@
             font-weight: 600;
         }
 
-        .badge-approved {
+        .badge-active {
             background: #dcfce7;
             color: #166534;
         }
 
-        .badge-pending {
+        .badge-warning {
             background: #fef3c7;
             color: #92400e;
         }
 
-        .badge-rejected {
+        .badge-danger {
             background: #fee2e2;
             color: #991b1b;
+        }
+
+        /* PROFILE */
+        .student-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .student-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #dbeafe;
+            color: #2563eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
         }
 
         /* RESPONSIVE */
@@ -323,7 +321,7 @@
             Jadwal Kuliah
         </a>
 
-        <a href="{{ route('admin.krs_mahasiswa') }}">
+        <a href="{{ route('admin.krs_mahasiswa') }}" class="active">
             <i class="fa fa-file-signature"></i>
             KRS Mahasiswa
         </a>
@@ -333,7 +331,7 @@
             Nilai & KHS
         </a>
 
-        <a href="{{ route('admin.booking_ruangan') }}" class="active">
+        <a href="{{ route('admin.booking_ruangan') }}">
             <i class="fa fa-door-open"></i>
             Booking Ruangan
         </a>
@@ -351,6 +349,7 @@
             <i class="fa fa-gear"></i>
             Pengaturan Sistem
         </a>
+
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
@@ -362,7 +361,6 @@
 
     </div>
 
-
     <!-- MAIN -->
     <div class="main">
 
@@ -371,11 +369,11 @@
 
             <div>
                 <h5 class="mb-1">
-                    Booking Ruangan
+                    KRS Mahasiswa
                 </h5>
 
                 <small class="text-muted">
-                    Manajemen peminjaman dan booking ruangan kampus
+                    Manajemen pengajuan Kartu Rencana Studi mahasiswa
                 </small>
             </div>
 
@@ -385,15 +383,14 @@
 
                     <i class="fa fa-search"></i>
 
-                    <input type="text"
-                           placeholder="Cari ruangan atau peminjam...">
+                    <input type="text" placeholder="Cari mahasiswa atau NIM...">
 
                 </div>
 
                 <button class="btn btn-primary">
 
                     <i class="fa fa-plus me-2"></i>
-                    Booking Baru
+                    Tambah KRS
 
                 </button>
 
@@ -409,15 +406,15 @@
                 <div class="dashboard-card stat-card">
 
                     <small class="text-muted">
-                        Total Booking
+                        Total Pengajuan
                     </small>
 
                     <h3 class="mt-2">
-                        156
+                        1,245
                     </h3>
 
                     <div class="icon bg-blue">
-                        <i class="fa fa-door-open"></i>
+                        <i class="fa fa-file-signature"></i>
                     </div>
 
                 </div>
@@ -429,15 +426,15 @@
                 <div class="dashboard-card stat-card">
 
                     <small class="text-muted">
-                        Ruangan Tersedia
+                        Disetujui
                     </small>
 
                     <h3 class="mt-2">
-                        24
+                        1,080
                     </h3>
 
                     <div class="icon bg-green">
-                        <i class="fa fa-check-circle"></i>
+                        <i class="fa fa-circle-check"></i>
                     </div>
 
                 </div>
@@ -449,11 +446,11 @@
                 <div class="dashboard-card stat-card">
 
                     <small class="text-muted">
-                        Menunggu Approval
+                        Menunggu
                     </small>
 
                     <h3 class="mt-2">
-                        12
+                        120
                     </h3>
 
                     <div class="icon bg-orange">
@@ -469,15 +466,15 @@
                 <div class="dashboard-card stat-card">
 
                     <small class="text-muted">
-                        Booking Hari Ini
+                        Ditolak
                     </small>
 
                     <h3 class="mt-2">
-                        18
+                        45
                     </h3>
 
                     <div class="icon bg-purple">
-                        <i class="fa fa-calendar-check"></i>
+                        <i class="fa fa-circle-xmark"></i>
                     </div>
 
                 </div>
@@ -494,19 +491,17 @@
                 <div>
 
                     <h6 class="mb-1">
-                        Daftar Booking Ruangan
+                        Data Pengajuan KRS
                     </h6>
 
                     <small class="text-muted">
-                        Data booking ruangan perkuliahan dan kegiatan kampus
+                        Daftar pengajuan KRS semester aktif
                     </small>
 
                 </div>
 
                 <button class="btn btn-outline-primary btn-sm">
-
                     Export Data
-
                 </button>
 
             </div>
@@ -516,17 +511,16 @@
                 <table class="table table-hover align-middle">
 
                     <thead>
-
                         <tr>
                             <th>No</th>
-                            <th>Ruangan</th>
-                            <th>Peminjam</th>
-                            <th>Tanggal</th>
-                            <th>Waktu</th>
+                            <th>Mahasiswa</th>
+                            <th>NIM</th>
+                            <th>Semester</th>
+                            <th>Total SKS</th>
+                            <th>Tanggal Pengajuan</th>
                             <th>Status</th>
                             <th width="120">Aksi</th>
                         </tr>
-
                     </thead>
 
                     <tbody>
@@ -537,20 +531,20 @@
 
                             <td>
 
-                                <div class="room-info">
+                                <div class="student-profile">
 
-                                    <div class="room-icon">
-                                        A1
+                                    <div class="student-avatar">
+                                        H
                                     </div>
 
                                     <div>
 
                                         <div class="fw-semibold">
-                                            Ruang Lab Komputer 1
+                                            Hendra
                                         </div>
 
                                         <small class="text-muted">
-                                            Gedung Teknologi Lt.2
+                                            Teknik Informatika
                                         </small>
 
                                     </div>
@@ -559,16 +553,15 @@
 
                             </td>
 
-                            <td>Hendra</td>
-                            <td>13 Mei 2026</td>
-                            <td>08:00 - 10:00</td>
+                            <td>22110001</td>
+                            <td>Semester 5</td>
+                            <td>24 SKS</td>
+                            <td>10 Mei 2026</td>
 
                             <td>
-
-                                <span class="badge-status badge-approved">
+                                <span class="badge-status badge-active">
                                     Disetujui
                                 </span>
-
                             </td>
 
                             <td>
@@ -595,20 +588,20 @@
 
                             <td>
 
-                                <div class="room-info">
+                                <div class="student-profile">
 
-                                    <div class="room-icon">
-                                        B2
+                                    <div class="student-avatar">
+                                        R
                                     </div>
 
                                     <div>
 
                                         <div class="fw-semibold">
-                                            Aula Seminar
+                                            Rizky Pratama
                                         </div>
 
                                         <small class="text-muted">
-                                            Gedung Utama Lt.1
+                                            Sistem Informasi
                                         </small>
 
                                     </div>
@@ -617,16 +610,15 @@
 
                             </td>
 
-                            <td>Salsa Putri</td>
-                            <td>14 Mei 2026</td>
-                            <td>13:00 - 15:00</td>
+                            <td>22110045</td>
+                            <td>Semester 3</td>
+                            <td>20 SKS</td>
+                            <td>11 Mei 2026</td>
 
                             <td>
-
-                                <span class="badge-status badge-pending">
+                                <span class="badge-status badge-warning">
                                     Menunggu
                                 </span>
-
                             </td>
 
                             <td>
@@ -653,20 +645,20 @@
 
                             <td>
 
-                                <div class="room-info">
+                                <div class="student-profile">
 
-                                    <div class="room-icon">
-                                        C3
+                                    <div class="student-avatar">
+                                        S
                                     </div>
 
                                     <div>
 
                                         <div class="fw-semibold">
-                                            Ruang Multimedia
+                                            Salsa Putri
                                         </div>
 
                                         <small class="text-muted">
-                                            Gedung Multimedia Lt.3
+                                            Manajemen Informatika
                                         </small>
 
                                     </div>
@@ -675,16 +667,15 @@
 
                             </td>
 
-                            <td>Ahmad Fauzi</td>
-                            <td>15 Mei 2026</td>
-                            <td>09:00 - 12:00</td>
+                            <td>22110078</td>
+                            <td>Semester 7</td>
+                            <td>18 SKS</td>
+                            <td>09 Mei 2026</td>
 
                             <td>
-
-                                <span class="badge-status badge-rejected">
+                                <span class="badge-status badge-danger">
                                     Ditolak
                                 </span>
-
                             </td>
 
                             <td>

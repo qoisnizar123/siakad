@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Ruangan | SIAKAD</title>
+    <title>Manajemen User | SIAKAD</title>
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -204,17 +204,17 @@
             background: #f8fafc;
         }
 
-        /* ROOM */
-        .room-info {
+        /* USER PROFILE */
+        .user-profile {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .room-icon {
+        .user-avatar {
             width: 42px;
             height: 42px;
-            border-radius: 12px;
+            border-radius: 50%;
             background: #dbeafe;
             color: #2563eb;
             display: flex;
@@ -231,19 +231,24 @@
             font-weight: 600;
         }
 
-        .badge-approved {
+        .badge-active {
             background: #dcfce7;
             color: #166534;
         }
 
-        .badge-pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .badge-rejected {
+        .badge-inactive {
             background: #fee2e2;
             color: #991b1b;
+        }
+
+        .badge-admin {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .badge-user {
+            background: #f3e8ff;
+            color: #7e22ce;
         }
 
         /* RESPONSIVE */
@@ -333,7 +338,7 @@
             Nilai & KHS
         </a>
 
-        <a href="{{ route('admin.booking_ruangan') }}" class="active">
+        <a href="{{ route('admin.booking_ruangan') }}">
             <i class="fa fa-door-open"></i>
             Booking Ruangan
         </a>
@@ -342,7 +347,7 @@
             Pengaturan
         </div>
 
-        <a href="{{ route('admin.manajemen_user') }}">
+        <a href="{{ route('admin.manajemen_user') }}" class="active">
             <i class="fa fa-user-gear"></i>
             Manajemen User
         </a>
@@ -371,11 +376,11 @@
 
             <div>
                 <h5 class="mb-1">
-                    Booking Ruangan
+                    Manajemen User
                 </h5>
 
                 <small class="text-muted">
-                    Manajemen peminjaman dan booking ruangan kampus
+                    Kelola akun pengguna sistem akademik
                 </small>
             </div>
 
@@ -386,14 +391,14 @@
                     <i class="fa fa-search"></i>
 
                     <input type="text"
-                           placeholder="Cari ruangan atau peminjam...">
+                           placeholder="Cari user...">
 
                 </div>
 
                 <button class="btn btn-primary">
 
                     <i class="fa fa-plus me-2"></i>
-                    Booking Baru
+                    Tambah User
 
                 </button>
 
@@ -409,15 +414,15 @@
                 <div class="dashboard-card stat-card">
 
                     <small class="text-muted">
-                        Total Booking
+                        Total User
                     </small>
 
                     <h3 class="mt-2">
-                        156
+                        1,254
                     </h3>
 
                     <div class="icon bg-blue">
-                        <i class="fa fa-door-open"></i>
+                        <i class="fa fa-users"></i>
                     </div>
 
                 </div>
@@ -429,35 +434,15 @@
                 <div class="dashboard-card stat-card">
 
                     <small class="text-muted">
-                        Ruangan Tersedia
-                    </small>
-
-                    <h3 class="mt-2">
-                        24
-                    </h3>
-
-                    <div class="icon bg-green">
-                        <i class="fa fa-check-circle"></i>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Menunggu Approval
+                        Administrator
                     </small>
 
                     <h3 class="mt-2">
                         12
                     </h3>
 
-                    <div class="icon bg-orange">
-                        <i class="fa fa-clock"></i>
+                    <div class="icon bg-green">
+                        <i class="fa fa-user-shield"></i>
                     </div>
 
                 </div>
@@ -469,15 +454,35 @@
                 <div class="dashboard-card stat-card">
 
                     <small class="text-muted">
-                        Booking Hari Ini
+                        Dosen
                     </small>
 
                     <h3 class="mt-2">
-                        18
+                        186
+                    </h3>
+
+                    <div class="icon bg-orange">
+                        <i class="fa fa-chalkboard-teacher"></i>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <div class="dashboard-card stat-card">
+
+                    <small class="text-muted">
+                        Mahasiswa
+                    </small>
+
+                    <h3 class="mt-2">
+                        1,056
                     </h3>
 
                     <div class="icon bg-purple">
-                        <i class="fa fa-calendar-check"></i>
+                        <i class="fa fa-user-graduate"></i>
                     </div>
 
                 </div>
@@ -494,11 +499,11 @@
                 <div>
 
                     <h6 class="mb-1">
-                        Daftar Booking Ruangan
+                        Daftar User
                     </h6>
 
                     <small class="text-muted">
-                        Data booking ruangan perkuliahan dan kegiatan kampus
+                        Data akun pengguna sistem SIAKAD
                     </small>
 
                 </div>
@@ -519,11 +524,11 @@
 
                         <tr>
                             <th>No</th>
-                            <th>Ruangan</th>
-                            <th>Peminjam</th>
-                            <th>Tanggal</th>
-                            <th>Waktu</th>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
                             <th>Status</th>
+                            <th>Terakhir Login</th>
                             <th width="120">Aksi</th>
                         </tr>
 
@@ -537,20 +542,20 @@
 
                             <td>
 
-                                <div class="room-info">
+                                <div class="user-profile">
 
-                                    <div class="room-icon">
-                                        A1
+                                    <div class="user-avatar">
+                                        H
                                     </div>
 
                                     <div>
 
                                         <div class="fw-semibold">
-                                            Ruang Lab Komputer 1
+                                            Hendra
                                         </div>
 
                                         <small class="text-muted">
-                                            Gedung Teknologi Lt.2
+                                            Administrator Sistem
                                         </small>
 
                                     </div>
@@ -559,17 +564,21 @@
 
                             </td>
 
-                            <td>Hendra</td>
-                            <td>13 Mei 2026</td>
-                            <td>08:00 - 10:00</td>
+                            <td>admin@kampus.ac.id</td>
 
                             <td>
-
-                                <span class="badge-status badge-approved">
-                                    Disetujui
+                                <span class="badge-status badge-admin">
+                                    Admin
                                 </span>
-
                             </td>
+
+                            <td>
+                                <span class="badge-status badge-active">
+                                    Aktif
+                                </span>
+                            </td>
+
+                            <td>13 Mei 2026</td>
 
                             <td>
 
@@ -595,20 +604,20 @@
 
                             <td>
 
-                                <div class="room-info">
+                                <div class="user-profile">
 
-                                    <div class="room-icon">
-                                        B2
+                                    <div class="user-avatar">
+                                        S
                                     </div>
 
                                     <div>
 
                                         <div class="fw-semibold">
-                                            Aula Seminar
+                                            Siti Rahmawati
                                         </div>
 
                                         <small class="text-muted">
-                                            Gedung Utama Lt.1
+                                            Dosen Teknik Informatika
                                         </small>
 
                                     </div>
@@ -617,17 +626,21 @@
 
                             </td>
 
-                            <td>Salsa Putri</td>
-                            <td>14 Mei 2026</td>
-                            <td>13:00 - 15:00</td>
+                            <td>siti@kampus.ac.id</td>
 
                             <td>
-
-                                <span class="badge-status badge-pending">
-                                    Menunggu
+                                <span class="badge-status badge-user">
+                                    Dosen
                                 </span>
-
                             </td>
+
+                            <td>
+                                <span class="badge-status badge-active">
+                                    Aktif
+                                </span>
+                            </td>
+
+                            <td>12 Mei 2026</td>
 
                             <td>
 
@@ -653,20 +666,20 @@
 
                             <td>
 
-                                <div class="room-info">
+                                <div class="user-profile">
 
-                                    <div class="room-icon">
-                                        C3
+                                    <div class="user-avatar">
+                                        R
                                     </div>
 
                                     <div>
 
                                         <div class="fw-semibold">
-                                            Ruang Multimedia
+                                            Rizky Pratama
                                         </div>
 
                                         <small class="text-muted">
-                                            Gedung Multimedia Lt.3
+                                            Mahasiswa Sistem Informasi
                                         </small>
 
                                     </div>
@@ -675,17 +688,21 @@
 
                             </td>
 
-                            <td>Ahmad Fauzi</td>
-                            <td>15 Mei 2026</td>
-                            <td>09:00 - 12:00</td>
+                            <td>rizky@student.ac.id</td>
 
                             <td>
-
-                                <span class="badge-status badge-rejected">
-                                    Ditolak
+                                <span class="badge-status badge-user">
+                                    Mahasiswa
                                 </span>
-
                             </td>
+
+                            <td>
+                                <span class="badge-status badge-inactive">
+                                    Nonaktif
+                                </span>
+                            </td>
+
+                            <td>08 Mei 2026</td>
 
                             <td>
 
