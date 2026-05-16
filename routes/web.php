@@ -61,6 +61,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/nilai_khs', [AdminController::class, 'nilaiKHS'])->name('admin.nilai_khs');
         Route::get('/booking', [AdminController::class, 'bookingIndex'])->name('admin.booking.index');
         Route::patch('/booking/{id}/update', [AdminController::class, 'updateStatus'])->name('admin.booking.update');
+        Route::get('/manajemen_user', [AdminController::class, 'manajemenUser'])->name('admin.manajemen_user');
         Route::get('/pengaturan_sistem', [AdminController::class, 'pengaturanSistem'])->name('admin.pengaturan_sistem');
     });
 });
