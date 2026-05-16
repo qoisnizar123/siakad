@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('kode_mk')->unique();
             $table->string('nama_mk');
             $table->integer('sks');
+            $table->integer('semester');
             $table->foreignId('prodi_id')->constrained('prodis');
             $table->timestamps();
         });
