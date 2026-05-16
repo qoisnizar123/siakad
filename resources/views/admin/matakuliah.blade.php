@@ -6,13 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Mata Kuliah | SIAKAD</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -50,6 +45,7 @@
         .sidebar a {
             display: flex;
             align-items: center;
+            gap: 10px;
             color: white;
             text-decoration: none;
             padding: 12px 14px;
@@ -220,7 +216,6 @@
         }
 
         @media(max-width: 991px) {
-
             .sidebar {
                 width: 220px;
             }
@@ -231,7 +226,6 @@
         }
 
         @media(max-width: 768px) {
-
             .sidebar {
                 position: relative;
                 width: 100%;
@@ -258,229 +252,93 @@
 
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
+        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <div class="menu-title">Main Menu</div>
+        <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
+        <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>
+        <a href="{{ route('admin.data_dosen') }}"><i class="fa fa-chalkboard-teacher"></i>Data Dosen</a>
+        <a href="{{ route('admin.matakuliah.index') }}" class="active"><i class="fa fa-book"></i>Mata Kuliah</a>
+        <a href="{{ route('admin.jadwal_kuliah') }}"><i class="fa fa-calendar-days"></i>Jadwal Kuliah</a>
+        <a href="{{ route('admin.krs_mahasiswa') }}"><i class="fa fa-file-signature"></i>KRS Mahasiswa</a>
+        <a href="{{ route('admin.nilai_khs') }}"><i class="fa fa-chart-column"></i>Nilai & KHS</a>
+        <a href="{{ route('admin.booking.index') }}"><i class="fa fa-door-open"></i>Booking Ruangan</a>
 
-        <h4>
-            <i class="fa-solid fa-graduation-cap me-2"></i>
-            SIAKAD
-        </h4>
+        <div class="menu-title">Pengaturan</div>
+        <a href="{{ route('admin.manajemen_user') }}"><i class="fa fa-user-gear"></i>Manajemen User</a>
+        <a href="{{ route('admin.pengaturan_sistem') }}"><i class="fa fa-gear"></i>Pengaturan Sistem</a>
 
-        <div class="menu-title">
-            Main Menu
-        </div>
-
-        <a href="{{ route('admin.dashboard') }}">
-            <i class="fa fa-home"></i>
-            Dashboard
-        </a>
-
-        <a href="{{ route('admin.data_mahasiswa') }}">
-            <i class="fa fa-users"></i>
-            Data Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.data_dosen') }}">
-            <i class="fa fa-chalkboard-teacher"></i>
-            Data Dosen
-        </a>
-
-        <a href="{{ route('admin.matakuliah') }}" class="active">
-            <i class="fa fa-book"></i>
-            Mata Kuliah
-        </a>
-
-        <a href="{{ route('admin.jadwal_kuliah') }}">
-            <i class="fa fa-calendar-days"></i>
-            Jadwal Kuliah
-        </a>
-
-        <a href="{{ route('admin.krs_mahasiswa') }}">
-            <i class="fa fa-file-signature"></i>
-            KRS Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.nilai_khs') }}">
-            <i class="fa fa-chart-column"></i>
-            Nilai & KHS
-        </a>
-
-        <a href="{{ route('admin.booking.index') }}">
-            <i class="fa fa-door-open"></i>
-            Booking Ruangan
-        </a>
-
-        <div class="menu-title">
-            Pengaturan
-        </div>
-
-        <a href="{{ route('admin.manajemen_user') }}">
-            <i class="fa fa-user-gear"></i>
-            Manajemen User
-        </a>
-
-        <a href="{{ route('admin.pengaturan_sistem') }}">
-            <i class="fa fa-gear"></i>
-            Pengaturan Sistem
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fa fa-sign-out-alt"></i>
-            Logout
-        </a>
-
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt"></i>Logout</a>
     </div>
 
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- TOPBAR -->
         <div class="topbar">
-
             <div>
-                <h5 class="mb-1">
-                    Data Mata Kuliah
-                </h5>
-
-                <small class="text-muted">
-                    Manajemen mata kuliah Sistem Informasi Akademik
-                </small>
+                <h5 class="mb-1 fw-bold">Data Mata Kuliah</h5>
+                <small class="text-muted">Manajemen mata kuliah Sistem Informasi Akademik</small>
             </div>
-
             <div class="d-flex align-items-center gap-3">
-
                 <div class="search-box">
-
                     <i class="fa fa-search"></i>
-
                     <input type="text" placeholder="Cari mata kuliah...">
-
                 </div>
-
-                <button class="btn btn-primary">
-
-                    <i class="fa fa-plus me-2"></i>
-                    Tambah Mata Kuliah
-
+                <button class="btn btn-primary rounded-3 fw-medium" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                    <i class="fa fa-plus me-2"></i>Tambah Mata Kuliah
                 </button>
-
             </div>
-
         </div>
 
-        <!-- STATISTIC -->
+        @if(session('success'))
+        <div class="alert alert-success border-0 shadow-sm rounded-3 mb-4 d-flex align-items-center" role="alert">
+            <i class="fa-solid fa-check-circle me-2"></i>
+            <div>{{ session('success') }}</div>
+        </div>
+        @endif
+
         <div class="row">
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Total Mata Kuliah
-                    </small>
-
-                    <h3 class="mt-2">
-                        124
-                    </h3>
-
-                    <div class="icon bg-blue">
-                        <i class="fa fa-book"></i>
-                    </div>
-
+                    <small class="text-muted">Total Mata Kuliah</small>
+                    <h3 class="mt-2 fw-bold text-dark">{{ $totalMatakuliah }}</h3>
+                    <div class="icon bg-blue"><i class="fa fa-book"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Mata Kuliah Wajib
-                    </small>
-
-                    <h3 class="mt-2">
-                        86
-                    </h3>
-
-                    <div class="icon bg-green">
-                        <i class="fa fa-check-circle"></i>
-                    </div>
-
+                    <small class="text-muted">Mata Kuliah Wajib</small>
+                    <h3 class="mt-2 fw-bold text-success">{{ $wajib }}</h3>
+                    <div class="icon bg-green"><i class="fa fa-check-circle"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Mata Kuliah Pilihan
-                    </small>
-
-                    <h3 class="mt-2">
-                        38
-                    </h3>
-
-                    <div class="icon bg-orange">
-                        <i class="fa fa-list"></i>
-                    </div>
-
+                    <small class="text-muted">Mata Kuliah Pilihan</small>
+                    <h3 class="mt-2 fw-bold text-warning">{{ $pilihan }}</h3>
+                    <div class="icon bg-orange"><i class="fa fa-list"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Total SKS
-                    </small>
-
-                    <h3 class="mt-2">
-                        356
-                    </h3>
-
-                    <div class="icon bg-purple">
-                        <i class="fa fa-layer-group"></i>
-                    </div>
-
+                    <small class="text-muted">Total SKS</small>
+                    <h3 class="mt-2 fw-bold text-purple">{{ $totalSks }}</h3>
+                    <div class="icon bg-purple"><i class="fa fa-layer-group"></i></div>
                 </div>
-
             </div>
-
         </div>
 
-        <!-- TABLE -->
-        <div class="dashboard-card">
-
+        <div class="dashboard-card border-0">
             <div class="d-flex justify-content-between align-items-center mb-4">
-
                 <div>
-                    <h6 class="mb-1">
-                        Daftar Mata Kuliah
-                    </h6>
-
-                    <small class="text-muted">
-                        Data mata kuliah aktif universitas
-                    </small>
+                    <h6 class="mb-1 fw-bold">Daftar Mata Kuliah</h6>
+                    <small class="text-muted">Data mata kuliah aktif universitas</small>
                 </div>
-
-                <button class="btn btn-outline-primary btn-sm">
-                    Export Data
-                </button>
-
+                <button class="btn btn-outline-primary btn-sm rounded-3">Export Data</button>
             </div>
 
             <div class="table-responsive">
-
                 <table class="table table-hover align-middle">
-
                     <thead>
                         <tr>
                             <th>No</th>
@@ -490,121 +348,146 @@
                             <th>SKS</th>
                             <th>Semester</th>
                             <th>Status</th>
-                            <th width="120">Aksi</th>
+                            <th width="120" class="text-center">Aksi</th>
                         </tr>
                     </thead>
-
                     <tbody>
-
+                        @forelse($matakuliah as $index => $mk)
                         <tr>
-
-                            <td>1</td>
-                            <td>IF201</td>
-                            <td>Pemrograman Web</td>
-                            <td>Teknik Informatika</td>
-                            <td>3 SKS</td>
-                            <td>5</td>
-
+                            <td>{{ $index + 1 }}</td>
+                            <td><span class="badge bg-light text-dark border fw-bold px-2 py-1 rounded">{{ $mk->kode_mk }}</span></td>
+                            <td class="fw-semibold text-dark">{{ $mk->nama_mk }}</td>
+                            <td>{{ $mk->prodi->nama_prodi ?? $mk->prodi->nama ?? 'Teknik Informatika' }}</td>
+                            <td><span class="fw-medium">{{ $mk->sks }} SKS</span></td>
+                            <td><span class="badge bg-primary-subtle text-primary border-0 rounded px-2 py-1">Semester {{ $mk->semester }}</span></td>
                             <td>
-                                <span class="badge-status badge-active">
-                                    Aktif
-                                </span>
+                                <span class="badge-status badge-active">Aktif</span>
                             </td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-1">
+                                    <button class="btn-action btn btn-light border" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $mk->id }}" title="Edit">
+                                        <i class="fa fa-pen text-warning"></i>
+                                    </button>
 
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
+                                    <form action="{{ route('admin.matakuliah.destroy', $mk->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus mata kuliah ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn-action btn btn-light border" title="Hapus">
+                                            <i class="fa fa-trash text-danger"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
-
                         </tr>
 
+                        <div class="modal fade" id="modalEdit{{ $mk->id }}" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content border-0 rounded-4 shadow">
+                                    <div class="modal-header border-0 bg-light px-4 pt-4">
+                                        <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-pen-to-square text-warning me-2"></i>Edit Mata Kuliah</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form action="{{ route('admin.matakuliah.update', $mk->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <div class="modal-body p-4">
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Kode Mata Kuliah</label>
+                                                <input type="text" name="kode_mk" class="form-control rounded-3" value="{{ $mk->kode_mk }}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Nama Mata Kuliah</label>
+                                                <input type="text" name="nama_mk" class="form-control rounded-3" value="{{ $mk->nama_mk }}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Program Studi</label>
+                                                <select name="prodi_id" class="form-control rounded-3" required>
+                                                    @foreach($prodis as $prodi)
+                                                    <option value="{{ $prodi->id }}" {{ $mk->prodi_id == $prodi->id ? 'selected' : '' }}>
+                                                        {{ $prodi->nama_prodi ?? $prodi->nama }}
+                                                    </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label small fw-semibold text-muted">Jumlah SKS</label>
+                                                    <input type="number" name="sks" class="form-control rounded-3" min="1" max="6" value="{{ $mk->sks }}" required>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label small fw-semibold text-muted">Semester</label>
+                                                    <input type="number" name="semester" class="form-control rounded-3" min="1" max="8" value="{{ $mk->semester }}" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer border-0 px-4 pb-4 bg-light rounded-bottom-4">
+                                            <button type="button" class="btn btn-light rounded-3 px-3 border" data-bs-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-primary rounded-3 px-4">Simpan Perubahan</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        @empty
                         <tr>
-
-                            <td>2</td>
-                            <td>SI305</td>
-                            <td>Analisis Sistem</td>
-                            <td>Sistem Informasi</td>
-                            <td>2 SKS</td>
-                            <td>4</td>
-
-                            <td>
-                                <span class="badge-status badge-active">
-                                    Aktif
-                                </span>
-                            </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
-                            </td>
-
+                            <td colspan="8" class="text-center py-4 text-muted">Belum ada kurikulum mata kuliah di database saat ini.</td>
                         </tr>
-
-                        <tr>
-
-                            <td>3</td>
-                            <td>MI102</td>
-                            <td>Basis Data</td>
-                            <td>Manajemen Informatika</td>
-                            <td>3 SKS</td>
-                            <td>2</td>
-
-                            <td>
-                                <span class="badge-status badge-nonactive">
-                                    Nonaktif
-                                </span>
-                            </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
-                            </td>
-
-                        </tr>
-
+                        @endforelse
                     </tbody>
-
                 </table>
-
             </div>
-
         </div>
-
     </div>
 
+    <div class="modal fade" id="modalTambah" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header border-0 bg-light px-4 pt-4">
+                    <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-circle-plus text-primary me-2"></i>Tambah Mata Kuliah Baru</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('admin.matakuliah.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Kode Mata Kuliah</label>
+                            <input type="text" name="kode_mk" class="form-control rounded-3" placeholder="Contoh: IF201" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Nama Mata Kuliah</label>
+                            <input type="text" name="nama_mk" class="form-control rounded-3" placeholder="Contoh: Pemrograman Framework" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Program Studi</label>
+                            <select name="prodi_id" class="form-control rounded-3" required>
+                                <option value="">-- Pilih Program Studi --</option>
+                                @foreach($prodis as $prodi)
+                                <option value="{{ $prodi->id }}">{{ $prodi->nama_prodi ?? $prodi->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-semibold text-muted">Jumlah SKS</label>
+                                <input type="number" name="sks" class="form-control rounded-3" min="1" max="6" placeholder="Beban SKS" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-semibold text-muted">SemesterTarget</label>
+                                <input type="number" name="semester" class="form-control rounded-3" min="1" max="8" placeholder="Semester 1-8" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 px-4 pb-4 bg-light rounded-bottom-4">
+                        <button type="button" class="btn btn-light rounded-3 px-3 border" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary rounded-3 px-4">Simpan Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

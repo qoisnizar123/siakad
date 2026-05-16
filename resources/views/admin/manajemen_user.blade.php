@@ -61,11 +61,11 @@
         }
 
         .sidebar a:hover {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .sidebar a.active {
-            background: rgba(255,255,255,0.18);
+            background: rgba(255, 255, 255, 0.18);
         }
 
         .sidebar i {
@@ -88,7 +88,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
 
         .search-box {
@@ -107,7 +107,7 @@
 
         .search-box input:focus {
             border-color: #1e3a8a;
-            box-shadow: 0 0 0 4px rgba(30,58,138,0.1);
+            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
         }
 
         .search-box i {
@@ -122,7 +122,7 @@
             background: white;
             border-radius: 14px;
             padding: 22px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             margin-bottom: 20px;
         }
 
@@ -145,22 +145,22 @@
         }
 
         .bg-blue {
-            background: rgba(59,130,246,0.15);
+            background: rgba(59, 130, 246, 0.15);
             color: #2563eb;
         }
 
         .bg-green {
-            background: rgba(34,197,94,0.15);
+            background: rgba(34, 197, 94, 0.15);
             color: #16a34a;
         }
 
         .bg-orange {
-            background: rgba(249,115,22,0.15);
+            background: rgba(249, 115, 22, 0.15);
             color: #ea580c;
         }
 
         .bg-purple {
-            background: rgba(168,85,247,0.15);
+            background: rgba(168, 85, 247, 0.15);
             color: #9333ea;
         }
 
@@ -318,7 +318,7 @@
             Data Dosen
         </a>
 
-        <a href="{{ route('admin.matakuliah') }}">
+        <a href="{{ route('admin.matakuliah.index') }}" class="{{ Request::is('admin/matakuliah*') ? 'active' : '' }}">
             <i class="fa fa-book"></i>
             Mata Kuliah
         </a>
@@ -391,7 +391,7 @@
                     <i class="fa fa-search"></i>
 
                     <input type="text"
-                           placeholder="Cari user...">
+                        placeholder="Cari user...">
 
                 </div>
 

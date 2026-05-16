@@ -285,7 +285,7 @@
         <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
         <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>
         <a href="{{ route('admin.data_dosen') }}"><i class="fa fa-chalkboard-teacher"></i>Data Dosen</a>
-        <a href="{{ route('admin.matakuliah') }}"><i class="fa fa-book"></i>Mata Kuliah</a>
+        <a href="{{ route('admin.matakuliah.index') }}" class="{{ Request::is('admin/matakuliah*') ? 'active' : '' }}"><i class="fa fa-book"></i>Mata Kuliah</a>
         <a href="{{ route('admin.jadwal_kuliah') }}"><i class="fa fa-calendar-days"></i>Jadwal Kuliah</a>
         <a href="{{ route('admin.krs_mahasiswa') }}"><i class="fa fa-file-signature"></i>KRS Mahasiswa</a>
         <a href="{{ route('admin.nilai_khs') }}"><i class="fa fa-chart-column"></i>Nilai & KHS</a>

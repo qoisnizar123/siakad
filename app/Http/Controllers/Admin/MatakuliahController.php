@@ -5,76 +5,78 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Matakuliah;
+use Illuminate\Support\Facades\DB;
 
 class MatakuliahController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        // Mengambil mata kuliah beserta data relasi prodi-nya
+        $matakuliah = Matakuliah::with('prodi')->latest()->get();
+
+        // Ambil data langsung dari tabel prodis untuk di-looping di modal dropdown
+        $prodis = DB::table('prodis')->get();
+
+        $totalMatakuliah = $matakuliah->count();
+        $totalSks = $matakuliah->sum('sks');
+        $wajib = $matakuliah->where('semester', '<=', 6)->count();
+        $pilihan = $matakuliah->where('semester', '>', 6)->count();
+
+        return view('admin.matakuliah', compact('matakuliah', 'totalMatakuliah', 'totalSks', 'wajib', 'pilihan', 'prodis'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // Validasi data yang masuk
         $request->validate([
-            'kode_mk'  => 'required|unique:matakuliahs,kode_mk|max:10',
+            'prodi_id' => 'required|exists:prodis,id', // 💡 Wajib dipilih dan harus ada di tabel prodis
+            'kode_mk'  => 'required|unique:mata_kuliahs,kode_mk|max:10',
             'nama_mk'  => 'required|string|max:100',
             'sks'      => 'required|integer|min:1|max:6',
             'semester' => 'required|integer|min:1|max:8',
         ]);
 
-        // Simpan ke database
         Matakuliah::create($request->all());
 
-        return response()->json([
-            'status'  => 'success',
-            'message' => 'Mata Kuliah ' . $request->nama_mk . ' berhasil ditambahkan!'
-        ], 201);
+        return redirect()->back()->with('success', 'Mata Kuliah baru berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        $mk = Matakuliah::findOrFail($id);
+
+        $request->validate([
+            'prodi_id' => 'required|exists:prodis,id', // 💡 Tambahkan juga di bagian update
+            'kode_mk'  => 'required|max:10|unique:mata_kuliahs,kode_mk,' . $id,
+            'nama_mk'  => 'required|string|max:100',
+            'sks'      => 'required|integer|min:1|max:6',
+            'semester' => 'required|integer|min:1|max:8',
+        ]);
+
+        $mk->update($request->all());
+
+        return redirect()->back()->with('success', 'Data Mata Kuliah berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $mk = Matakuliah::findOrFail($id);
+        $mk->delete();
+
+        return redirect()->back()->with('success', 'Mata Kuliah berhasil dihapus!');
     }
 }

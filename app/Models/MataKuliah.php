@@ -8,10 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class MataKuliah extends Model
 {
     use HasFactory;
+    protected $table = 'mata_kuliahs';
+
     protected $fillable = [
-        'kode_mk', 
-        'nama_mk', 
-        'sks', 
+        'prodi_id',
+        'kode_mk',
+        'nama_mk',
+        'sks',
         'semester'
     ];
+
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'prodi_id');
+    }
 }

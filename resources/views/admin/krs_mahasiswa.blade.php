@@ -311,7 +311,7 @@
             Data Dosen
         </a>
 
-        <a href="{{ route('admin.matakuliah') }}">
+        <a href="{{ route('admin.matakuliah.index') }}" class="{{ Request::is('admin/matakuliah*') ? 'active' : '' }}">
             <i class="fa fa-book"></i>
             Mata Kuliah
         </a>

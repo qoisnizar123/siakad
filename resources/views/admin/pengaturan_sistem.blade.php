@@ -231,7 +231,7 @@
             Data Dosen
         </a>
 
-        <a href="{{ route('admin.matakuliah') }}">
+        <a href="{{ route('admin.matakuliah.index') }}">
             <i class="fa fa-book"></i>
             Mata Kuliah
         </a>
@@ -271,9 +271,9 @@
         </a>
 
         <form id="logout-form"
-              action="{{ route('logout') }}"
-              method="POST"
-              style="display: none;">
+            action="{{ route('logout') }}"
+            method="POST"
+            style="display: none;">
             @csrf
         </form>
 
@@ -335,8 +335,8 @@
                             </label>
 
                             <input type="text"
-                                   class="form-control"
-                                   value="Universitas Teknologi Indonesia">
+                                class="form-control"
+                                value="Universitas Teknologi Indonesia">
 
                         </div>
 
@@ -373,8 +373,8 @@
                             </label>
 
                             <input type="email"
-                                   class="form-control"
-                                   value="admin@kampus.ac.id">
+                                class="form-control"
+                                value="admin@kampus.ac.id">
 
                         </div>
 
@@ -385,7 +385,7 @@
                             </label>
 
                             <textarea class="form-control"
-                                      rows="3">Jl. Pendidikan No. 10 Surabaya</textarea>
+                                rows="3">Jl. Pendidikan No. 10 Surabaya</textarea>
 
                         </div>
 
@@ -406,8 +406,8 @@
                         </label>
 
                         <input type="number"
-                               class="form-control"
-                               value="8">
+                            class="form-control"
+                            value="8">
 
                     </div>
 
@@ -428,8 +428,8 @@
                     <div class="form-check form-switch mb-3">
 
                         <input class="form-check-input"
-                               type="checkbox"
-                               checked>
+                            type="checkbox"
+                            checked>
 
                         <label class="form-check-label">
                             Aktifkan Verifikasi Email
@@ -440,8 +440,8 @@
                     <div class="form-check form-switch">
 
                         <input class="form-check-input"
-                               type="checkbox"
-                               checked>
+                            type="checkbox"
+                            checked>
 
                         <label class="form-check-label">
                             Aktifkan Backup Otomatis

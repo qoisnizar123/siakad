@@ -55,7 +55,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::get('/data_mahasiswa', [AdminController::class, 'dataMahasiswa'])->name('admin.data_mahasiswa');
         Route::get('/data_dosen', [AdminController::class, 'dataDosen'])->name('admin.data_dosen');
-        Route::get('/matakuliah', [AdminController::class, 'mataKuliah'])->name('admin.matakuliah');
         Route::get('/jadwal_kuliah', [AdminController::class, 'jadwalKuliah'])->name('admin.jadwal_kuliah');
         Route::get('/krs_mahasiswa', [AdminController::class, 'krsMahasiswa'])->name('admin.krs_mahasiswa');
         Route::get('/nilai_khs', [AdminController::class, 'nilaiKHS'])->name('admin.nilai_khs');
@@ -63,5 +62,6 @@ Route::middleware('auth')->group(function () {
         Route::patch('/booking/{id}/update', [AdminController::class, 'updateStatus'])->name('admin.booking.update');
         Route::get('/manajemen_user', [AdminController::class, 'manajemenUser'])->name('admin.manajemen_user');
         Route::get('/pengaturan_sistem', [AdminController::class, 'pengaturanSistem'])->name('admin.pengaturan_sistem');
+        Route::resource('matakuliah', MatakuliahController::class)->names('admin.matakuliah');
     });
 });

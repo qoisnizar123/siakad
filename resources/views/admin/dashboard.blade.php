@@ -237,7 +237,7 @@
             Data Dosen
         </a>
 
-        <a href="{{ route('admin.matakuliah') }}">
+        <a href="{{ route('admin.matakuliah.index') }}" class="{{ Request::is('admin/matakuliah*') ? 'active' : '' }}">
             <i class="fa fa-book"></i>
             Mata Kuliah
         </a>
@@ -618,7 +618,7 @@
                 <div class="col-md-2 mb-3">
 
                     <a href="{{ route('admin.data_mahasiswa') }}"
-                    class="text-decoration-none">
+                        class="text-decoration-none">
 
                         <button class="btn btn-light border w-100 py-3">
 
@@ -635,7 +635,7 @@
                 <div class="col-md-2 mb-3">
 
                     <a href="{{ route('admin.data_dosen') }}"
-                    class="text-decoration-none">
+                        class="text-decoration-none">
 
                         <button class="btn btn-light border w-100 py-3">
 
@@ -651,8 +651,8 @@
 
                 <div class="col-md-2 mb-3">
 
-                    <a href="{{ route('admin.matakuliah') }}"
-                    class="text-decoration-none">
+                    <a href="{{ route('admin.matakuliah.index') }}" class="{{ Request::is('admin/matakuliah*') ? 'active' : '' }}"
+                        class="text-decoration-none">
 
                         <button class="btn btn-light border w-100 py-3">
 
@@ -669,7 +669,7 @@
                 <div class="col-md-2 mb-3">
 
                     <a href="{{ route('admin.jadwal_kuliah') }}"
-                    class="text-decoration-none">
+                        class="text-decoration-none">
 
                         <button class="btn btn-light border w-100 py-3">
 
@@ -686,7 +686,7 @@
                 <div class="col-md-2 mb-3">
 
                     <a href="{{ route('admin.nilai_khs') }}"
-                    class="text-decoration-none">
+                        class="text-decoration-none">
 
                         <button class="btn btn-light border w-100 py-3">
 
@@ -703,7 +703,7 @@
                 <div class="col-md-2 mb-3">
 
                     <a href="{{ route('admin.pengaturan_sistem') }}"
-                    class="text-decoration-none">
+                        class="text-decoration-none">
 
                         <button class="btn btn-light border w-100 py-3">
 
