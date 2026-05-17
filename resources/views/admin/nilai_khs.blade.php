@@ -6,13 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nilai & KHS | SIAKAD</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -50,6 +45,7 @@
         .sidebar a {
             display: flex;
             align-items: center;
+            gap: 10px;
             color: white;
             text-decoration: none;
             padding: 12px 14px;
@@ -219,6 +215,7 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
+            text-transform: uppercase;
         }
 
         /* BADGE */
@@ -244,9 +241,7 @@
             color: #991b1b;
         }
 
-        /* RESPONSIVE */
         @media(max-width: 991px) {
-
             .sidebar {
                 width: 220px;
             }
@@ -257,7 +252,6 @@
         }
 
         @media(max-width: 768px) {
-
             .sidebar {
                 position: relative;
                 width: 100%;
@@ -284,231 +278,110 @@
 
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
+        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <div class="menu-title">Main Menu</div>
+        <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
+        <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>
+        <a href="{{ route('admin.data_dosen') }}"><i class="fa fa-chalkboard-teacher"></i>Data Dosen</a>
+        <a href="{{ route('admin.matakuliah.index') }}"><i class="fa fa-book"></i>Mata Kuliah</a>
+        <a href="{{ route('admin.jadwal_kuliah') }}"><i class="fa fa-calendar-days"></i>Jadwal Kuliah</a>
+        <a href="{{ route('admin.krs_mahasiswa') }}"><i class="fa fa-file-signature"></i>KRS Mahasiswa</a>
+        <a href="{{ route('admin.nilai_khs') }}" class="active"><i class="fa fa-chart-column"></i>Nilai & KHS</a>
+        <a href="{{ route('admin.booking.index') }}"><i class="fa fa-door-open"></i>Booking Ruangan</a>
 
-        <h4>
-            <i class="fa-solid fa-graduation-cap me-2"></i>
-            SIAKAD
-        </h4>
+        <div class="menu-title">Pengaturan</div>
+        <a href="{{ route('admin.manajemen_user') }}"><i class="fa fa-user-gear"></i>Manajemen User</a>
+        <a href="{{ route('admin.pengaturan_sistem') }}"><i class="fa fa-gear"></i>Pengaturan Sistem</a>
 
-        <div class="menu-title">
-            Main Menu
-        </div>
-
-        <a href="{{ route('admin.dashboard') }}">
-            <i class="fa fa-home"></i>
-            Dashboard
-        </a>
-
-        <a href="{{ route('admin.data_mahasiswa') }}">
-            <i class="fa fa-users"></i>
-            Data Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.data_dosen') }}">
-            <i class="fa fa-chalkboard-teacher"></i>
-            Data Dosen
-        </a>
-
-        <a href="{{ route('admin.matakuliah.index') }}">
-            <i class="fa fa-book"></i>
-            Mata Kuliah
-        </a>
-
-        <a href="{{ route('admin.jadwal_kuliah') }}">
-            <i class="fa fa-calendar-days"></i>
-            Jadwal Kuliah
-        </a>
-
-        <a href="{{ route('admin.krs_mahasiswa') }}">
-            <i class="fa fa-file-signature"></i>
-            KRS Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.nilai_khs') }}" class="active">
-            <i class="fa fa-chart-column"></i>
-            Nilai & KHS
-        </a>
-
-        <a href="{{ route('admin.booking.index') }}">
-            <i class="fa fa-door-open"></i>
-            Booking Ruangan
-        </a>
-
-        <div class="menu-title">
-            Pengaturan
-        </div>
-
-        <a href="{{ route('admin.manajemen_user') }}">
-            <i class="fa fa-user-gear"></i>
-            Manajemen User
-        </a>
-
-        <a href="{{ route('admin.pengaturan_sistem') }}">
-            <i class="fa fa-gear"></i>
-            Pengaturan Sistem
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fa fa-sign-out-alt"></i>
-            Logout
-        </a>
-
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt"></i>Logout</a>
     </div>
 
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- TOPBAR -->
         <div class="topbar">
-
             <div>
-                <h5 class="mb-1">
-                    Nilai & KHS Mahasiswa
-                </h5>
-
-                <small class="text-muted">
-                    Manajemen nilai akademik dan Kartu Hasil Studi mahasiswa
-                </small>
+                <h5 class="mb-1 fw-bold">Nilai & KHS Mahasiswa</h5>
+                <small class="text-muted">Manajemen nilai akademik dan Kartu Hasil Studi mahasiswa</small>
             </div>
-
             <div class="d-flex align-items-center gap-3">
-
-                <div class="search-box">
-
-                    <i class="fa fa-search"></i>
-
-                    <input type="text" placeholder="Cari mahasiswa atau mata kuliah...">
-
-                </div>
-
-                <button class="btn btn-primary">
-
-                    <i class="fa fa-plus me-2"></i>
-                    Input Nilai
-
+                <div class="search-box"><i class="fa fa-search"></i><input type="text" placeholder="Cari mahasiswa atau mata kuliah..."></div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalInputNilai">
+                    <i class="fa fa-plus me-2"></i>Input Nilai
                 </button>
-
             </div>
-
         </div>
 
-        <!-- STATISTIC -->
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-3 mb-4 p-3" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-circle-check me-3 fs-5 text-success"></i>
+                <div class="text-dark"><strong>Berhasil!</strong> {{ session('success') }}</div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
+        @if($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-3 mb-4 p-3" role="alert">
+            <div class="d-flex align-items-start">
+                <i class="fa-solid fa-triangle-exclamation me-3 fs-5 text-danger mt-1"></i>
+                <div class="text-dark">
+                    <strong>Gagal Menyimpan Data:</strong>
+                    <ul class="mb-0 ps-3 small">
+                        @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
         <div class="row">
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Total Nilai
-                    </small>
-
-                    <h3 class="mt-2">
-                        3,240
-                    </h3>
-
-                    <div class="icon bg-blue">
-                        <i class="fa fa-chart-column"></i>
-                    </div>
-
+                    <small class="text-muted">Total Nilai</small>
+                    <h3 class="mt-2 fw-bold text-dark">{{ $totalNilai }}</h3>
+                    <div class="icon bg-blue"><i class="fa fa-chart-column"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        IPK Tertinggi
-                    </small>
-
-                    <h3 class="mt-2">
-                        3.98
-                    </h3>
-
-                    <div class="icon bg-green">
-                        <i class="fa fa-trophy"></i>
-                    </div>
-
+                    <small class="text-muted">IPK Rata-Rata</small>
+                    <h3 class="mt-2 fw-bold text-success">{{ $ipkTertinggi }}</h3>
+                    <div class="icon bg-green"><i class="fa fa-trophy"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Mahasiswa Lulus
-                    </small>
-
-                    <h3 class="mt-2">
-                        1,845
-                    </h3>
-
-                    <div class="icon bg-orange">
-                        <i class="fa fa-user-graduate"></i>
-                    </div>
-
+                    <small class="text-muted">Mahasiswa Lulus</small>
+                    <h3 class="mt-2 fw-bold" style="color:#166534;">{{ $mahasiswaLulus }}</h3>
+                    <div class="icon bg-orange"><i class="fa fa-user-graduate"></i></div>
                 </div>
-
             </div>
-
             <div class="col-md-3">
-
                 <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Remedial
-                    </small>
-
-                    <h3 class="mt-2">
-                        84
-                    </h3>
-
-                    <div class="icon bg-purple">
-                        <i class="fa fa-rotate-right"></i>
-                    </div>
-
+                    <small class="text-muted">Remedial</small>
+                    <h3 class="mt-2 fw-bold text-danger">{{ $remedial }}</h3>
+                    <div class="icon bg-purple"><i class="fa fa-rotate-right"></i></div>
                 </div>
-
             </div>
-
         </div>
 
-        <!-- TABLE -->
         <div class="dashboard-card">
-
             <div class="d-flex justify-content-between align-items-center mb-4">
-
                 <div>
-
-                    <h6 class="mb-1">
-                        Data Nilai Mahasiswa
-                    </h6>
-
-                    <small class="text-muted">
-                        Daftar nilai dan hasil studi semester aktif
-                    </small>
-
+                    <h6 class="mb-1 fw-bold">Data Nilai Mahasiswa</h6>
+                    <small class="text-muted">Daftar nilai dan hasil studi semester aktif</small>
                 </div>
-
-                <button class="btn btn-outline-primary btn-sm">
-                    Export Nilai
-                </button>
-
+                <button class="btn btn-outline-primary btn-sm rounded-3">Export Nilai</button>
             </div>
 
             <div class="table-responsive">
-
                 <table class="table table-hover align-middle">
-
                     <thead>
                         <tr>
                             <th>No</th>
@@ -517,198 +390,96 @@
                             <th>SKS</th>
                             <th>Nilai</th>
                             <th>Grade</th>
-                            <th>IPK</th>
+                            <th>Bobot</th>
                             <th>Status</th>
-                            <th width="120">Aksi</th>
+                            <th width="120" class="text-center">Aksi</th>
                         </tr>
                     </thead>
-
                     <tbody>
-
+                        @forelse($nilais as $index => $n)
                         <tr>
-
-                            <td>1</td>
-
+                            <td>{{ $index + 1 }}</td>
                             <td>
-
                                 <div class="student-profile">
-
-                                    <div class="student-avatar">
-                                        H
-                                    </div>
-
+                                    <div class="student-avatar">{{ substr($n->mahasiswa->nama_mahasiswa ?? 'M', 0, 1) }}</div>
                                     <div>
-
-                                        <div class="fw-semibold">
-                                            Hendra
-                                        </div>
-
-                                        <small class="text-muted">
-                                            22110001
-                                        </small>
-
+                                        <div class="fw-semibold text-dark">{{ $n->mahasiswa->nama_mahasiswa ?? 'N/A' }}</div>
+                                        <small class="text-muted">{{ $n->mahasiswa->nim ?? 'N/A' }}</small>
                                     </div>
-
                                 </div>
-
                             </td>
-
-                            <td>Pemrograman Web</td>
-                            <td>3</td>
-                            <td>92</td>
-                            <td>A</td>
-                            <td>3.85</td>
-
+                            <td><span class="fw-medium">{{ $n->matakuliah->nama_mk ?? 'N/A' }}</span></td>
+                            <td><span class="fw-semibold text-secondary">{{ $n->matakuliah->sks ?? 0 }} SKS</span></td>
+                            <td><span class="fw-bold text-dark">{{ $n->nilai_angka }}</span></td>
+                            <td><span class="badge bg-light text-dark border fw-bold px-2 py-1">{{ $n->nilai_huruf }}</span></td>
+                            <td><span class="fw-medium text-secondary">{{ number_format($n->bobot, 2) }}</span></td>
                             <td>
-                                <span class="badge-status badge-success">
-                                    Lulus
+                                <span class="badge-status {{ $n->status == 'Lulus' ? 'badge-success' : ($n->status == 'Perbaikan' ? 'badge-warning' : 'badge-danger') }}">
+                                    {{ $n->status }}
                                 </span>
                             </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
+                            <td class="text-center">
+                                <form action="{{ route('admin.nilai_khs.destroy', $n->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data nilai akademik ini?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="btn-action btn btn-light border" title="Hapus"><i class="fa fa-trash text-danger"></i></button>
+                                </form>
                             </td>
-
                         </tr>
-
+                        @empty
                         <tr>
-
-                            <td>2</td>
-
-                            <td>
-
-                                <div class="student-profile">
-
-                                    <div class="student-avatar">
-                                        R
-                                    </div>
-
-                                    <div>
-
-                                        <div class="fw-semibold">
-                                            Rizky Pratama
-                                        </div>
-
-                                        <small class="text-muted">
-                                            22110024
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-                            <td>Basis Data</td>
-                            <td>4</td>
-                            <td>78</td>
-                            <td>B</td>
-                            <td>3.42</td>
-
-                            <td>
-                                <span class="badge-status badge-warning">
-                                    Perbaikan
-                                </span>
-                            </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
-                            </td>
-
+                            <td colspan="9" class="text-center py-4 text-muted">Belum ada inputan nilai akademik mahasiswa di database lokal.</td>
                         </tr>
-
-                        <tr>
-
-                            <td>3</td>
-
-                            <td>
-
-                                <div class="student-profile">
-
-                                    <div class="student-avatar">
-                                        S
-                                    </div>
-
-                                    <div>
-
-                                        <div class="fw-semibold">
-                                            Salsa Putri
-                                        </div>
-
-                                        <small class="text-muted">
-                                            22110088
-                                        </small>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-                            <td>Jaringan Komputer</td>
-                            <td>3</td>
-                            <td>55</td>
-                            <td>D</td>
-                            <td>2.15</td>
-
-                            <td>
-                                <span class="badge-status badge-danger">
-                                    Remedial
-                                </span>
-                            </td>
-
-                            <td>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-eye text-primary"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-pen text-warning"></i>
-                                </button>
-
-                                <button class="btn-action btn btn-light border">
-                                    <i class="fa fa-trash text-danger"></i>
-                                </button>
-
-                            </td>
-
-                        </tr>
-
+                        @endforelse
                     </tbody>
-
                 </table>
-
             </div>
-
         </div>
-
     </div>
 
+    <div class="modal fade" id="modalInputNilai" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 rounded-4 shadow">
+                <div class="modal-header border-0 bg-light px-4 pt-4">
+                    <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-square-plus text-primary me-2"></i>Input Nilai Mahasiswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('admin.nilai_khs.store') }}" method="POST">
+                    @csrf
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Pilih Mahasiswa</label>
+                            <select name="mahasiswa_id" class="form-select rounded-3" required>
+                                <option value="">-- Pilih Mahasiswa --</option>
+                                @foreach($master_mahasiswa as $mhs)
+                                <option value="{{ $mhs->id }}">{{ $mhs->nim }} - {{ $mhs->nama_mahasiswa }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Mata Kuliah</label>
+                            <select name="mata_kuliah_id" class="form-select rounded-3" required>
+                                <option value="">-- Pilih Mata Kuliah --</option>
+                                @foreach($master_mk as $mk)
+                                <option value="{{ $mk->id }}">{{ $mk->kode_mk }} - {{ $mk->nama_mk }} ({{ $mk->sks }} SKS)</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Nilai Angka Kumulatif</label>
+                            <input type="number" name="nilai_angka" class="form-control rounded-3" placeholder="Masukkan angka 0 - 100" min="0" max="100" required>
+                            <div class="form-text text-muted small mt-1">Sistem akan otomatis menghitung Grade Huruf dan Status Kelulusan secara instan.</div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 px-4 pb-4 bg-light rounded-bottom-4">
+                        <button type="button" class="btn btn-light rounded-3 px-3 border" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary rounded-3 px-4">Simpan Nilai</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

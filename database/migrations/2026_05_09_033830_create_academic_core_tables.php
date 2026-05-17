@@ -48,9 +48,12 @@ return new class extends Migration
         // 4. Tabel Nilai
         Schema::create('nilais', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('krs_id')->constrained('krs')->onDelete('cascade');
-            $table->integer('angka')->nullable(); // 0-100
-            $table->char('huruf', 2)->nullable(); // A, B+, dst
+            $table->foreignId('mahasiswa_id')->constrained('mahasiswas')->onDelete('cascade');
+            $table->foreignId('mata_kuliah_id')->constrained('mata_kuliahs')->onDelete('cascade'); // Menggunakan mata_kuliah_id sesuai standardisasi lokal kita
+            $table->integer('nilai_angka');
+            $table->string('nilai_huruf', 2);
+            $table->double('bobot', 4, 2);
+            $table->string('status', 50); // Lulus, Perbaikan, Remedial
             $table->timestamps();
         });
 

@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\MatakuliahController;
 use App\Http\Controllers\Admin\JadwalKuliahController;
 use App\Http\Controllers\Admin\DosenController as AdminJalurDosenController;
 use App\Http\Controllers\Admin\MahasiswaController as AdminJalurMahasiswaController;
+use App\Http\Controllers\Admin\KrsAdminController;
+use App\Http\Controllers\Admin\NilaiKhsController;
 use Illuminate\Support\Facades\App;
 
 /*
@@ -79,5 +81,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/data_mahasiswa', [AdminJalurMahasiswaController::class, 'store'])->name('admin.data_mahasiswa.store');
         Route::put('/data_mahasiswa/{id}', [AdminJalurMahasiswaController::class, 'update'])->name('admin.data_mahasiswa.update');
         Route::delete('/data_mahasiswa/{id}', [AdminJalurMahasiswaController::class, 'destroy'])->name('admin.data_mahasiswa.destroy');
+        Route::get('/krs_mahasiswa', [KrsAdminController::class, 'index'])->name('admin.krs_mahasiswa');
+        Route::post('/krs_mahasiswa', [KrsAdminController::class, 'store'])->name('admin.krs_mahasiswa.store');
+        Route::delete('/krs_mahasiswa/{mahasiswa_id}', [KrsAdminController::class, 'destroy'])->name('admin.krs_mahasiswa.destroy');
+        Route::put('/krs_mahasiswa/{mahasiswa_id}/update_status', [KrsAdminController::class, 'updateStatus'])->name('admin.krs_mahasiswa.updateStatus');
+        Route::get('/nilai_khs', [NilaiKhsController::class, 'index'])->name('admin.nilai_khs');
+        Route::post('/nilai_khs', [NilaiKhsController::class, 'store'])->name('admin.nilai_khs.store');
+        Route::delete('/nilai_khs/{id}', [NilaiKhsController::class, 'destroy'])->name('admin.nilai_khs.destroy');
     });
 });
