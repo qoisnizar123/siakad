@@ -7,9 +7,7 @@
     <title>Jadwal Kuliah | SIAKAD</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -18,7 +16,7 @@
             background: #f1f5f9;
         }
 
-        /* SIDEBAR */
+        /* SIDEBAR (SINKRONISASI SPACING) */
         .sidebar {
             width: 250px;
             height: 100vh;
@@ -47,6 +45,7 @@
         .sidebar a {
             display: flex;
             align-items: center;
+            gap: 10px;
             color: white;
             text-decoration: none;
             padding: 12px 14px;
@@ -66,6 +65,7 @@
 
         .sidebar i {
             width: 20px;
+            text-align: center;
         }
 
         /* MAIN */
@@ -74,7 +74,6 @@
             padding: 25px;
         }
 
-        /* TOPBAR */
         .topbar {
             background: white;
             border-radius: 14px;
@@ -112,7 +111,6 @@
             color: #64748b;
         }
 
-        /* CARD */
         .dashboard-card {
             background: white;
             border-radius: 14px;
@@ -159,7 +157,6 @@
             color: #9333ea;
         }
 
-        /* BUTTON */
         .btn-primary {
             background: #1e3a8a;
             border: none;
@@ -183,7 +180,6 @@
             justify-content: center;
         }
 
-        /* TABLE */
         .table thead {
             background: #1e3a8a;
             color: white;
@@ -199,7 +195,6 @@
             background: #f8fafc;
         }
 
-        /* BADGE */
         .badge-status {
             padding: 6px 10px;
             border-radius: 6px;
@@ -222,12 +217,6 @@
             color: #1d4ed8;
         }
 
-        .badge-nonactive {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        /* RESPONSIVE */
         @media(max-width: 991px) {
             .sidebar {
                 width: 220px;
@@ -266,7 +255,7 @@
 <body>
 
     <div class="sidebar">
-        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAAD</h4>
         <div class="menu-title">Main Menu</div>
         <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
         <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>
@@ -282,81 +271,42 @@
         <a href="{{ route('admin.pengaturan_sistem') }}"><i class="fa fa-gear"></i>Pengaturan Sistem</a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt"></i>Logout</a>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt"></i>Logout</a>
     </div>
 
     <div class="main">
-
         <div class="topbar">
             <div>
                 <h5 class="mb-1">Jadwal Kuliah</h5>
                 <small class="text-muted">Manajemen jadwal perkuliahan mahasiswa</small>
             </div>
             <div class="d-flex align-items-center gap-3">
-                <div class="search-box">
-                    <i class="fa fa-search"></i>
-                    <input type="text" placeholder="Cari jadwal kuliah...">
-                </div>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                    <i class="fa fa-plus me-2"></i>Tambah Jadwal
-                </button>
+                <div class="search-box"><i class="fa fa-search"></i><input type="text" placeholder="Cari jadwal kuliah..."></div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah"><i class="fa fa-plus me-2"></i>Tambah Jadwal</button>
             </div>
         </div>
-
-        @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-3 mb-4 p-3" role="alert">
-            <div class="d-flex align-items-center">
-                <i class="fa-solid fa-circle-check me-3 fs-5 text-success"></i>
-                <div class="text-dark">
-                    <strong>Berhasil Menyimpan Data</strong> {{ session('success') }}
-                </div>
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
-
-        @if($errors->any())
-        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-3 mb-4 p-3" role="alert">
-            <div class="d-flex align-items-start">
-                <i class="fa-solid fa-triangle-exclamation me-3 fs-5 text-danger mt-1"></i>
-                <div class="text-dark">
-                    <strong class="d-block mb-1">Gagal Menyimpan Jadwal:</strong>
-                    <ul class="mb-0 ps-3 small">
-                        @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
 
         <div class="row">
             <div class="col-md-3">
-                <div class="dashboard-card stat-card">
-                    <small class="text-muted">Total Jadwal</small>
+                <div class="dashboard-card stat-card"><small class="text-muted">Total Jadwal</small>
                     <h3 class="mt-2 fw-bold">{{ $totalJadwal }}</h3>
                     <div class="icon bg-blue"><i class="fa fa-calendar-days"></i></div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card stat-card">
-                    <small class="text-muted">Kelas Aktif</small>
+                <div class="dashboard-card stat-card"><small class="text-muted">Kelas Aktif</small>
                     <h3 class="mt-2 fw-bold text-success">{{ $kelasAktif }}</h3>
                     <div class="icon bg-green"><i class="fa fa-school"></i></div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card stat-card">
-                    <small class="text-muted">Ruangan Digunakan</small>
+                <div class="dashboard-card stat-card"><small class="text-muted">Ruangan Digunakan</small>
                     <h3 class="mt-2 fw-bold text-warning">{{ $ruanganDigunakan }}</h3>
                     <div class="icon bg-orange"><i class="fa fa-door-open"></i></div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card stat-card">
-                    <small class="text-muted">Jadwal Hari Ini</small>
+                <div class="dashboard-card stat-card"><small class="text-muted">Jadwal Hari Ini</small>
                     <h3 class="mt-2 fw-bold text-purple">{{ $jadwalHariIni }}</h3>
                     <div class="icon bg-purple"><i class="fa fa-clock"></i></div>
                 </div>
@@ -366,8 +316,7 @@
         <div class="dashboard-card">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h6 class="mb-1 fw-bold">Daftar Jadwal Kuliah</h6>
-                    <small class="text-muted">Jadwal perkuliahan semester aktif</small>
+                    <h6 class="mb-1 fw-bold">Daftar Jadwal Kuliah</h6><small class="text-muted">Jadwal perkuliahan semester aktif</small>
                 </div>
                 <button class="btn btn-outline-primary btn-sm rounded-3">Export Jadwal</button>
             </div>
@@ -396,25 +345,16 @@
                             <td class="text-primary fw-medium">{{ \Carbon\Carbon::parse($j->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($j->jam_selesai)->format('H:i') }}</td>
                             <td><span class="fw-medium text-dark">{{ $j->ruangan->nama_ruangan ?? 'N/A' }}</span></td>
                             <td>
-                                @if($j->status == 'Aktif')
-                                <span class="badge-status badge-active">Aktif</span>
-                                @elseif($j->status == 'Penuh')
-                                <span class="badge-status badge-info">Penuh</span>
-                                @else
-                                <span class="badge-status badge-warning">Pending</span>
-                                @endif
+                                @if($j->status == 'Aktif') <span class="badge-status badge-active">Aktif</span>
+                                @elseif($j->status == 'Penuh') <span class="badge-status badge-info">Penuh</span>
+                                @else <span class="badge-status badge-warning">Pending</span> @endif
                             </td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-1">
-                                    <button class="btn-action btn btn-light border" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $j->id }}" title="Edit">
-                                        <i class="fa fa-pen text-warning"></i>
-                                    </button>
+                                    <button class="btn-action btn btn-light border" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $j->id }}" title="Edit"><i class="fa fa-pen text-warning"></i></button>
                                     <form action="{{ route('admin.jadwal_kuliah.destroy', $j->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus jadwal kuliah ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn-action btn btn-light border" title="Hapus">
-                                            <i class="fa fa-trash text-danger"></i>
-                                        </button>
+                                        @csrf @method('DELETE')
+                                        <button type="submit" class="btn-action btn btn-light border" title="Hapus"><i class="fa fa-trash text-danger"></i></button>
                                     </form>
                                 </div>
                             </td>
@@ -428,15 +368,13 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form action="{{ route('admin.jadwal_kuliah.update', $j->id) }}" method="POST">
-                                        @csrf
-                                        @method('PUT')
+                                        @csrf @method('PUT')
                                         <div class="modal-body p-4">
                                             <div class="mb-3">
                                                 <label class="form-label small fw-semibold text-muted">Mata Kuliah</label>
-                                                <select name="mata_kuliah_id" class="form-select rounded-3" required> @foreach($master_mk as $mk)
-                                                    <option value="{{ $mk->id }}" {{ $j->mata_kuliah_id == $mk->id ? 'selected' : '' }}>
-                                                        {{ $mk->nama_mk }}
-                                                    </option>
+                                                <select name="mata_kuliah_id" class="form-select rounded-3" required>
+                                                    @foreach($master_mk as $mk)
+                                                    <option value="{{ $mk->id }}" {{ $j->mata_kuliah_id == $mk->id ? 'selected' : '' }}>{{ $mk->nama_mk }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -444,9 +382,7 @@
                                                 <label class="form-label small fw-semibold text-muted">Dosen Pengajar</label>
                                                 <select name="dosen_id" class="form-select rounded-3" required>
                                                     @foreach($master_dosen as $ds)
-                                                    <option value="{{ $ds->id }}" {{ $j->dosen_id == $ds->id ? 'selected' : '' }}>
-                                                        {{ $ds->nama_dosen ?? $ds->nama ?? $ds->name }}
-                                                    </option>
+                                                    <option value="{{ $ds->id }}" {{ $j->dosen_id == $ds->id ? 'selected' : '' }}>{{ $ds->nama_dosen ?? $ds->nama ?? $ds->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -467,22 +403,13 @@
                                                 </select>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label small fw-semibold text-muted">Jam Mulai</label>
-                                                    <input type="time" name="jam_mulai" class="form-control rounded-3" value="{{ $j->jam_mulai }}" required>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <label class="form-label small fw-semibold text-muted">Jam Selesai</label>
-                                                    <input type="time" name="jam_selesai" class="form-control rounded-3" value="{{ $j->jam_selesai }}" required>
-                                                </div>
+                                                <div class="col-md-6 mb-3"><label class="form-label small fw-semibold text-muted">Jam Mulai</label><input type="time" name="jam_mulai" class="form-control rounded-3" value="{{ $j->jam_mulai }}" required></div>
+                                                <div class="col-md-6 mb-3"><label class="form-label small fw-semibold text-muted">Jam Selesai</label><input type="time" name="jam_selesai" class="form-control rounded-3" value="{{ $j->jam_selesai }}" required></div>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label small fw-semibold text-muted">Semester</label>
                                                 <select name="semester" class="form-select rounded-3" required>
-                                                    <option value="">-- Pilih Semester --</option>
-                                                    @for ($i = 1; $i <= 8; $i++)
-                                                        <option value="{{ $i }}">Semester {{ $i }}</option>
-                                                        @endfor
+                                                    @for ($i = 1; $i <= 8; $i++) <option value="{{ $i }}" {{ $j->semester == $i ? 'selected' : '' }}>Semester {{ $i }}</option> @endfor
                                                 </select>
                                             </div>
                                             <div class="mb-3">
@@ -527,29 +454,21 @@
                             <label class="form-label small fw-semibold text-muted">Mata Kuliah</label>
                             <select name="mata_kuliah_id" class="form-select rounded-3" required>
                                 <option value="">-- Pilih Mata Kuliah --</option>
-                                @foreach($master_mk as $mk)
-                                <option value="{{ $mk->id }}">{{ $mk->nama_mk }}</option>
-                                @endforeach
+                                @foreach($master_mk as $mk) <option value="{{ $mk->id }}">{{ $mk->nama_mk }}</option> @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-semibold text-muted">Dosen Pengajar</label>
                             <select name="dosen_id" class="form-select rounded-3" required>
                                 <option value="">-- Pilih Dosen --</option>
-                                @foreach($master_dosen as $ds)
-                                <option value="{{ $ds->id }}">
-                                    {{ $ds->nama_dosen ?? $ds->nama ?? $ds->name }}
-                                </option>
-                                @endforeach
+                                @foreach($master_dosen as $ds) <option value="{{ $ds->id }}">{{ $ds->nama_dosen ?? $ds->nama ?? $ds->name }}</option> @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-semibold text-muted">Ruangan Kelas</label>
                             <select name="ruangan_id" class="form-select rounded-3" required>
                                 <option value="">-- Pilih Ruangan --</option>
-                                @foreach($master_ruangan as $rg)
-                                <option value="{{ $rg->id }}">{{ $rg->nama_ruangan }}</option>
-                                @endforeach
+                                @foreach($master_ruangan as $rg) <option value="{{ $rg->id }}">{{ $rg->nama_ruangan }}</option> @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
@@ -564,22 +483,14 @@
                             </select>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label small fw-semibold text-muted">Jam Mulai</label>
-                                <input type="time" name="jam_mulai" class="form-control rounded-3" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label small fw-semibold text-muted">Jam Selesai</label>
-                                <input type="time" name="jam_selesai" class="form-control rounded-3" required>
-                            </div>
+                            <div class="col-md-6 mb-3"><label class="form-label small fw-semibold text-muted">Jam Mulai</label><input type="time" name="jam_mulai" class="form-control rounded-3" required></div>
+                            <div class="col-md-6 mb-3"><label class="form-label small fw-semibold text-muted">Jam Selesai</label><input type="time" name="jam_selesai" class="form-control rounded-3" required></div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-semibold text-muted">Semester</label>
                             <select name="semester" class="form-select rounded-3" required>
                                 <option value="">-- Pilih Semester --</option>
-                                @for ($i = 1; $i <= 8; $i++)
-                                    <option value="{{ $i }}">Semester {{ $i }}</option>
-                                    @endfor
+                                @for ($i = 1; $i <= 8; $i++) <option value="{{ $i }}">Semester {{ $i }}</option> @endfor
                             </select>
                         </div>
                         <div class="mb-3">

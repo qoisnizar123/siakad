@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\RuanganController;
 use App\Http\Controllers\Admin\MatakuliahController;
 use App\Http\Controllers\Admin\JadwalKuliahController;
@@ -12,6 +13,8 @@ use App\Http\Controllers\Admin\DosenController as AdminJalurDosenController;
 use App\Http\Controllers\Admin\MahasiswaController as AdminJalurMahasiswaController;
 use App\Http\Controllers\Admin\KrsAdminController;
 use App\Http\Controllers\Admin\NilaiKhsController;
+use App\Http\Controllers\Admin\ManajemenUserController;
+use App\Http\Controllers\Admin\PengaturanSistemController;
 use Illuminate\Support\Facades\App;
 
 /*
@@ -58,7 +61,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', function () {
             return redirect()->route('admin.dashboard');
         });
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
         Route::get('/data_mahasiswa', [AdminController::class, 'dataMahasiswa'])->name('admin.data_mahasiswa');
         Route::get('/data_dosen', [AdminController::class, 'dataDosen'])->name('admin.data_dosen');
         Route::get('/jadwal_kuliah', [AdminController::class, 'jadwalKuliah'])->name('admin.jadwal_kuliah');
@@ -88,5 +91,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/nilai_khs', [NilaiKhsController::class, 'index'])->name('admin.nilai_khs');
         Route::post('/nilai_khs', [NilaiKhsController::class, 'store'])->name('admin.nilai_khs.store');
         Route::delete('/nilai_khs/{id}', [NilaiKhsController::class, 'destroy'])->name('admin.nilai_khs.destroy');
+        Route::get('/manajemen_user', [ManajemenUserController::class, 'index'])->name('admin.manajemen_user');
+        Route::post('/manajemen_user', [ManajemenUserController::class, 'store'])->name('admin.manajemen_user.store');
+        Route::put('/manajemen_user/{id}', [ManajemenUserController::class, 'update'])->name('admin.manajemen_user.update');
+        Route::delete('/manajemen_user/{id}', [ManajemenUserController::class, 'destroy'])->name('admin.manajemen_user.destroy');
+        Route::get('/pengaturan_sistem', [PengaturanSistemController::class, 'index'])->name('admin.pengaturan_sistem');
+        Route::post('/pengaturan_sistem', [PengaturanSistemController::class, 'update'])->name('admin.pengaturan_sistem.update');
+        Route::post('/pengaturan_sistem/clear-cache', [PengaturanSistemController::class, 'clearCache'])->name('admin.pengaturan_sistem.clearCache');
     });
 });

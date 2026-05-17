@@ -6,13 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pengaturan Sistem | SIAKAD</title>
 
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -50,6 +45,7 @@
         .sidebar a {
             display: flex;
             align-items: center;
+            gap: 10px;
             color: white;
             text-decoration: none;
             padding: 12px 14px;
@@ -139,6 +135,14 @@
             border-radius: 10px;
             padding: 10px 18px;
             font-size: 14px;
+            width: 100%;
+            text-decoration: none;
+            color: #334155;
+            display: block;
+        }
+
+        .btn-light-custom:hover {
+            background: #f1f5f9;
         }
 
         /* SETTING ITEM */
@@ -179,9 +183,7 @@
             color: #9333ea;
         }
 
-        /* RESPONSIVE */
         @media(max-width: 768px) {
-
             .sidebar {
                 position: relative;
                 width: 100%;
@@ -204,392 +206,167 @@
 
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
+        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <div class="menu-title">Main Menu</div>
+        <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
+        <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>
+        <a href="{{ route('admin.data_dosen') }}"><i class="fa fa-chalkboard-teacher"></i>Data Dosen</a>
+        <a href="{{ route('admin.matakuliah.index') }}"><i class="fa fa-book"></i>Mata Kuliah</a>
+        <a href="{{ route('admin.jadwal_kuliah') }}"><i class="fa fa-calendar-days"></i>Jadwal Kuliah</a>
+        <a href="{{ route('admin.krs_mahasiswa') }}"><i class="fa fa-file-signature"></i>KRS Mahasiswa</a>
+        <a href="{{ route('admin.nilai_khs') }}"><i class="fa fa-chart-column"></i>Nilai & KHS</a>
+        <a href="{{ route('admin.booking.index') }}"><i class="fa fa-door-open"></i>Booking Ruangan</a>
 
-        <h4>
-            <i class="fa-solid fa-graduation-cap me-2"></i>
-            SIAKAD
-        </h4>
+        <div class="menu-title">Pengaturan</div>
+        <a href="{{ route('admin.manajemen_user') }}"><i class="fa fa-user-gear"></i>Manajemen User</a>
+        <a href="{{ route('admin.pengaturan_sistem') }}" class="active"><i class="fa fa-gear"></i>Pengaturan Sistem</a>
 
-        <div class="menu-title">
-            Main Menu
-        </div>
-
-        <a href="{{ route('admin.dashboard') }}">
-            <i class="fa fa-home"></i>
-            Dashboard
-        </a>
-
-        <a href="{{ route('admin.data_mahasiswa') }}">
-            <i class="fa fa-users"></i>
-            Data Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.data_dosen') }}">
-            <i class="fa fa-chalkboard-teacher"></i>
-            Data Dosen
-        </a>
-
-        <a href="{{ route('admin.matakuliah.index') }}">
-            <i class="fa fa-book"></i>
-            Mata Kuliah
-        </a>
-
-        <a href="{{ route('admin.jadwal_kuliah') }}">
-            <i class="fa fa-calendar-days"></i>
-            Jadwal Kuliah
-        </a>
-
-        <a href="{{ route('admin.krs_mahasiswa') }}">
-            <i class="fa fa-file-signature"></i>
-            KRS Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.nilai_khs') }}">
-            <i class="fa fa-chart-column"></i>
-            Nilai & KHS
-        </a>
-
-        <a href="{{ route('admin.booking.index') }}">
-            <i class="fa fa-door-open"></i>
-            Booking Ruangan
-        </a>
-
-        <div class="menu-title">
-            Pengaturan
-        </div>
-
-        <a href="{{ route('admin.manajemen_user') }}">
-            <i class="fa fa-user-gear"></i>
-            Manajemen User
-        </a>
-
-        <a href="{{ route('admin.pengaturan_sistem') }}" class="active">
-            <i class="fa fa-gear"></i>
-            Pengaturan Sistem
-        </a>
-
-        <form id="logout-form"
-            action="{{ route('logout') }}"
-            method="POST"
-            style="display: none;">
-            @csrf
-        </form>
-
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fa fa-sign-out-alt"></i>
-            Logout
-        </a>
-
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt"></i>Logout</a>
     </div>
 
-    <!-- MAIN -->
     <div class="main">
+        <form action="{{ route('admin.pengaturan_sistem.update') }}" method="POST">
+            @csrf
 
-        <!-- TOPBAR -->
-        <div class="topbar">
-
-            <div>
-
-                <h5 class="mb-1">
-                    Pengaturan Sistem
-                </h5>
-
-                <small class="text-muted">
-                    Konfigurasi dan pengaturan Sistem Informasi Akademik
-                </small>
-
+            <div class="topbar">
+                <div>
+                    <h5 class="mb-1 fw-bold">Pengaturan Sistem</h5>
+                    <small class="text-muted">Konfigurasi dan pengaturan global Sistem Informasi Akademik</small>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save me-2"></i>Simpan Perubahan
+                </button>
             </div>
 
-            <button class="btn btn-primary">
+            @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-3 mb-4 p-3" role="alert">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-circle-check me-3 fs-5 text-success"></i>
+                    <div class="text-dark"><strong>Berhasil!</strong> {{ session('success') }}</div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
 
-                <i class="fa fa-save me-2"></i>
-                Simpan Perubahan
-
-            </button>
-
-        </div>
-
-        <div class="row">
-
-            <!-- FORM PENGATURAN -->
-            <div class="col-lg-8">
-
-                <div class="dashboard-card">
-
-                    <h6 class="mb-4">
-                        Informasi Sistem
-                    </h6>
-
-                    <div class="row">
-
-                        <div class="col-md-6 mb-3">
-
-                            <label class="form-label">
-                                Nama Universitas
-                            </label>
-
-                            <input type="text"
-                                class="form-control"
-                                value="Universitas Teknologi Indonesia">
-
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="dashboard-card">
+                        <h6 class="mb-4 fw-bold text-dark">Informasi Sistem</h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nama Universitas</label>
+                                <input type="text" name="nama_universitas" class="form-control" value="{{ \App\Models\Setting::get('nama_universitas', 'Universitas Teknologi Indonesia') }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Tahun Akademik</label>
+                                @php $ta = \App\Models\Setting::get('tahun_akademik', '2025 / 2026'); @endphp
+                                <select name="tahun_akademik" class="form-select">
+                                    <option value="2025 / 2026" {{ $ta == '2025 / 2026' ? 'selected' : '' }}>2025 / 2026</option>
+                                    <option value="2026 / 2027" {{ $ta == '2026 / 2027' ? 'selected' : '' }}>2026 / 2027</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Semester Aktif</label>
+                                @php $sa = \App\Models\Setting::get('semester_aktif', 'Ganjil'); @endphp
+                                <select name="semester_aktif" class="form-select">
+                                    <option value="Ganjil" {{ $sa == 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
+                                    <option value="Genap" {{ $sa == 'Genap' ? 'selected' : '' }}>Genap</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Email Kampus</label>
+                                <input type="email" name="email_kampus" class="form-control" value="{{ \App\Models\Setting::get('email_kampus', 'admin@kampus.ac.id') }}">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label">Alamat Kampus</label>
+                                <textarea name="alamat_kampus" class="form-control" rows="3">{{ \App\Models\Setting::get('alamat_kampus', 'Jl. Pendidikan No. 10 Surabaya') }}</textarea>
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="col-md-6 mb-3">
-
-                            <label class="form-label">
-                                Tahun Akademik
-                            </label>
-
-                            <select class="form-select">
-                                <option>2025 / 2026</option>
-                                <option>2026 / 2027</option>
+                    <div class="dashboard-card">
+                        <h6 class="mb-4 fw-bold text-dark">Pengaturan Keamanan</h6>
+                        <div class="mb-3">
+                            <label class="form-label">Password Minimum</label>
+                            <input type="number" name="password_minimum" class="form-control" value="{{ \App\Models\Setting::get('password_minimum', '8') }}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Session Timeout</label>
+                            @php $st = \App\Models\Setting::get('session_timeout', '30 Menit'); @endphp
+                            <select name="session_timeout" class="form-select">
+                                <option value="30 Menit" {{ $st == '30 Menit' ? 'selected' : '' }}>30 Menit</option>
+                                <option value="1 Jam" {{ $st == '1 Jam' ? 'selected' : '' }}>1 Jam</option>
+                                <option value="2 Jam" {{ $st == '2 Jam' ? 'selected' : '' }}>2 Jam</option>
                             </select>
-
                         </div>
-
-                        <div class="col-md-6 mb-3">
-
-                            <label class="form-label">
-                                Semester Aktif
-                            </label>
-
-                            <select class="form-select">
-                                <option>Ganjil</option>
-                                <option>Genap</option>
-                            </select>
-
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" checked>
+                            <label class="form-check-label">Aktifkan Verifikasi Email</label>
                         </div>
-
-                        <div class="col-md-6 mb-3">
-
-                            <label class="form-label">
-                                Email Kampus
-                            </label>
-
-                            <input type="email"
-                                class="form-control"
-                                value="admin@kampus.ac.id">
-
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" checked>
+                            <label class="form-check-label">Aktifkan Backup Otomatis</label>
                         </div>
-
-                        <div class="col-md-12 mb-3">
-
-                            <label class="form-label">
-                                Alamat Kampus
-                            </label>
-
-                            <textarea class="form-control"
-                                rows="3">Jl. Pendidikan No. 10 Surabaya</textarea>
-
-                        </div>
-
                     </div>
+                </div>
+        </form>
+        <div class="col-lg-4">
+            <div class="dashboard-card">
+                <h6 class="mb-4 fw-bold text-dark">Status Sistem</h6>
 
+                <div class="setting-item d-flex align-items-center gap-3">
+                    <div class="setting-icon bg-green"><i class="fa fa-server"></i></div>
+                    <div>
+                        <div class="fw-semibold text-dark">Server</div>
+                        <small class="text-success">Online & Stabil</small>
+                    </div>
                 </div>
 
-                <div class="dashboard-card">
-
-                    <h6 class="mb-4">
-                        Pengaturan Keamanan
-                    </h6>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Password Minimum
-                        </label>
-
-                        <input type="number"
-                            class="form-control"
-                            value="8">
-
+                <div class="setting-item d-flex align-items-center gap-3">
+                    <div class="setting-icon bg-blue"><i class="fa fa-database"></i></div>
+                    <div>
+                        <div class="fw-semibold text-dark">Database</div>
+                        <small class="text-primary">Terhubung</small>
                     </div>
-
-                    <div class="mb-3">
-
-                        <label class="form-label">
-                            Session Timeout
-                        </label>
-
-                        <select class="form-select">
-                            <option>30 Menit</option>
-                            <option>1 Jam</option>
-                            <option>2 Jam</option>
-                        </select>
-
-                    </div>
-
-                    <div class="form-check form-switch mb-3">
-
-                        <input class="form-check-input"
-                            type="checkbox"
-                            checked>
-
-                        <label class="form-check-label">
-                            Aktifkan Verifikasi Email
-                        </label>
-
-                    </div>
-
-                    <div class="form-check form-switch">
-
-                        <input class="form-check-input"
-                            type="checkbox"
-                            checked>
-
-                        <label class="form-check-label">
-                            Aktifkan Backup Otomatis
-                        </label>
-
-                    </div>
-
                 </div>
 
+                <div class="setting-item d-flex align-items-center gap-3">
+                    <div class="setting-icon bg-orange"><i class="fa fa-shield-halved"></i></div>
+                    <div>
+                        <div class="fw-semibold text-dark">Keamanan</div>
+                        <small class="text-warning">Sistem Aman</small>
+                    </div>
+                </div>
+
+                <div class="setting-item d-flex align-items-center gap-3">
+                    <div class="setting-icon bg-purple"><i class="fa fa-cloud-arrow-up"></i></div>
+                    <div>
+                        <div class="fw-semibold text-dark">Backup</div>
+                        <small class="text-secondary">Terakhir 1 Jam Lalu</small>
+                    </div>
+                </div>
             </div>
 
-            <!-- STATUS -->
-            <div class="col-lg-4">
+            <div class="dashboard-card">
+                <h6 class="mb-4 fw-bold text-dark">Aksi Cepat</h6>
+                <div class="d-grid gap-3">
+                    <button type="button" class="btn btn-light-custom text-start"><i class="fa fa-database me-2 text-primary"></i>Backup Database</button>
+                    <button type="button" class="btn btn-light-custom text-start"><i class="fa fa-rotate me-2 text-success"></i>Restart Sistem</button>
 
-                <div class="dashboard-card">
+                    <form action="{{ route('admin.pengaturan_sistem.clearCache') }}" method="POST" class="m-0 p-0">
+                        @csrf
+                        <button type="submit" class="btn btn-light-custom text-start w-100"><i class="fa fa-trash me-2 text-danger"></i>Bersihkan Cache</button>
+                    </form>
 
-                    <h6 class="mb-4">
-                        Status Sistem
-                    </h6>
-
-                    <div class="setting-item d-flex align-items-center gap-3">
-
-                        <div class="setting-icon bg-green">
-                            <i class="fa fa-server"></i>
-                        </div>
-
-                        <div>
-
-                            <div class="fw-semibold">
-                                Server
-                            </div>
-
-                            <small class="text-success">
-                                Online & Stabil
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                    <div class="setting-item d-flex align-items-center gap-3">
-
-                        <div class="setting-icon bg-blue">
-                            <i class="fa fa-database"></i>
-                        </div>
-
-                        <div>
-
-                            <div class="fw-semibold">
-                                Database
-                            </div>
-
-                            <small class="text-primary">
-                                Terhubung
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                    <div class="setting-item d-flex align-items-center gap-3">
-
-                        <div class="setting-icon bg-orange">
-                            <i class="fa fa-shield-halved"></i>
-                        </div>
-
-                        <div>
-
-                            <div class="fw-semibold">
-                                Keamanan
-                            </div>
-
-                            <small class="text-warning">
-                                Sistem Aman
-                            </small>
-
-                        </div>
-
-                    </div>
-
-                    <div class="setting-item d-flex align-items-center gap-3">
-
-                        <div class="setting-icon bg-purple">
-                            <i class="fa fa-cloud-arrow-up"></i>
-                        </div>
-
-                        <div>
-
-                            <div class="fw-semibold">
-                                Backup
-                            </div>
-
-                            <small class="text-secondary">
-                                Terakhir 1 Jam Lalu
-                            </small>
-
-                        </div>
-
-                    </div>
-
+                    <button type="button" class="btn btn-light-custom text-start"><i class="fa fa-file-export me-2 text-warning"></i>Export Pengaturan</button>
                 </div>
-
-                <div class="dashboard-card">
-
-                    <h6 class="mb-4">
-                        Aksi Cepat
-                    </h6>
-
-                    <div class="d-grid gap-3">
-
-                        <button class="btn btn-light-custom text-start">
-
-                            <i class="fa fa-database me-2 text-primary"></i>
-                            Backup Database
-
-                        </button>
-
-                        <button class="btn btn-light-custom text-start">
-
-                            <i class="fa fa-rotate me-2 text-success"></i>
-                            Restart Sistem
-
-                        </button>
-
-                        <button class="btn btn-light-custom text-start">
-
-                            <i class="fa fa-trash me-2 text-danger"></i>
-                            Bersihkan Cache
-
-                        </button>
-
-                        <button class="btn btn-light-custom text-start">
-
-                            <i class="fa fa-file-export me-2 text-warning"></i>
-                            Export Pengaturan
-
-                        </button>
-
-                    </div>
-
-                </div>
-
             </div>
-
         </div>
-
     </div>
-
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

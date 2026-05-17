@@ -50,6 +50,7 @@
             margin-bottom: 6px;
             font-size: 14px;
             transition: .3s;
+            gap: 10px;
         }
 
         .sidebar a:hover {
@@ -93,6 +94,7 @@
             padding: 10px 15px 10px 40px;
             width: 100%;
             font-size: 14px;
+            outline: none;
         }
 
         .search-box i {
@@ -179,7 +181,6 @@
             font-size: 14px;
         }
 
-        /* BUTTON */
         .btn-primary {
             background: #1e3a8a;
             border: none;
@@ -189,11 +190,11 @@
             background: #172554;
         }
 
-        /* BADGE */
         .badge-status {
             padding: 6px 10px;
             border-radius: 6px;
             font-size: 11px;
+            font-weight: 600;
         }
 
         .badge-active {
@@ -210,519 +211,195 @@
 
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
+        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <div class="menu-title">Main Menu</div>
+        <a href="{{ route('admin.dashboard') }}" class="active"><i class="fa fa-home"></i>Dashboard</a>
+        <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>
+        <a href="{{ route('admin.data_dosen') }}"><i class="fa fa-chalkboard-teacher"></i>Data Dosen</a>
+        <a href="{{ route('admin.matakuliah.index') }}"><i class="fa fa-book"></i>Mata Kuliah</a>
+        <a href="{{ route('admin.jadwal_kuliah') }}"><i class="fa fa-calendar-days"></i>Jadwal Kuliah</a>
+        <a href="{{ route('admin.krs_mahasiswa') }}"><i class="fa fa-file-signature"></i>KRS Mahasiswa</a>
+        <a href="{{ route('admin.nilai_khs') }}"><i class="fa fa-chart-column"></i>Nilai & KHS</a>
+        <a href="{{ route('admin.booking.index') }}"><i class="fa fa-door-open"></i>Booking Ruangan</a>
 
-        <h4>
-            <i class="fa-solid fa-graduation-cap me-2"></i>
-            SIAKAD
-        </h4>
+        <div class="menu-title">Pengaturan</div>
+        <a href="{{ route('admin.manajemen_user') }}"><i class="fa fa-user-gear"></i>Manajemen User</a>
+        <a href="{{ route('admin.pengaturan_sistem') }}"><i class="fa fa-gear"></i>Pengaturan Sistem</a>
 
-        <div class="menu-title">
-            Main Menu
-        </div>
-
-        <a href="{{ route('admin.dashboard') }}" class="active">
-            <i class="fa fa-home"></i>
-            Dashboard
-        </a>
-
-        <a href="{{ route('admin.data_mahasiswa') }}">
-            <i class="fa fa-users"></i>
-            Data Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.data_dosen') }}">
-            <i class="fa fa-chalkboard-teacher"></i>
-            Data Dosen
-        </a>
-
-        <a href="{{ route('admin.matakuliah.index') }}" class="{{ Request::is('admin/matakuliah*') ? 'active' : '' }}">
-            <i class="fa fa-book"></i>
-            Mata Kuliah
-        </a>
-
-        <a href="{{ route('admin.jadwal_kuliah') }}">
-            <i class="fa fa-calendar-days"></i>
-            Jadwal Kuliah
-        </a>
-
-        <a href="{{ route('admin.krs_mahasiswa') }}">
-            <i class="fa fa-file-signature"></i>
-            KRS Mahasiswa
-        </a>
-
-        <a href="{{ route('admin.nilai_khs') }}">
-            <i class="fa fa-chart-column"></i>
-            Nilai & KHS
-        </a>
-
-        <a href="{{ route('admin.booking.index') }}">
-            <i class="fa fa-door-open"></i>
-            Booking Ruangan
-        </a>
-
-        <div class="menu-title">
-            Pengaturan
-        </div>
-
-        <a href="{{ route('admin.manajemen_user') }}">
-            <i class="fa fa-user-gear"></i>
-            Manajemen User
-        </a>
-
-        <a href="{{ route('admin.pengaturan_sistem') }}">
-            <i class="fa fa-gear"></i>
-            Pengaturan Sistem
-        </a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fa fa-sign-out-alt"></i>
-            Logout
-        </a>
-
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-out-alt"></i>Logout</a>
     </div>
 
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- TOPBAR -->
         <div class="topbar">
-
             <div>
-                <h5 class="mb-1">
-                    Dashboard Admin
-                </h5>
-
-                <small class="text-muted">
-                    Sistem Informasi Akademik Universitas
-                </small>
+                <h5 class="mb-1 fw-bold">Dashboard Admin</h5>
+                <small class="text-muted">Sistem Informasi Akademik Kantor Pusat</small>
             </div>
-
             <div class="d-flex align-items-center gap-3">
-
-                <div class="search-box">
-
-                    <i class="fa fa-search"></i>
-
-                    <input type="text" placeholder="Cari data mahasiswa, dosen, jadwal...">
-
-                </div>
-
+                <div class="search-box"><i class="fa fa-search"></i><input type="text" placeholder="Cari data akademik..."></div>
                 <div>
                     <i class="fa fa-user-circle fs-4 text-primary"></i>
-                    <span class="ms-1">Administrator</span>
+                    <span class="ms-1 fw-semibold">{{ auth()->user()->name ?? 'Administrator' }}</span>
                 </div>
-
             </div>
-
-        </div>
-
-        <!-- STATISTIC -->
-        <div class="row">
-
-            <div class="col-md-3">
-
-                <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Total Mahasiswa
-                    </small>
-
-                    <h3 class="mt-2">
-                        2,845
-                    </h3>
-
-                    <div class="icon bg-blue">
-                        <i class="fa fa-users"></i>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Total Dosen
-                    </small>
-
-                    <h3 class="mt-2">
-                        186
-                    </h3>
-
-                    <div class="icon bg-green">
-                        <i class="fa fa-chalkboard-teacher"></i>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Mata Kuliah
-                    </small>
-
-                    <h3 class="mt-2">
-                        124
-                    </h3>
-
-                    <div class="icon bg-orange">
-                        <i class="fa fa-book"></i>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="dashboard-card stat-card">
-
-                    <small class="text-muted">
-                        Booking Ruangan
-                    </small>
-
-                    <h3 class="mt-2">
-                        32
-                    </h3>
-
-                    <div class="icon bg-purple">
-                        <i class="fa fa-door-open"></i>
-                    </div>
-
-                </div>
-
-            </div>
-
         </div>
 
         <div class="row">
+            <div class="col-md-3">
+                <div class="dashboard-card stat-card">
+                    <small class="text-muted">Total Mahasiswa</small>
+                    <h3 class="mt-2 fw-bold text-dark">{{ number_format($totalMahasiswa) }}</h3>
+                    <div class="icon bg-blue"><i class="fa fa-users"></i></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="dashboard-card stat-card">
+                    <small class="text-muted">Total Dosen</small>
+                    <h3 class="mt-2 fw-bold text-dark">{{ number_format($totalDosen) }}</h3>
+                    <div class="icon bg-green"><i class="fa fa-chalkboard-teacher"></i></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="dashboard-card stat-card">
+                    <small class="text-muted">Mata Kuliah</small>
+                    <h3 class="mt-2 fw-bold text-dark">{{ number_format($totalMatakuliah) }}</h3>
+                    <div class="icon bg-orange"><i class="fa fa-book"></i></div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="dashboard-card stat-card">
+                    <small class="text-muted">Booking Ruangan</small>
+                    <h3 class="mt-2 fw-bold text-dark">{{ number_format($totalBooking) }}</h3>
+                    <div class="icon bg-purple"><i class="fa fa-door-open"></i></div>
+                </div>
+            </div>
+        </div>
 
-            <!-- TABLE -->
+        <div class="row">
             <div class="col-md-8">
-
                 <div class="dashboard-card">
-
                     <div class="d-flex justify-content-between align-items-center mb-3">
-
-                        <h6 class="mb-0">
-                            Aktivitas Akademik Terbaru
-                        </h6>
-
-                        <button class="btn btn-primary btn-sm">
-                            Lihat Semua
-                        </button>
-
+                        <h6 class="mb-0 fw-bold">Aktivitas Akademik Terbaru</h6>
+                        <a href="{{ route('admin.krs_mahasiswa') }}" class="btn btn-primary btn-sm rounded-3">Lihat Semua</a>
                     </div>
 
-                    <table class="table table-bordered align-middle">
-
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Mahasiswa</th>
-                                <th>Kegiatan</th>
-                                <th>Tanggal</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            <tr>
-
-                                <td>1</td>
-                                <td>Hendra</td>
-                                <td>Pengajuan KRS</td>
-                                <td>09 Mei 2026</td>
-
-                                <td>
-                                    <span class="badge-status badge-active">
-                                        Disetujui
-                                    </span>
-                                </td>
-
-                            </tr>
-
-                            <tr>
-
-                                <td>2</td>
-                                <td>Rizky Pratama</td>
-                                <td>Booking Ruangan</td>
-                                <td>09 Mei 2026</td>
-
-                                <td>
-                                    <span class="badge-status badge-pending">
-                                        Menunggu
-                                    </span>
-                                </td>
-
-                            </tr>
-
-                            <tr>
-
-                                <td>3</td>
-                                <td>Salsa Putri</td>
-                                <td>Upload Tugas Akhir</td>
-                                <td>08 Mei 2026</td>
-
-                                <td>
-                                    <span class="badge-status badge-active">
-                                        Selesai
-                                    </span>
-                                </td>
-
-                            </tr>
-
-                            <tr>
-
-                                <td>4</td>
-                                <td>Ahmad Fauzi</td>
-                                <td>Input Nilai</td>
-                                <td>08 Mei 2026</td>
-
-                                <td>
-                                    <span class="badge-status badge-active">
-                                        Berhasil
-                                    </span>
-                                </td>
-
-                            </tr>
-
-                        </tbody>
-
-                    </table>
-
+                    <div class="table-responsive">
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Mahasiswa</th>
+                                    <th>Kegiatan Akademik</th>
+                                    <th>Waktu Input</th>
+                                    <th>Status Validasi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($recentKrs as $index => $krs)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td><span class="fw-semibold text-dark">{{ $krs->mahasiswa->nama_mahasiswa ?? 'N/A' }}</span></td>
+                                    <td><span class="text-muted"><i class="fa-solid fa-file-signature me-1"></i> Pengajuan Rencana Studi (KRS)</span></td>
+                                    <td><small class="text-secondary fw-medium">{{ $krs->created_at ? $krs->created_at->translatedFormat('d M Y') : 'Hari ini' }}</small></td>
+                                    <td>
+                                        <span class="badge-status {{ $krs->status == 'approved' ? 'badge-active' : 'badge-pending' }}">
+                                            {{ $krs->status == 'approved' ? 'Disetujui' : 'Menunggu' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-muted">Belum ada aktivitas transaksi KRS terbaru hari ini.</td>
+                                    end
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
             </div>
 
-            <!-- ACTIVITY -->
             <div class="col-md-4">
-
                 <div class="dashboard-card">
-
-                    <h6 class="mb-4">
-                        Aktivitas Sistem
-                    </h6>
+                    <h6 class="mb-4 fw-bold text-dark">Aktivitas Sistem</h6>
 
                     <div class="activity-item">
-
-                        <div class="activity-icon bg-blue">
-                            <i class="fa fa-user-plus"></i>
-                        </div>
-
+                        <div class="activity-icon bg-blue"><i class="fa fa-user-plus"></i></div>
                         <div>
-
-                            <div class="fw-semibold">
-                                Mahasiswa Baru
-                            </div>
-
-                            <small class="text-muted">
-                                25 mahasiswa baru ditambahkan hari ini
-                            </small>
-
+                            <div class="fw-semibold text-dark">Registrasi Mahasiswa</div>
+                            <small class="text-muted">{{ $mhsBaruCount }} mahasiswa baru ditambahkan dalam 24 jam terakhir.</small>
                         </div>
-
                     </div>
 
                     <div class="activity-item">
-
-                        <div class="activity-icon bg-green">
-                            <i class="fa fa-book"></i>
-                        </div>
-
+                        <div class="activity-icon bg-green"><i class="fa fa-book"></i></div>
                         <div>
-
-                            <div class="fw-semibold">
-                                Jadwal Kuliah
-                            </div>
-
-                            <small class="text-muted">
-                                Jadwal semester baru berhasil dibuat
-                            </small>
-
+                            <div class="fw-semibold text-dark">Komponen Nilai & KHS</div>
+                            <small class="text-muted">Total {{ $nilaiInjected }} record transkrip nilai terproses di database.</small>
                         </div>
-
                     </div>
 
                     <div class="activity-item">
-
-                        <div class="activity-icon bg-orange">
-                            <i class="fa fa-chart-line"></i>
-                        </div>
-
+                        <div class="activity-icon bg-orange"><i class="fa fa-user-gear"></i></div>
                         <div>
-
-                            <div class="fw-semibold">
-                                Input Nilai
-                            </div>
-
-                            <small class="text-muted">
-                                80% dosen telah menginput nilai
-                            </small>
-
+                            <div class="fw-semibold text-dark">Manajemen Pengguna</div>
+                            <small class="text-muted">Sistem saat ini mengamankan {{ $totalUser }} akun login unik aktif.</small>
                         </div>
-
                     </div>
 
                     <div class="activity-item">
-
-                        <div class="activity-icon bg-purple">
-                            <i class="fa fa-server"></i>
-                        </div>
-
+                        <div class="activity-icon bg-purple"><i class="fa fa-server"></i></div>
                         <div>
-
-                            <div class="fw-semibold">
-                                Status Server
-                            </div>
-
-                            <small class="text-muted">
-                                Sistem berjalan normal tanpa kendala
-                            </small>
-
+                            <div class="fw-semibold text-dark">Status Core Engine</div>
+                            <small class="text-success fw-medium"><i class="fa-solid fa-circle-check"></i> Server local stabil 100%</small>
                         </div>
-
                     </div>
-
                 </div>
-
             </div>
-
         </div>
 
-        <!-- QUICK ACCESS -->
         <div class="dashboard-card">
-
-            <div class="d-flex justify-content-between align-items-center mb-4">
-
-                <h6 class="mb-0">
-                    Akses Cepat
-                </h6>
-
-            </div>
-
+            <h6 class="mb-4 fw-bold text-dark">Akses Cepat Modul Utama</h6>
             <div class="row text-center">
-
                 <div class="col-md-2 mb-3">
-
-                    <a href="{{ route('admin.data_mahasiswa') }}"
-                        class="text-decoration-none">
-
-                        <button class="btn btn-light border w-100 py-3">
-
-                            <i class="fa fa-users fs-4 text-primary mb-2"></i><br>
-
-                            Mahasiswa
-
-                        </button>
-
+                    <a href="{{ route('admin.data_mahasiswa') }}" class="text-decoration-none">
+                        <button class="btn btn-light border w-100 py-3 rounded-4 shadow-sm"><i class="fa fa-users fs-4 text-primary mb-2"></i><br><small class="fw-semibold text-secondary">Mahasiswa</small></button>
                     </a>
-
                 </div>
-
                 <div class="col-md-2 mb-3">
-
-                    <a href="{{ route('admin.data_dosen') }}"
-                        class="text-decoration-none">
-
-                        <button class="btn btn-light border w-100 py-3">
-
-                            <i class="fa fa-chalkboard-teacher fs-4 text-success mb-2"></i><br>
-
-                            Dosen
-
-                        </button>
-
+                    <a href="{{ route('admin.data_dosen') }}" class="text-decoration-none">
+                        <button class="btn btn-light border w-100 py-3 rounded-4 shadow-sm"><i class="fa fa-chalkboard-teacher fs-4 text-success mb-2"></i><br><small class="fw-semibold text-secondary">Dosen</small></button>
                     </a>
-
                 </div>
-
                 <div class="col-md-2 mb-3">
-
-                    <a href="{{ route('admin.matakuliah.index') }}" class="{{ Request::is('admin/matakuliah*') ? 'active' : '' }}"
-                        class="text-decoration-none">
-
-                        <button class="btn btn-light border w-100 py-3">
-
-                            <i class="fa fa-book fs-4 text-warning mb-2"></i><br>
-
-                            Mata Kuliah
-
-                        </button>
-
+                    <a href="{{ route('admin.matakuliah.index') }}" class="text-decoration-none">
+                        <button class="btn btn-light border w-100 py-3 rounded-4 shadow-sm"><i class="fa fa-book fs-4 text-warning mb-2"></i><br><small class="fw-semibold text-secondary">Mata Kuliah</small></button>
                     </a>
-
                 </div>
-
                 <div class="col-md-2 mb-3">
-
-                    <a href="{{ route('admin.jadwal_kuliah') }}"
-                        class="text-decoration-none">
-
-                        <button class="btn btn-light border w-100 py-3">
-
-                            <i class="fa fa-calendar-days fs-4 text-danger mb-2"></i><br>
-
-                            Jadwal
-
-                        </button>
-
+                    <a href="{{ route('admin.jadwal_kuliah') }}" class="text-decoration-none">
+                        <button class="btn btn-light border w-100 py-3 rounded-4 shadow-sm"><i class="fa fa-calendar-days fs-4 text-danger mb-2"></i><br><small class="fw-semibold text-secondary">Jadwal</small></button>
                     </a>
-
                 </div>
-
                 <div class="col-md-2 mb-3">
-
-                    <a href="{{ route('admin.nilai_khs') }}"
-                        class="text-decoration-none">
-
-                        <button class="btn btn-light border w-100 py-3">
-
-                            <i class="fa fa-chart-column fs-4 text-info mb-2"></i><br>
-
-                            Nilai
-
-                        </button>
-
+                    <a href="{{ route('admin.nilai_khs') }}" class="text-decoration-none">
+                        <button class="btn btn-light border w-100 py-3 rounded-4 shadow-sm"><i class="fa fa-chart-column fs-4 text-info mb-2"></i><br><small class="fw-semibold text-secondary">Nilai & KHS</small></button>
                     </a>
-
                 </div>
-
                 <div class="col-md-2 mb-3">
-
-                    <a href="{{ route('admin.pengaturan_sistem') }}"
-                        class="text-decoration-none">
-
-                        <button class="btn btn-light border w-100 py-3">
-
-                            <i class="fa fa-gear fs-4 text-secondary mb-2"></i><br>
-
-                            Pengaturan
-
-                        </button>
-
+                    <a href="{{ route('admin.pengaturan_sistem') }}" class="text-decoration-none">
+                        <button class="btn btn-light border w-100 py-3 rounded-4 shadow-sm"><i class="fa fa-gear fs-4 text-secondary mb-2"></i><br><small class="fw-semibold text-secondary">Pengaturan</small></button>
                     </a>
-
                 </div>
-
             </div>
-
         </div>
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

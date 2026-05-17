@@ -16,7 +16,7 @@
             background: #f1f5f9;
         }
 
-        /* SIDEBAR */
+        /* SIDEBAR (SINKRONISASI SPACING) */
         .sidebar {
             width: 250px;
             height: 100vh;
@@ -74,7 +74,6 @@
             padding: 25px;
         }
 
-        /* TOPBAR */
         .topbar {
             background: white;
             border-radius: 14px;
@@ -112,7 +111,6 @@
             color: #64748b;
         }
 
-        /* CARD */
         .dashboard-card {
             background: white;
             border-radius: 14px;
@@ -159,7 +157,6 @@
             color: #9333ea;
         }
 
-        /* BUTTON */
         .btn-primary {
             background: #1e3a8a;
             border: none;
@@ -183,7 +180,6 @@
             justify-content: center;
         }
 
-        /* TABLE */
         .table thead {
             background: #1e3a8a;
             color: white;
@@ -199,7 +195,6 @@
             background: #f8fafc;
         }
 
-        /* ROOM */
         .room-info {
             display: flex;
             align-items: center;
@@ -218,7 +213,6 @@
             font-weight: 700;
         }
 
-        /* BADGE */
         .badge-status {
             padding: 6px 10px;
             border-radius: 6px;
@@ -306,46 +300,32 @@
                 <small class="text-muted">Manajemen peminjaman dan booking ruangan kampus</small>
             </div>
             <div class="d-flex align-items-center gap-3">
-                <div class="search-box">
-                    <i class="fa fa-search"></i>
-                    <input type="text" placeholder="Cari ruangan atau peminjam...">
-                </div>
+                <div class="search-box"><i class="fa fa-search"></i><input type="text" placeholder="Cari ruangan atau peminjam..."></div>
                 <button class="btn btn-primary"><i class="fa fa-plus me-2"></i>Booking Baru</button>
             </div>
         </div>
 
-        @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show mb-4 rounded-3 border-0 shadow-sm" role="alert">
-            <i class="fa fa-check-circle me-2"></i>{{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
-
         <div class="row">
             <div class="col-md-3">
-                <div class="dashboard-card stat-card">
-                    <small class="text-muted">Total Booking</small>
+                <div class="dashboard-card stat-card"><small class="text-muted">Total Booking</small>
                     <h3 class="mt-2 fw-bold">{{ $bookings->count() }}</h3>
                     <div class="icon bg-blue"><i class="fa fa-door-open"></i></div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card stat-card">
-                    <small class="text-muted">Booking Disetujui</small>
+                <div class="dashboard-card stat-card"><small class="text-muted">Booking Disetujui</small>
                     <h3 class="mt-2 fw-bold text-success">{{ $bookings->where('status', 'disetujui')->count() }}</h3>
                     <div class="icon bg-green"><i class="fa fa-check-circle"></i></div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card stat-card">
-                    <small class="text-muted">Menunggu Approval</small>
+                <div class="dashboard-card stat-card"><small class="text-muted">Menunggu Approval</small>
                     <h3 class="mt-2 fw-bold text-warning">{{ $bookings->where('status', 'menunggu')->count() }}</h3>
                     <div class="icon bg-orange"><i class="fa fa-clock"></i></div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card stat-card">
-                    <small class="text-muted">Booking Ditolak</small>
+                <div class="dashboard-card stat-card"><small class="text-muted">Booking Ditolak</small>
                     <h3 class="mt-2 fw-bold text-danger">{{ $bookings->where('status', 'ditolak')->count() }}</h3>
                     <div class="icon bg-purple"><i class="fa fa-ban"></i></div>
                 </div>
@@ -355,8 +335,7 @@
         <div class="dashboard-card">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <div>
-                    <h6 class="mb-1 fw-bold">Daftar Booking Ruangan</h6>
-                    <small class="text-muted">Data booking ruangan perkuliahan dan kegiatan kampus</small>
+                    <h6 class="mb-1 fw-bold">Daftar Booking Ruangan</h6><small class="text-muted">Data booking ruangan perkuliahan dan kegiatan kampus</small>
                 </div>
                 <button class="btn btn-outline-primary btn-sm rounded-3">Export Data</button>
             </div>
@@ -380,9 +359,7 @@
                             <td>{{ $index + 1 }}</td>
                             <td>
                                 <div class="room-info">
-                                    <div class="room-icon">
-                                        {{ strtoupper(substr($b->ruangan->nama_ruangan ?? 'R', 0, 2)) }}
-                                    </div>
+                                    <div class="room-icon">{{ strtoupper(substr($b->ruangan->nama_ruangan ?? 'R', 0, 2)) }}</div>
                                     <div>
                                         <div class="fw-semibold text-dark">{{ $b->ruangan->nama_ruangan ?? 'N/A' }}</div>
                                         <small class="text-muted">Kapasitas: {{ $b->ruangan->kapasitas ?? '-' }} Mhs</small>
@@ -396,13 +373,9 @@
                             <td>{{ \Carbon\Carbon::parse($b->tanggal)->format('d M Y') }}</td>
                             <td><span class="badge bg-light text-dark border">{{ $b->jam_mulai }} - {{ $b->jam_selesai }}</span></td>
                             <td>
-                                @if($b->status == 'disetujui')
-                                <span class="badge-status badge-approved">Disetujui</span>
-                                @elseif($b->status == 'ditolak')
-                                <span class="badge-status badge-rejected">Ditolak</span>
-                                @else
-                                <span class="badge-status badge-pending">Menunggu</span>
-                                @endif
+                                @if($b->status == 'disetujui') <span class="badge-status badge-approved">Disetujui</span>
+                                @elseif($b->status == 'ditolak') <span class="badge-status badge-rejected">Ditolak</span>
+                                @else <span class="badge-status badge-pending">Menunggu</span> @endif
                             </td>
                             <td class="text-center">
                                 @if($b->status == 'menunggu' || $b->status == 'dipesan')
@@ -410,21 +383,15 @@
                                     <form action="{{ route('admin.booking.update', $b->id) }}" method="POST" class="d-inline">
                                         @csrf @method('PATCH')
                                         <input type="hidden" name="status" value="disetujui">
-                                        <button type="submit" class="btn-action btn btn-light border" title="Setujui">
-                                            <i class="fa fa-check text-success"></i>
-                                        </button>
+                                        <button type="submit" class="btn-action btn btn-light border" title="Setujui"><i class="fa fa-check text-success"></i></button>
                                     </form>
                                     <form action="{{ route('admin.booking.update', $b->id) }}" method="POST" class="d-inline">
                                         @csrf @method('PATCH')
                                         <input type="hidden" name="status" value="ditolak">
-                                        <button type="submit" class="btn-action btn btn-light border" title="Tolak">
-                                            <i class="fa fa-times text-danger"></i>
-                                        </button>
+                                        <button type="submit" class="btn-action btn btn-light border" title="Tolak"><i class="fa fa-times text-danger"></i></button>
                                     </form>
                                 </div>
-                                @else
-                                <span class="text-muted small">- Selesai -</span>
-                                @endif
+                                @else <span class="text-muted small">- Selesai -</span> @endif
                             </td>
                         </tr>
                         @empty
