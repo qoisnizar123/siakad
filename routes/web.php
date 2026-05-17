@@ -5,10 +5,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\DosenController;
-use App\Http\Controllers\Admin\DosenController as AdminJalurDosenController;
 use App\Http\Controllers\Admin\RuanganController;
 use App\Http\Controllers\Admin\MatakuliahController;
 use App\Http\Controllers\Admin\JadwalKuliahController;
+use App\Http\Controllers\Admin\DosenController as AdminJalurDosenController;
+use App\Http\Controllers\Admin\MahasiswaController as AdminJalurMahasiswaController;
 use Illuminate\Support\Facades\App;
 
 /*
@@ -48,20 +49,20 @@ Route::middleware('auth')->group(function () {
         Route::get('/absensi', [DosenController::class, 'absensi'])->name('dosen.absensi');
         Route::get('/nilai', [DosenController::class, 'nilai'])->name('dosen.nilai');
         Route::get('/jadwal_mengajar', [DosenController::class, 'jadwalMengajar'])->name('dosen.jadwal');
+    });
+
+    // Group ADMIN
+    Route::middleware('role:admin')->prefix('admin')->group(function () {
+        Route::get('/', function () {
+            return redirect()->route('admin.dashboard');
         });
-        
-        // Group ADMIN
-        Route::middleware('role:admin')->prefix('admin')->group(function () {
-            Route::get('/', function () {
-                return redirect()->route('admin.dashboard');
-                });
-                Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-                Route::get('/data_mahasiswa', [AdminController::class, 'dataMahasiswa'])->name('admin.data_mahasiswa');
-                Route::get('/data_dosen', [AdminController::class, 'dataDosen'])->name('admin.data_dosen');
-                Route::get('/jadwal_kuliah', [AdminController::class, 'jadwalKuliah'])->name('admin.jadwal_kuliah');
-                Route::get('/krs_mahasiswa', [AdminController::class, 'krsMahasiswa'])->name('admin.krs_mahasiswa');
-                Route::get('/nilai_khs', [AdminController::class, 'nilaiKHS'])->name('admin.nilai_khs');
-                Route::get('/booking', [AdminController::class, 'bookingIndex'])->name('admin.booking.index');
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::get('/data_mahasiswa', [AdminController::class, 'dataMahasiswa'])->name('admin.data_mahasiswa');
+        Route::get('/data_dosen', [AdminController::class, 'dataDosen'])->name('admin.data_dosen');
+        Route::get('/jadwal_kuliah', [AdminController::class, 'jadwalKuliah'])->name('admin.jadwal_kuliah');
+        Route::get('/krs_mahasiswa', [AdminController::class, 'krsMahasiswa'])->name('admin.krs_mahasiswa');
+        Route::get('/nilai_khs', [AdminController::class, 'nilaiKHS'])->name('admin.nilai_khs');
+        Route::get('/booking', [AdminController::class, 'bookingIndex'])->name('admin.booking.index');
         Route::patch('/booking/{id}/update', [AdminController::class, 'updateStatus'])->name('admin.booking.update');
         Route::get('/manajemen_user', [AdminController::class, 'manajemenUser'])->name('admin.manajemen_user');
         Route::get('/pengaturan_sistem', [AdminController::class, 'pengaturanSistem'])->name('admin.pengaturan_sistem');
@@ -74,5 +75,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/data_dosen', [AdminJalurDosenController::class, 'store'])->name('admin.data_dosen.store');
         Route::put('/data_dosen/{id}', [AdminJalurDosenController::class, 'update'])->name('admin.data_dosen.update');
         Route::delete('/data_dosen/{id}', [AdminJalurDosenController::class, 'destroy'])->name('admin.data_dosen.destroy');
+        Route::get('/data_mahasiswa', [AdminJalurMahasiswaController::class, 'index'])->name('admin.data_mahasiswa');
+        Route::post('/data_mahasiswa', [AdminJalurMahasiswaController::class, 'store'])->name('admin.data_mahasiswa.store');
+        Route::put('/data_mahasiswa/{id}', [AdminJalurMahasiswaController::class, 'update'])->name('admin.data_mahasiswa.update');
+        Route::delete('/data_mahasiswa/{id}', [AdminJalurMahasiswaController::class, 'destroy'])->name('admin.data_mahasiswa.destroy');
     });
 });

@@ -8,15 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Mahasiswa extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'prodi_id', 'nim', 'nama_mahasiswa', 'angkatan'];
+    protected $table = 'mahasiswas';
+    protected $fillable = [
+        'user_id',
+        'nim',
+        'nama_mahasiswa',
+        'email',
+        'prodi_id',
+        'semester',
+        'status',
+        'angkatan',
+    ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function prodi()
     {
-        return $this->belongsTo(Prodi::class);
+        return $this->belongsTo(Prodi::class, 'prodi_id');
     }
 }

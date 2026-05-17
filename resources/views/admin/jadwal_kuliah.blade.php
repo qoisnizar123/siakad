@@ -304,9 +304,31 @@
         </div>
 
         @if(session('success'))
-        <div class="alert alert-success border-0 shadow-sm rounded-3 mb-4 d-flex align-items-center">
-            <i class="fa-solid fa-check-circle me-2"></i>
-            <div>{{ session('success') }}</div>
+        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-3 mb-4 p-3" role="alert">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-circle-check me-3 fs-5 text-success"></i>
+                <div class="text-dark">
+                    <strong>Berhasil Menyimpan Data</strong> {{ session('success') }}
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
+        @if($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show border-0 shadow-sm rounded-3 mb-4 p-3" role="alert">
+            <div class="d-flex align-items-start">
+                <i class="fa-solid fa-triangle-exclamation me-3 fs-5 text-danger mt-1"></i>
+                <div class="text-dark">
+                    <strong class="d-block mb-1">Gagal Menyimpan Jadwal:</strong>
+                    <ul class="mb-0 ps-3 small">
+                        @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         @endif
 
@@ -369,7 +391,7 @@
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td class="fw-semibold text-dark">{{ $j->matakuliah->nama_mk ?? 'N/A' }}</td>
-                            <td>{{ $j->dosen->name ?? $j->dosen->nama ?? 'N/A' }}</td>
+                            <td>{{ $j->dosen->nama_dosen ?? $j->dosen->nama ?? $j->dosen->name ?? 'N/A' }}</td>
                             <td><span class="badge bg-light text-dark border px-2 py-1">{{ $j->hari }}</span></td>
                             <td class="text-primary fw-medium">{{ \Carbon\Carbon::parse($j->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($j->jam_selesai)->format('H:i') }}</td>
                             <td><span class="fw-medium text-dark">{{ $j->ruangan->nama_ruangan ?? 'N/A' }}</span></td>
@@ -411,9 +433,10 @@
                                         <div class="modal-body p-4">
                                             <div class="mb-3">
                                                 <label class="form-label small fw-semibold text-muted">Mata Kuliah</label>
-                                                <select name="matakuliah_id" class="form-select rounded-3" required>
-                                                    @foreach($master_mk as $mk)
-                                                    <option value="{{ $mk->id }}" {{ $j->matakuliah_id == $mk->id ? 'selected' : '' }}>{{ $mk->nama_mk }}</option>
+                                                <select name="mata_kuliah_id" class="form-select rounded-3" required> @foreach($master_mk as $mk)
+                                                    <option value="{{ $mk->id }}" {{ $j->mata_kuliah_id == $mk->id ? 'selected' : '' }}>
+                                                        {{ $mk->nama_mk }}
+                                                    </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -421,7 +444,9 @@
                                                 <label class="form-label small fw-semibold text-muted">Dosen Pengajar</label>
                                                 <select name="dosen_id" class="form-select rounded-3" required>
                                                     @foreach($master_dosen as $ds)
-                                                    <option value="{{ $ds->id }}" {{ $j->dosen_id == $ds->id ? 'selected' : '' }}>{{ $ds->name ?? $ds->nama }}</option>
+                                                    <option value="{{ $ds->id }}" {{ $j->dosen_id == $ds->id ? 'selected' : '' }}>
+                                                        {{ $ds->nama_dosen ?? $ds->nama ?? $ds->name }}
+                                                    </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -436,7 +461,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label small fw-semibold text-muted">Hari</label>
                                                 <select name="hari" class="form-select rounded-3" required>
-                                                    @foreach(['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'] as $hari)
+                                                    @foreach(['Senin','Selasa','Rabu','Kamis','Jumat'] as $hari)
                                                     <option value="{{ $hari }}" {{ $j->hari == $hari ? 'selected' : '' }}>{{ $hari }}</option>
                                                     @endforeach
                                                 </select>
@@ -450,6 +475,15 @@
                                                     <label class="form-label small fw-semibold text-muted">Jam Selesai</label>
                                                     <input type="time" name="jam_selesai" class="form-control rounded-3" value="{{ $j->jam_selesai }}" required>
                                                 </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Semester</label>
+                                                <select name="semester" class="form-select rounded-3" required>
+                                                    <option value="">-- Pilih Semester --</option>
+                                                    @for ($i = 1; $i <= 8; $i++)
+                                                        <option value="{{ $i }}">Semester {{ $i }}</option>
+                                                        @endfor
+                                                </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label small fw-semibold text-muted">Status</label>
@@ -491,7 +525,7 @@
                     <div class="modal-body p-4">
                         <div class="mb-3">
                             <label class="form-label small fw-semibold text-muted">Mata Kuliah</label>
-                            <select name="matakuliah_id" class="form-select rounded-3" required>
+                            <select name="mata_kuliah_id" class="form-select rounded-3" required>
                                 <option value="">-- Pilih Mata Kuliah --</option>
                                 @foreach($master_mk as $mk)
                                 <option value="{{ $mk->id }}">{{ $mk->nama_mk }}</option>
@@ -503,7 +537,9 @@
                             <select name="dosen_id" class="form-select rounded-3" required>
                                 <option value="">-- Pilih Dosen --</option>
                                 @foreach($master_dosen as $ds)
-                                <option value="{{ $ds->id }}">{{ $ds->name ?? $ds->nama }}</option>
+                                <option value="{{ $ds->id }}">
+                                    {{ $ds->nama_dosen ?? $ds->nama ?? $ds->name }}
+                                </option>
                                 @endforeach
                             </select>
                         </div>
@@ -525,7 +561,6 @@
                                 <option value="Rabu">Rabu</option>
                                 <option value="Kamis">Kamis</option>
                                 <option value="Jumat">Jumat</option>
-                                <option value="Sabtu">Sabtu</option>
                             </select>
                         </div>
                         <div class="row">
@@ -537,6 +572,15 @@
                                 <label class="form-label small fw-semibold text-muted">Jam Selesai</label>
                                 <input type="time" name="jam_selesai" class="form-control rounded-3" required>
                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Semester</label>
+                            <select name="semester" class="form-select rounded-3" required>
+                                <option value="">-- Pilih Semester --</option>
+                                @for ($i = 1; $i <= 8; $i++)
+                                    <option value="{{ $i }}">Semester {{ $i }}</option>
+                                    @endfor
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-semibold text-muted">Status</label>

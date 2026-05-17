@@ -25,13 +25,14 @@ return new class extends Migration
         // 2. Tabel Jadwal Kuliah (Pusat Relasi)
         Schema::create('jadwal_kuliahs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mata_kuliah_id')->constrained('mata_kuliahs');
+            $table->foreignId('mata_kuliah_id')->constrained('mata_kuliahs')->onDelete('cascade');
             $table->foreignId('dosen_id')->constrained('dosens');
             $table->foreignId('ruangan_id')->constrained('ruangans');
             $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat']);
             $table->time('jam_mulai');
             $table->time('jam_selesai');
-            $table->string('semester'); // Contoh: Ganjil 2024/2025
+            $table->string('semester');
+            $table->string('status', 50)->default('Aktif');
             $table->timestamps();
         });
 

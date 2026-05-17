@@ -10,19 +10,20 @@ class JadwalKuliah extends Model
     protected $table = 'jadwal_kuliahs'; // Mengunci nama tabel di database
 
     protected $fillable = [
-        'matakuliah_id',
+        'mata_kuliah_id',
         'dosen_id',
         'ruangan_id',
         'hari',
         'jam_mulai',
         'jam_selesai',
-        'status'
+        'semester',
+        'status',
     ];
 
     // Relasi ke Mata Kuliah
     public function matakuliah()
     {
-        return $this->belongsTo(Matakuliah::class, 'matakuliah_id');
+        return $this->belongsTo(Matakuliah::class, 'mata_kuliah_id');
     }
 
     // Relasi ke Dosen

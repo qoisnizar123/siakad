@@ -46,30 +46,36 @@ class JadwalKuliahController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'matakuliah_id' => 'required',
-            'dosen_id'      => 'required',
-            'ruangan_id'    => 'required',
+            'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
+            'dosen_id'      => 'required|exists:dosens,id',
+            'ruangan_id'    => 'required|exists:ruangans,id',
             'hari'          => 'required|string',
             'jam_mulai'     => 'required',
             'jam_selesai'   => 'required',
-            'status'        => 'required|string'
+            'semester'      => 'required|integer|min:1|max:8',
+            'status'        => 'required|string',
         ]);
 
-        JadwalKuliah::create($request->all());
-        return redirect()->back()->with('success', 'Jadwal Kuliah berhasil ditambahkan!');
+        $data = $request->all();
+        $data['mata_kuliah_id'] = $request->mata_kuliah_id;
+
+        JadwalKuliah::create($data);
+
+        return redirect()->back()->with('success', 'Jadwal Kuliah baru berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id)
     {
         $j = JadwalKuliah::findOrFail($id);
         $request->validate([
-            'matakuliah_id' => 'required',
-            'dosen_id'      => 'required',
-            'ruangan_id'    => 'required',
+            'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
+            'dosen_id'      => 'required|exists:dosens,id',
+            'ruangan_id'    => 'required|exists:ruangans,id',
             'hari'          => 'required|string',
             'jam_mulai'     => 'required',
             'jam_selesai'   => 'required',
-            'status'        => 'required|string'
+            'semester'      => 'required|integer|min:1|max:8',
+            'status'        => 'required|string',
         ]);
 
         $j->update($request->all());

@@ -26,10 +26,13 @@ return new class extends Migration
         Schema::create('mahasiswas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('nim', 25)->unique();
+            $table->string('nama_mahasiswa', 150);
+            $table->string('email', 100)->unique();
             $table->foreignId('prodi_id')->constrained('prodis');
-            $table->char('nim', 10)->unique();
-            $table->string('nama_mahasiswa');
-            $table->integer('angkatan');
+            $table->integer('semester');
+            $table->string('angkatan', 4);
+            $table->string('status', 50);
             $table->timestamps();
         });
     }
