@@ -99,7 +99,6 @@
     <!-- SIDEBAR -->
     <div class="sidebar">
         <h5><i class="fa fa-graduation-cap me-2"></i>SIAKAD</h5>
-
         <a href="{{ route('mahasiswa.dashboard') }}"><i class="fa fa-home me-2"></i> Dashboard</a>
         <a href="{{ route('mahasiswa.krs') }}"><i class="fa fa-book me-2"></i> KRS</a>
         <a href="{{ route('mahasiswa.khs') }}"><i class="fa fa-chart-line me-2"></i> KHS</a>
@@ -108,12 +107,10 @@
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
-
         <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fa-solid fa-right-from-bracket me-2"></i>
             <span>Logout</span>
         </a>
-
     </div>
 
     <!-- MAIN -->

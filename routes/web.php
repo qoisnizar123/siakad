@@ -122,14 +122,12 @@ Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->group(functi
     // 🏁 Fitur 1: Dashboard Utama Mahasiswa
     Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
 
-    // 📅 Fitur 2: Jadwal Kuliah (SOLUSI KUNCI SINKRONISASI TOTAL)
-    // Kita kunci kedua nama rute ini agar semuanya diproses oleh MahasiswaJadwalController yang dinamis!
-    Route::get('/jadwal', [MahasiswaJadwalController::class, 'index'])->name('mahasiswa.jadwal');
-    Route::get('/jadwal_kuliah', [MahasiswaJadwalController::class, 'index'])->name('mahasiswa.jadwal_kuliah');
+    // 📅 Fitur 2: Jadwal Kuliah
+    Route::get('/jadwal', [MahasiswaController::class, 'jadwalKuliah'])->name('mahasiswa.jadwal_kuliah');
 
     // 📝 Fitur 3: Pengisian KRS Online
-    Route::get('/mahasiswa/krs', [MahasiswaController::class, 'krs'])->name('mahasiswa.krs');
-    Route::post('/mahasiswa/krs/simpan', [MahasiswaController::class, 'storeKrs'])->name('mahasiswa.krs.store');
+    Route::get('/krs', [MahasiswaController::class, 'krs'])->name('mahasiswa.krs');
+    Route::post('/krs/simpan', [MahasiswaController::class, 'storeKrs'])->name('mahasiswa.krs.store');
 
     // 📊 Fitur 4: KHS & Hasil Nilai Akademik
     Route::get('/khs', [MahasiswaController::class, 'khs'])->name('mahasiswa.khs');

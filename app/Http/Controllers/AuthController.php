@@ -8,13 +8,15 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
+    // === Fitur Autentikasi ===
+    
     // Tampilkan halaman login
     public function showLogin()
     {
         return view('login');
     }
 
-    // Proses login
+    // Proses validasi dan login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -25,7 +27,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            // Logic redirect berdasarkan role
+            // Logic redirect berdasarkan role user
             $user = Auth::user();
             if ($user->role === 'admin') {
                 return redirect()->route('admin.dashboard');
@@ -42,14 +44,15 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    // Proses logout
+    // === Fitur Logout ===
     public function logout(Request $request)
     {
         Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    
-    // Lempar ke halaman login (rute named 'login')
-    return redirect()->route('login');
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        // Lempar ke halaman login (rute named 'login')
+        return redirect()->route('login');
     }
 }

@@ -17,7 +17,7 @@ use Carbon\Carbon;
 
 class DosenController extends Controller
 {
-    // 🏠 1. Halaman Dashboard Utama
+    // === Fitur Dashboard Dosen ===
     public function dashboard()
     {
         $dosen = Dosen::where('user_id', Auth::id())->first();
@@ -66,9 +66,7 @@ class DosenController extends Controller
         ));
     }
 
-    //==================================================================================
-    // 📅 2. Jadwal Mengajar Dosen
-    // 🗓️ Halaman Jadwal Mengajar Dosen
+    // === Fitur Jadwal Mengajar ===
     public function jadwalMengajar(Request $request)
     {
         $dosen = Dosen::where('user_id', Auth::id())->first();
@@ -79,18 +77,16 @@ class DosenController extends Controller
         $jadwalHariIniCount = 0;
         $kelasOnlineCount = 0;
 
-        // 💡 Logika Penentuan Hari & Judul Dinamis Berdasarkan Filter
-        $hariRealTime = \Carbon\Carbon::now()->locale('id')->isoFormat('dddd'); // Waktu asli di dunia nyata
-        $filterHari = $request->input('hari', 'Semua Hari'); // Mengambil data dropdown
+        // Logika Penentuan Hari & Judul Dinamis Berdasarkan Filter
+        $hariRealTime = \Carbon\Carbon::now()->locale('id')->isoFormat('dddd'); 
+        $filterHari = $request->input('hari', 'Semua Hari'); 
 
         if ($filterHari != 'Semua Hari') {
-            // Jika dosen memilih hari tertentu (misal: Selasa)
             $judulJadwalBawah = "Jadwal Hari Ini (" . $filterHari . ")";
             $hariPencarianCard = $filterHari;
         } else {
-            // Jika dosen memilih "Semua Hari"
             $judulJadwalBawah = "Jadwal Hari Ini";
-            $hariPencarianCard = $hariRealTime; // Default kembali menampilkan jadwal hari ini yang asli
+            $hariPencarianCard = $hariRealTime; 
         }
 
         if ($dosen) {
@@ -105,7 +101,7 @@ class DosenController extends Controller
             $totalJadwal = JadwalKuliah::where('dosen_id', $dosen->id)->count();
             $kelasOnlineCount = JadwalKuliah::where('dosen_id', $dosen->id)->where('metode', 'Online')->count();
             
-            // 2. Query untuk Card Bawah (Sekarang ikut berubah mengikuti filter)
+            // 2. Query untuk Card Bawah
             $jadwalHariIni = JadwalKuliah::with(['matakuliah'])
                 ->where('dosen_id', $dosen->id)
                 ->where('hari', $hariPencarianCard)
@@ -123,7 +119,7 @@ class DosenController extends Controller
         ));
     }
 
-    // 🆕 Menyimpan/Menambahkan Detail Jadwal Baru
+    // Proses Tambah Jadwal Baru
     public function storeJadwal(Request $request)
     {
         $request->validate([
@@ -152,8 +148,9 @@ class DosenController extends Controller
         return redirect()->back()->with('success', 'Jadwal mengajar baru berhasil ditambahkan.');
     }
 
-    //==================================================================================
-    // 📊 3. Halaman Utama Nilai (Rekapitulasi Total Berdasarkan Permintaan Kolom Baru)
+    // === Fitur Penilaian Mahasiswa ===
+    
+    // Halaman Utama Rekapitulasi Nilai
     public function nilai()
     {
         $dosen = Dosen::where('user_id', Auth::id())->first();
@@ -161,12 +158,11 @@ class DosenController extends Controller
         $jadwals = collect();
 
         if ($dosen) {
-            // 💡 Ambil semua kelas/jadwal yang diampu oleh dosen ini untuk opsi di dalam modal
+            // Ambil semua kelas/jadwal yang diampu oleh dosen ini
             $jadwals = JadwalKuliah::with('matakuliah')
                 ->where('dosen_id', $dosen->id)
                 ->get();
 
-            // Ambil seluruh ID mata kuliah dari jadwal tersebut
             $mataKuliahIds = $jadwals->pluck('mata_kuliah_id');
 
             // Ambil rekap data KHS mahasiswa
@@ -175,32 +171,29 @@ class DosenController extends Controller
                 ->get();
         }
 
-        // 💡 Pastikan variabel $jadwals ikut dikirimkan ke dalam view
         return view('dosen.nilai', compact('dosen', 'khsRecords', 'jadwals'));
     }
 
     public function indexNilai()
     {
         return $this->nilai();
-        }
+    }
         
-    //==================================================================================
-        // 📝 4. Halaman Form Input Nilai per Kelas
-        public function inputNilai(int $jadwal_id)
-        {
-            $dosen = Dosen::where('user_id', Auth::id())->first();
-            $jadwal = JadwalKuliah::with('matakuliah')->findOrFail($jadwal_id);
-            
-            $mahasiswas = Krs::with('mahasiswa')
+    // Halaman Form Input Nilai per Kelas
+    public function inputNilai(int $jadwal_id)
+    {
+        $dosen = Dosen::where('user_id', Auth::id())->first();
+        $jadwal = JadwalKuliah::with('matakuliah')->findOrFail($jadwal_id);
+        
+        $mahasiswas = Krs::with('mahasiswa')
             ->where('mata_kuliah_id', $jadwal->mata_kuliah_id)
             ->where('status', 'Disetujui')
             ->get();
+        
+        return view('dosen.input_nilai', compact('dosen', 'jadwal', 'mahasiswas'));
+    }
             
-            return view('dosen.input_nilai', compact('dosen', 'jadwal', 'mahasiswas'));
-            }
-            
-    //==================================================================================
-    // 💾 5. Proses Simpan Nilai ke Database (KHS)
+    // Proses Simpan Nilai ke Database (KHS)
     public function storeNilai(Request $request)
     {
         $request->validate([
@@ -231,7 +224,7 @@ class DosenController extends Controller
         return redirect()->route('dosen.nilai')->with('success', 'Nilai mahasiswa berhasil disimpan!');
     }
     
-    // 🗑️ 6. Proses Hapus Nilai Rekapitulasi
+    // Proses Hapus Nilai
     public function destroyNilai(int $id)
     {
         $khs = Khs::findOrFail($id);
@@ -240,8 +233,7 @@ class DosenController extends Controller
         return redirect()->route('dosen.nilai')->with('success', 'Data nilai mahasiswa berhasil dihapus dari sistem!');
     }
 
-    //==================================================================================
-    // Rute pelengkap view kosong
+    // === Fitur Mata Kuliah Dosen ===
     public function matakuliah()
     {
         $dosen = Dosen::where('user_id', Auth::id())->first();
@@ -250,13 +242,14 @@ class DosenController extends Controller
         if ($dosen) {
             // Tarik data jadwal yang diampu dosen ini beserta detail matakuliahnya
             $jadwals = JadwalKuliah::with(['matakuliah'])
-            ->where('dosen_id', $dosen->id)
-            ->get();
-            }
+                ->where('dosen_id', $dosen->id)
+                ->get();
+        }
             
-            return view('dosen.matakuliah', compact('dosen', 'jadwals'));
+        return view('dosen.matakuliah', compact('dosen', 'jadwals'));
     }
-    // 🆕 Fungsi Tambah Mata Kuliah Mandiri oleh Dosen
+
+    // Proses Tambah Mata Kuliah Mandiri
     public function storeMatakuliah(Request $request)
     {
         $request->validate([
@@ -276,32 +269,26 @@ class DosenController extends Controller
             'sks' => $request->sks,
         ]);
 
-        // 2. Hubungkan mata kuliah tersebut ke dosen ini sebagai jadwal/kelas baru
+        // 2. Hubungkan mata kuliah ke dosen sebagai kelas baru
         JadwalKuliah::create([
             'dosen_id' => $dosen->id,
             'mata_kuliah_id' => $mk->id,
             'kelas' => $request->kelas,
             'semester' => $request->semester,
-            // Jika di tabel jadwal ada kolom hari/ruangan yang required, beri nilai default sementara:
-            // 'hari' => 'Belum Diatur',
-            // 'ruangan_id' => null, 
         ]);
 
         return redirect()->back()->with('success', 'Mata kuliah baru berhasil ditambahkan dan ditugaskan ke Anda.');
     }
             
-    //==================================================================================
-    // 👥 Halaman Daftar Mahasiswa & Persetujuan Kelas (KRS)
+    // === Fitur Persetujuan KRS Mahasiswa ===
     public function dataMahasiswa()
     {
         $dosen = Dosen::where('user_id', Auth::id())->first();
         $krsRecords = collect();
 
         if ($dosen) {
-            // 1. Cari semua mata kuliah yang diajarkan dosen ini
             $mataKuliahIds = JadwalKuliah::where('dosen_id', $dosen->id)->pluck('mata_kuliah_id');
 
-            // 2. Ambil data KRS mahasiswa yang mendaftar ke mata kuliah tersebut
             $krsRecords = Krs::with(['mahasiswa', 'matakuliah'])
                 ->whereIn('mata_kuliah_id', $mataKuliahIds)
                 ->orderBy('created_at', 'desc')
@@ -311,7 +298,7 @@ class DosenController extends Controller
         return view('dosen.data_mahasiswa', compact('dosen', 'krsRecords'));
     }
 
-    // ✅ Fungsi Menyetujui Mahasiswa Masuk Kelas
+    // Menyetujui KRS
     public function approveKrs(int $id)
     {
         $krs = Krs::findOrFail($id);
@@ -320,7 +307,7 @@ class DosenController extends Controller
         return redirect()->back()->with('success', 'Mahasiswa berhasil disetujui masuk ke kelas.');
     }
 
-    // ❌ Fungsi Menolak Mahasiswa
+    // Menolak KRS
     public function rejectKrs(int $id)
     {
         $krs = Krs::findOrFail($id);
@@ -329,15 +316,15 @@ class DosenController extends Controller
         return redirect()->back()->with('success', 'Pengajuan kelas mahasiswa ditolak.');
     }
 
-    //==================================================================================
-    // 📋 Halaman Utama Filter Absensi
+    // === Fitur Absensi Perkuliahan ===
+    
+    // Halaman Utama Filter Absensi
     public function absensi(Request $request)
     {
         $dosen = Dosen::where('user_id', Auth::id())->first();
         $jadwals = collect();
 
         if ($dosen) {
-            // Ambil kelas yang diajar dosen untuk opsi dropdown filter
             $jadwals = JadwalKuliah::with('matakuliah')
                 ->where('dosen_id', $dosen->id)
                 ->get();
@@ -346,23 +333,20 @@ class DosenController extends Controller
         return view('dosen.absensi_mahasiswa', compact('dosen', 'jadwals'));
     }
 
-    // 📋 Halaman Absensi Setelah Kelas Dipilih (Memunculkan Form Mahasiswa)
+    // Halaman Form Absensi Kelas Terpilih
     public function absensiKelas(int $jadwal_id, Request $request)
     {
         $dosen = Dosen::where('user_id', Auth::id())->first();
         $jadwals = JadwalKuliah::with('matakuliah')->where('dosen_id', $dosen->id)->get();
         $jadwal_terpilih = JadwalKuliah::with('matakuliah')->findOrFail($jadwal_id);
 
-        // Ambil Data Pertemuan untuk kelas ini
         $pertemuans = Pertemuan::where('jadwal_id', $jadwal_id)->orderBy('pertemuan_ke', 'asc')->get();
         $pertemuan_aktif = null;
         $mahasiswas = collect();
 
-        // Jika dosen memilih pertemuan tertentu dari filter dropdown
         if ($request->has('pertemuan_id') && $request->pertemuan_id != '') {
             $pertemuan_aktif = Pertemuan::findOrFail($request->pertemuan_id);
             
-            // Ambil daftar mahasiswa yang disetujui di KRS kelas ini
             $mahasiswas = Krs::with(['mahasiswa', 'mahasiswa.absensi' => function($q) use ($pertemuan_aktif) {
                 $q->where('pertemuan_id', $pertemuan_aktif->id);
             }])
@@ -374,7 +358,7 @@ class DosenController extends Controller
         return view('dosen.absensi_mahasiswa', compact('dosen', 'jadwals', 'jadwal_terpilih', 'pertemuans', 'pertemuan_aktif', 'mahasiswas'));
     }
 
-    // 🆕 Simpan Catatan Pertemuan Baru
+    // Simpan Catatan Pertemuan Baru
     public function storePertemuan(Request $request)
     {
         $request->validate([
@@ -388,7 +372,7 @@ class DosenController extends Controller
         return redirect()->back()->with('success', 'Sesi pertemuan baru berhasil dibuat.');
     }
 
-    // 💾 Simpan / Update Absensi Mahasiswa per Pertemuan
+    // Simpan / Update Absensi Mahasiswa
     public function storeAbsensi(Request $request)
     {
         $request->validate([

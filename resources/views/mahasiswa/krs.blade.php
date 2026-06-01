@@ -11,65 +11,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9;
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 240px;
-            height: 100vh;
-            position: fixed;
-            background: #1e3a8a;
-            color: white;
-            padding: 20px;
-        }
-
-        .sidebar h5 {
-            font-weight: 600;
-            margin-bottom: 30px;
-        }
-
-        .sidebar a {
-            display: block;
-            color: white;
-            padding: 10px;
-            border-radius: 6px;
-            text-decoration: none;
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        .sidebar a:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* MAIN */
-        .main {
-            margin-left: 240px;
-            padding: 20px;
-        }
-
-        /* CARD */
-        .card-box {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        /* TABLE */
-        .table thead {
-            background: #1e3a8a;
-            color: white;
-            font-size: 13px;
-        }
-
-        .table td {
-            font-size: 13px;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; }
+        .sidebar { width: 240px; height: 100vh; position: fixed; background: #1e3a8a; color: white; padding: 20px; }
+        .sidebar h5 { font-weight: 600; margin-bottom: 30px; }
+        .sidebar a { display: block; color: white; padding: 10px; border-radius: 6px; text-decoration: none; margin-bottom: 5px; font-size: 14px; transition: 0.3s; }
+        .sidebar a:hover { background: rgba(255, 255, 255, 0.1); }
+        .main { margin-left: 240px; padding: 20px; }
+        .card-box { background: white; padding: 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); }
+        .table thead { background: #1e3a8a; color: white; font-size: 13px; }
+        .table td { font-size: 13px; vertical-align: middle; }
+        .btn-primary { background: #1e3a8a; border: none; }
+        .btn-primary:hover { background: #162d6b; }
     </style>
 </head>
 
@@ -77,8 +29,7 @@
 
     <!-- SIDEBAR -->
     <div class="sidebar">
-        <h5><i class="fa-solid fa-graduation-cap me-2"></i> SIAKAD</h5>
-
+        <h5><i class="fa fa-graduation-cap me-2"></i>SIAKAD</h5>
         <a href="{{ route('mahasiswa.dashboard') }}"><i class="fa fa-home me-2"></i> Dashboard</a>
         <a href="{{ route('mahasiswa.krs') }}"><i class="fa fa-book me-2"></i> KRS</a>
         <a href="{{ route('mahasiswa.khs') }}"><i class="fa fa-chart-line me-2"></i> KHS</a>
@@ -87,104 +38,149 @@
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
-
         <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
             <i class="fa-solid fa-right-from-bracket me-2"></i>
             <span>Logout</span>
         </a>
-
     </div>
 
-
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- HEADER -->
-        <div class="card-box">
-            <h5>Kartu Rencana Studi (KRS)</h5>
-            <small class="text-muted">Semester Ganjil 2026</small>
-        </div>
-
-        <!-- TABLE KRS -->
-        <div class="card-box">
-            <h6 class="mb-3">Pilih Mata Kuliah</h6>
-
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Pilih</th>
-                        <th>Kode</th>
-                        <th>Mata Kuliah</th>
-                        <th>SKS</th>
-                        <th>Dosen</th>
-                        <th>Jadwal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="checkbox" class="mk" data-sks="3"></td>
-                        <td>IF101</td>
-                        <td>Pemrograman Web</td>
-                        <td>3</td>
-                        <td>Dr. Budi</td>
-                        <td>Senin 08:00</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="mk" data-sks="3"></td>
-                        <td>IF102</td>
-                        <td>Basis Data</td>
-                        <td>3</td>
-                        <td>Dr. Andi</td>
-                        <td>Selasa 10:00</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="mk" data-sks="2"></td>
-                        <td>IF103</td>
-                        <td>Jaringan Komputer</td>
-                        <td>2</td>
-                        <td>Dr. Siti</td>
-                        <td>Rabu 13:00</td>
-                    </tr>
-                    <tr>
-                        <td><input type="checkbox" class="mk" data-sks="3"></td>
-                        <td>IF104</td>
-                        <td>Algoritma</td>
-                        <td>3</td>
-                        <td>Dr. Ahmad</td>
-                        <td>Kamis 09:00</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- TOTAL -->
-            <div class="d-flex justify-content-between align-items-center">
-                <strong>Total SKS: <span id="totalSKS">0</span></strong>
-
-                <button class="btn btn-primary">
-                    Simpan KRS
-                </button>
+        <div class="card-box d-flex justify-content-between align-items-center">
+            <div>
+                <h5 class="mb-1"><i class="fa fa-book-open text-primary me-2"></i> Kartu Rencana Studi (KRS)</h5>
+                <small class="text-muted">Semester Ganjil 2026/2027 &bull; {{ $mahasiswa->nama_mahasiswa ?? $mahasiswa->nama ?? 'Mahasiswa' }}</small>
+            </div>
+            <div class="text-end">
+                <span class="badge bg-primary fs-6 py-2 px-3">SKS Terdaftar: {{ $totalSksSaatIni }}</span>
             </div>
         </div>
 
+        @if(session('success'))
+            <div class="alert alert-success border-0 shadow-sm rounded-3 mb-3">
+                <i class="fa fa-circle-check me-2"></i> {{ session('success') }}
+            </div>
+        @endif
+
+        @if($errors->any())
+            <div class="alert alert-danger border-0 shadow-sm rounded-3 mb-3">
+                <i class="fa fa-triangle-exclamation me-2"></i> {{ $errors->first() }}
+            </div>
+        @endif
+
+        <form action="{{ route('mahasiswa.krs.store') }}" method="POST">
+            @csrf
+            <div class="card-box">
+                <h6 class="mb-3 fw-semibold">Pilih Mata Kuliah Tersedia</h6>
+
+                <table class="table table-bordered text-center shadow-sm">
+                    <thead>
+                        <tr>
+                            <th width="80">Pilih</th>
+                            <th width="100">Kode</th>
+                            <th class="text-start">Mata Kuliah</th>
+                            <th width="70">SKS</th>
+                            <th>Dosen</th>
+                            <th width="180">Jadwal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($jadwals as $jadwal)
+                        @php
+                            // Cek apakah mahasiswa sudah mengambil mata kuliah ini sebelumnya
+                            $isDiambil = $krsSaya->has($jadwal->mata_kuliah_id);
+                            $statusKrs = $isDiambil ? $krsSaya[$jadwal->mata_kuliah_id]->status : null;
+                        @endphp
+                        <tr>
+                            <td>
+                                @if($isDiambil)
+                                    <span class="badge {{ $statusKrs == 'Disetujui' ? 'bg-success' : ($statusKrs == 'Ditolak' ? 'bg-danger' : 'bg-warning text-dark') }} w-100 py-2">
+                                        {{ $statusKrs }}
+                                    </span>
+                                @else
+                                    <input type="checkbox" name="mata_kuliah_id[]" value="{{ $jadwal->mata_kuliah_id }}" class="mk form-check-input border-secondary" style="width: 20px; height: 20px;" data-sks="{{ $jadwal->matakuliah->sks ?? 0 }}">
+                                @endif
+                            </td>
+                            <td class="fw-bold text-secondary">{{ $jadwal->matakuliah->kode_mk ?? '-' }}</td>
+                            <td class="text-start fw-semibold text-dark">{{ $jadwal->matakuliah->nama_mk ?? 'N/A' }}</td>
+                            <td>{{ $jadwal->matakuliah->sks ?? 0 }}</td>
+                            <td class="text-start"><i class="fa fa-user-tie text-muted me-1"></i> {{ $jadwal->dosen->nama_dosen ?? 'N/A' }}</td>
+                            <td>
+                                {{ $jadwal->hari }}, {{ $jadwal->jam_mulai ? \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') : '--' }}
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-muted py-4">Belum ada jadwal kuliah yang dibuka untuk semester ini.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
+                <div class="d-flex justify-content-between align-items-center mt-4 bg-light p-3 rounded border">
+                    <strong class="fs-5 text-dark">
+                        <i class="fa fa-calculator text-primary me-2"></i> Total SKS Ditambahkan: <span id="totalSKS" class="text-primary fs-4">0</span>
+                    </strong>
+
+                    <button type="submit" id="btnSimpan" class="btn btn-primary rounded-3 px-4 fw-semibold" disabled>
+                        <i class="fa fa-save me-1"></i> Simpan KRS
+                    </button>
+                </div>
+            </div>
+        </form>
+
     </div>
 
-    <script>
+   <script>
         const checkboxes = document.querySelectorAll('.mk');
         const totalSKS = document.getElementById('totalSKS');
+        const btnSimpan = document.getElementById('btnSimpan');
+        
+        // Ambil data SKS yang sudah disetujui/menunggu dari backend
+        const sksSudahTerdaftar = parseInt('{{ $totalSksSaatIni ?? 0 }}'); 
+        const batasMaksimalSKS = 24;
 
         checkboxes.forEach(cb => {
-            cb.addEventListener('change', () => {
-                let total = 0;
+            cb.addEventListener('change', (e) => {
+                let totalTambahan = 0;
+                let anyChecked = false;
+                
+                // Hitung total checkbox yang dicentang
                 checkboxes.forEach(c => {
                     if (c.checked) {
-                        total += parseInt(c.dataset.sks);
+                        totalTambahan += parseInt(c.dataset.sks);
+                        anyChecked = true;
                     }
                 });
-                totalSKS.innerText = total;
+                
+                let grandTotalSKS = sksSudahTerdaftar + totalTambahan;
+
+                // Cegah jika melebihi batas 24 SKS
+                if (grandTotalSKS > batasMaksimalSKS) {
+                    alert(`Gagal ditambahkan! Batas maksimal adalah ${batasMaksimalSKS} SKS.\nSKS Terdaftar: ${sksSudahTerdaftar}\nSKS yang akan ditambah: ${totalTambahan}\nTotal: ${grandTotalSKS} SKS.`);
+                    
+                    // Batalkan centangan terakhir
+                    e.target.checked = false;
+                    
+                    // Hitung ulang setelah dibatalkan
+                    totalTambahan = 0;
+                    anyChecked = false;
+                    checkboxes.forEach(c => {
+                        if (c.checked) {
+                            totalTambahan += parseInt(c.dataset.sks);
+                            anyChecked = true;
+                        }
+                    });
+                }
+                
+                // Update angka di layar
+                totalSKS.innerText = totalTambahan;
+                
+                // Aktifkan tombol simpan HANYA jika ada checkbox yang dipilih valid
+                btnSimpan.disabled = !anyChecked;
             });
         });
     </script>
 
 </body>
-
 </html>

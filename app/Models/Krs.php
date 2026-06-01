@@ -12,11 +12,7 @@ class Krs extends Model
     // 💡 Mengunci nama tabel asli kelompokmu
     protected $table = 'krs';
 
-    protected $fillable = [
-        'mahasiswa_id',
-        'jadwal_id',
-        'status'
-    ];
+    protected $guarded = [];
 
     // Relasi ke data profil induk Mahasiswa
     public function mahasiswa()
@@ -28,5 +24,11 @@ class Krs extends Model
     public function jadwal()
     {
         return $this->belongsTo(JadwalKuliah::class, 'jadwal_id');
+    }
+
+    public function matakuliah()
+    {
+        // Menghubungkan Krs dengan tabel Matakuliah lewat kolom 'mata_kuliah_id'
+        return $this->belongsTo(Matakuliah::class, 'mata_kuliah_id');
     }
 }

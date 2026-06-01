@@ -107,17 +107,20 @@
 
 <body>
 
+    <!-- SIDEBAR -->
     <div class="sidebar">
-        <h5><i class="fa-solid fa-graduation-cap me-2"></i> SIAKAD</h5>
-        <a href="{{ route('mahasiswa.dashboard') }}" class="active"><i class="fa fa-home me-2"></i> Dashboard</a>
+        <h5><i class="fa fa-graduation-cap me-2"></i>SIAKAD</h5>
+        <a href="{{ route('mahasiswa.dashboard') }}"><i class="fa fa-home me-2"></i> Dashboard</a>
         <a href="{{ route('mahasiswa.krs') }}"><i class="fa fa-book me-2"></i> KRS</a>
         <a href="{{ route('mahasiswa.khs') }}"><i class="fa fa-chart-line me-2"></i> KHS</a>
         <a href="{{ route('mahasiswa.jadwal_kuliah') }}"><i class="fa fa-calendar me-2"></i> Jadwal</a>
         <a href="{{ route('mahasiswa.booking') }}"><i class="fa fa-door-open me-2"></i> Booking Ruangan</a>
-
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="margin-top: 30px;">
-            <i class="fa-solid fa-right-from-bracket me-2"></i><span>Logout</span>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fa-solid fa-right-from-bracket me-2"></i>
+            <span>Logout</span>
         </a>
     </div>
 
@@ -126,7 +129,7 @@
         <div class="topbar">
             <div>
                 <strong>Dashboard Mahasiswa</strong><br>
-                <small class="text-muted">Semester Ganjil 2026</small>
+                <small class="text-muted">Semester Ganjil 2026/2027</small>
             </div>
             <div class="profile">
                 <i class="fa fa-user-circle me-1"></i>{{ Auth::user()->name }}
@@ -163,29 +166,32 @@
         </div>
 
         <div class="card-box">
-            <h6 class="mb-3">Jadwal Kuliah Semester Anda</h6>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Jadwal Kuliah Semester Anda</h6>
+                <a href="{{ route('mahasiswa.jadwal_kuliah') }}" class="btn btn-outline-primary btn-sm">Lihat Semua</a>
+            </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle">
+                <table class="table table-bordered table-hover align-middle text-center">
                     <thead>
                         <tr>
-                            <th>Hari</th>
-                            <th>Mata Kuliah</th>
-                            <th>Dosen</th>
-                            <th>Jam</th>
-                            <th>Ruangan</th>
+                            <th width="100">Hari</th>
+                            <th class="text-start">Mata Kuliah</th>
+                            <th class="text-start">Dosen</th>
+                            <th width="130">Jam</th>
+                            <th width="150">Ruangan</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($jadwals as $j)
                         <tr>
-                            <td class="fw-semibold">{{ $j->hari }}</td>
-                            <td class="fw-bold text-dark">{{ $j->matakuliah->nama ?? 'N/A' }}</td>
-                            <td>{{ $j->dosen->nama_dosen ?? $j->dosen->nama ?? 'Dosen' }}</td>
-                            <td class="text-primary fw-medium">
+                            <td class="fw-semibold text-primary">{{ $j->hari }}</td>
+                            <td class="text-start fw-bold text-dark">{{ $j->matakuliah->nama_mk ?? $j->matakuliah->nama ?? 'N/A' }}</td>
+                            <td class="text-start">{{ $j->dosen->nama_dosen ?? $j->dosen->nama ?? 'Dosen' }}</td>
+                            <td class="fw-medium">
                                 {{ \Carbon\Carbon::parse($j->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($j->jam_selesai)->format('H:i') }}
                             </td>
-                            <td><span class="badge bg-light text-dark border">{{ $j->ruangan->nama_ruangan ?? 'N/A' }}</span></td>
+                            <td><span class="badge bg-light text-dark border">{{ $j->ruangan->nama_ruangan ?? $j->ruangan ?? 'N/A' }}</span></td>
                         </tr>
                         @empty
                         <tr>
