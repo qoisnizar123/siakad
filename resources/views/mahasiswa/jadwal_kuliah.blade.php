@@ -45,6 +45,12 @@
             background: rgba(255, 255, 255, 0.12);
         }
 
+        /* 💡 Menambahkan class active agar menu Jadwal menyala sesuai standardisasi visual tim */
+        .sidebar a.active {
+            background: rgba(255, 255, 255, 0.18);
+            font-weight: 500;
+        }
+
         /* MAIN */
         .main {
             margin-left: 240px;
@@ -88,9 +94,9 @@
         .badge-mk {
             background: #dbeafe;
             color: #1e40af;
-            padding: 6px 10px;
+            padding: 4px 8px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
         }
 
@@ -131,9 +137,7 @@
 
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
-
         <h5>
             <i class="fa-solid fa-graduation-cap me-2"></i>
             SIAKAD
@@ -142,162 +146,95 @@
         <a href="{{ route('mahasiswa.dashboard') }}"><i class="fa fa-home me-2"></i> Dashboard</a>
         <a href="{{ route('mahasiswa.krs') }}"><i class="fa fa-book me-2"></i> KRS</a>
         <a href="{{ route('mahasiswa.khs') }}"><i class="fa fa-chart-line me-2"></i> KHS</a>
-        <a href="{{ route('mahasiswa.jadwal') }}"><i class="fa fa-calendar me-2"></i> Jadwal</a>
+        <a href="{{ route('mahasiswa.jadwal_kuliah') }}" class="active"><i class="fa fa-calendar me-2"></i> Jadwal</a>
         <a href="{{ route('mahasiswa.booking') }}"><i class="fa fa-door-open me-2"></i> Booking Ruangan</a>
+
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
 
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="margin-top: 30px;">
             <i class="fa-solid fa-right-from-bracket me-2"></i>
             <span>Logout</span>
         </a>
-
     </div>
 
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- TOPBAR -->
         <div class="topbar">
-
             <div>
                 <strong>Jadwal Kuliah Mahasiswa</strong><br>
-
                 <small class="text-muted">
-                    Semester Ganjil 2026/2027
+                    Paket Semester {{ $semesterMahasiswa }} &bull; Beban Total: {{ $totalSks }} SKS
                 </small>
             </div>
-
+            <div class="small fw-semibold text-secondary">
+                <i class="fa fa-user me-1 text-primary"></i> {{ auth()->user()->name }}
+            </div>
         </div>
 
-        <!-- TABLE -->
         <div class="card-box">
-
             <div class="d-flex justify-content-between align-items-center mb-3">
-
                 <h6>
-                    Jadwal kuliah
+                    Jadwal perkuliahan Paket Semester {{ $semesterMahasiswa }}
                 </h6>
-
                 <button class="btn btn-success btn-sm">
-
                     <i class="fa fa-download me-1"></i>
                     Cetak Jadwal
-
                 </button>
-
             </div>
 
-            <table class="table table-bordered align-middle">
-
-                <thead>
-                    <tr>
-                        <th>Hari</th>
-                        <th>Jam</th>
-                        <th>Mata Kuliah</th>
-                        <th>Dosen</th>
-                        <th>Ruangan</th>
-                        <th>SKS</th>
-                        <th>Metode</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    <tr>
-
-                        <td>Senin</td>
-                        <td>08:00 - 10:00</td>
-                        <td>Pemrograman Web</td>
-                        <td>Dr. Ahmad Fauzi</td>
-                        <td>Lab Komputer 1</td>
-                        <td>3</td>
-
-                        <td>
-                            <span class="badge-offline">
-                                Offline
-                            </span>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Senin</td>
-                        <td>10:30 - 12:00</td>
-                        <td>Basis Data</td>
-                        <td>Siti Aminah, M.Kom</td>
-                        <td>Ruang D203</td>
-                        <td>3</td>
-
-                        <td>
-                            <span class="badge-online">
-                                Online
-                            </span>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Selasa</td>
-                        <td>13:00 - 15:00</td>
-                        <td>Struktur Data</td>
-                        <td>Budi Santoso, M.T</td>
-                        <td>Lab Algoritma</td>
-                        <td>3</td>
-
-                        <td>
-                            <span class="badge-offline">
-                                Offline
-                            </span>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Rabu</td>
-                        <td>09:00 - 11:00</td>
-                        <td>Jaringan Komputer</td>
-                        <td>Agus Salim, M.Kom</td>
-                        <td>Ruang C102</td>
-                        <td>2</td>
-
-                        <td>
-                            <span class="badge-offline">
-                                Offline
-                            </span>
-                        </td>
-
-                    </tr>
-
-                    <tr>
-
-                        <td>Kamis</td>
-                        <td>08:00 - 10:00</td>
-                        <td>Sistem Operasi</td>
-                        <td>Dewi Lestari, M.T</td>
-                        <td>Lab Komputer 2</td>
-                        <td>3</td>
-
-                        <td>
-                            <span class="badge-online">
-                                Online
-                            </span>
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
+            <div class="table-responsive">
+                <table class="table table-bordered align-middle">
+                    <thead>
+                        <tr>
+                            <th>Hari</th>
+                            <th>Jam</th>
+                            <th>Mata Kuliah</th>
+                            <th>Dosen</th>
+                            <th>Ruangan</th>
+                            <th>SKS</th>
+                            <th>Metode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($jadwals as $j)
+                        <tr>
+                            <td class="fw-semibold">{{ $j->hari }}</td>
+                            <td class="text-primary fw-medium">
+                                {{ \Carbon\Carbon::parse($j->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($j->jam_selesai)->format('H:i') }}
+                            </td>
+                            <td>
+                                @if(isset($j->matakuliah->kode_mk))
+                                <span class="badge-mk me-1">{{ $j->matakuliah->kode_mk }}</span>
+                                @endif
+                                <span class="fw-bold text-dark">{{ $j->matakuliah->nama ?? 'N/A' }}</span>
+                            </td>
+                            <td>{{ $j->dosen->nama_dosen ?? $j->dosen->nama ?? 'Dosen Pengajar' }}</td>
+                            <td><span class="fw-medium text-secondary">{{ $j->ruangan->nama_ruangan ?? 'N/A' }}</span></td>
+                            <td class="fw-bold">{{ $j->matakuliah->sks ?? 0 }}</td>
+                            <td>
+                                <span class="{{ strtolower($j->metode ?? 'Offline') == 'online' ? 'badge-online' : 'badge-offline' }}">
+                                    {{ ucfirst($j->metode ?? 'Offline') }}
+                                </span>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="7" class="text-center py-4 text-muted">
+                                <i class="fa-solid fa-calendar-xmark fs-4 mb-2 d-block text-secondary"></i>
+                                Belum ada daftar paket jadwal perkuliahan yang dirilis untuk Semester {{ $semesterMahasiswa }} Anda.
+                            </td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

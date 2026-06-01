@@ -60,9 +60,30 @@ return new class extends Migration
         // 5. Tabel Absensi
         Schema::create('absensis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('krs_id')->constrained('krs')->onDelete('cascade');
-            $table->date('tanggal');
-            $table->enum('status', ['hadir', 'sakit', 'izin', 'alpa']);
+            
+            // Relasi ke tabel pertemuans yang baru saja kita buat di atas
+            $table->unsignedBigInteger('pertemuan_id');
+            $table->foreign('pertemuan_id')->references('id')->on('pertemuans')->onDelete('cascade');
+            
+            // Relasi ke tabel mahasiswa (pastikan nama tabel mahasiswamu benar)
+            $table->unsignedBigInteger('mahasiswa_id');
+            $table->foreign('mahasiswa_id')->references('id')->on('mahasiswas')->onDelete('cascade');
+            
+            // Pilihan status absensi sesuai UI kelompokmu
+            $table->enum('status_kehadiran', ['Hadir', 'Izin', 'Sakit', 'Alpha'])->default('Alpha');
+            $table->string('keterangan')->nullable(); // Kolom teks untuk keterangan tambahan
+            
+            $table->timestamps();
+        });
+        
+        // 6. Tabel KHS (Kartu Hasil Studi)
+        Schema::create('khs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('mahasiswa_id')->constrained('mahasiswas')->onDelete('cascade');
+            $table->foreignId('mata_kuliah_id')->constrained('mata_kuliahs')->onDelete('cascade');
+            $table->integer('nilai_angka');
+            $table->string('nilai_huruf', 2);
+            $table->integer('semester');
             $table->timestamps();
         });
     }

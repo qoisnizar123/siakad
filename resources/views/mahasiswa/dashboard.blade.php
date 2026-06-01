@@ -45,6 +45,11 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+        .sidebar a.active {
+            background: rgba(255, 255, 255, 0.18);
+            font-weight: 600;
+        }
+
         /* MAIN */
         .main {
             margin-left: 240px;
@@ -69,6 +74,7 @@
             border-radius: 10px;
             font-size: 14px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
         }
 
         .stat-card {
@@ -90,9 +96,9 @@
 
         .table td {
             font-size: 13px;
+            vertical-align: middle;
         }
 
-        /* PROFILE */
         .profile {
             font-size: 13px;
         }
@@ -101,108 +107,94 @@
 
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
         <h5><i class="fa-solid fa-graduation-cap me-2"></i> SIAKAD</h5>
-
-        <a href="{{ route('mahasiswa.dashboard') }}"><i class="fa fa-home me-2"></i> Dashboard</a>
+        <a href="{{ route('mahasiswa.dashboard') }}" class="active"><i class="fa fa-home me-2"></i> Dashboard</a>
         <a href="{{ route('mahasiswa.krs') }}"><i class="fa fa-book me-2"></i> KRS</a>
         <a href="{{ route('mahasiswa.khs') }}"><i class="fa fa-chart-line me-2"></i> KHS</a>
-        <a href="{{ route('mahasiswa.jadwal') }}"><i class="fa fa-calendar me-2"></i> Jadwal</a>
+        <a href="{{ route('mahasiswa.jadwal_kuliah') }}"><i class="fa fa-calendar me-2"></i> Jadwal</a>
         <a href="{{ route('mahasiswa.booking') }}"><i class="fa fa-door-open me-2"></i> Booking Ruangan</a>
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
 
-        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-            <i class="fa-solid fa-right-from-bracket me-2"></i>
-            <span>Logout</span>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
+        <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="margin-top: 30px;">
+            <i class="fa-solid fa-right-from-bracket me-2"></i><span>Logout</span>
         </a>
-
     </div>
 
-    <!-- MAIN -->
     <div class="main">
 
-        <!-- TOPBAR -->
         <div class="topbar">
             <div>
                 <strong>Dashboard Mahasiswa</strong><br>
                 <small class="text-muted">Semester Ganjil 2026</small>
             </div>
-
             <div class="profile">
-                <i class="fa fa-user-circle me-1"></i>
-                {{ Auth::user()->name }}
+                <i class="fa fa-user-circle me-1"></i>{{ Auth::user()->name }}
             </div>
         </div>
 
-        <!-- STAT -->
-        <div class="row mb-3">
+        <div class="row mb-1">
             <div class="col-md-3">
                 <div class="card-box stat-card">
                     <div>IPK</div>
-                    <div class="stat-number">3.75</div>
+                    <div class="stat-number">{{ number_format($ipk, 2) }}</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card-box stat-card">
                     <div>SKS Diambil</div>
-                    <div class="stat-number">21</div>
+                    <div class="stat-number">{{ $sksDiambil }}</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card-box stat-card">
                     <div>Semester</div>
-                    <div class="stat-number">5</div>
+                    <div class="stat-number">{{ $semester }}</div>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="card-box stat-card">
                     <div>Status</div>
-                    <div class="stat-number text-success">Aktif</div>
+                    <div class="stat-number {{ strtolower($statusAkun) == 'aktif' ? 'text-success' : 'text-danger' }}">
+                        {{ $statusAkun }}
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- JADWAL -->
         <div class="card-box">
-            <h6 class="mb-3">Jadwal Kuliah</h6>
+            <h6 class="mb-3">Jadwal Kuliah Semester Anda</h6>
 
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Hari</th>
-                        <th>Mata Kuliah</th>
-                        <th>Dosen</th>
-                        <th>Jam</th>
-                        <th>Ruangan</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Senin</td>
-                        <td>Pemrograman Web</td>
-                        <td>Dr. Budi</td>
-                        <td>08:00 - 10:00</td>
-                        <td>Lab 1</td>
-                    </tr>
-                    <tr>
-                        <td>Selasa</td>
-                        <td>Basis Data</td>
-                        <td>Dr. Andi</td>
-                        <td>10:00 - 12:00</td>
-                        <td>R.203</td>
-                    </tr>
-                    <tr>
-                        <td>Rabu</td>
-                        <td>Algoritma</td>
-                        <td>Dr. Siti</td>
-                        <td>13:00 - 15:00</td>
-                        <td>R.105</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Hari</th>
+                            <th>Mata Kuliah</th>
+                            <th>Dosen</th>
+                            <th>Jam</th>
+                            <th>Ruangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($jadwals as $j)
+                        <tr>
+                            <td class="fw-semibold">{{ $j->hari }}</td>
+                            <td class="fw-bold text-dark">{{ $j->matakuliah->nama ?? 'N/A' }}</td>
+                            <td>{{ $j->dosen->nama_dosen ?? $j->dosen->nama ?? 'Dosen' }}</td>
+                            <td class="text-primary fw-medium">
+                                {{ \Carbon\Carbon::parse($j->jam_mulai)->format('H:i') }} - {{ \Carbon\Carbon::parse($j->jam_selesai)->format('H:i') }}
+                            </td>
+                            <td><span class="badge bg-light text-dark border">{{ $j->ruangan->nama_ruangan ?? 'N/A' }}</span></td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">Belum ada paket jadwal perkuliahan rilis di database local untuk semester Anda.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>

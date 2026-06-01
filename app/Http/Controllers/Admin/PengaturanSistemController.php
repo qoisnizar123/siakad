@@ -34,6 +34,6 @@ class PengaturanSistemController extends Controller
     public function clearCache()
     {
         Artisan::call('optimize:clear');
-        return redirect()->back()->with('success', 'Cache sistem berhasil dibersihkan dari background server local!');
+        return back()->with('success', 'Sistem berhasil disegarkan! Seluruh cache rute dan view telah dibersihkan.');
     }
 }

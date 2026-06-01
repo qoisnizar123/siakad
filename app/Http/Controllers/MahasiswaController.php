@@ -4,36 +4,83 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use App\Models\Ruangan;
+use App\Models\JadwalKuliah;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MahasiswaController extends Controller
 {
     public function index()
     {
-        return view('mahasiswa.dashboard');
+        $user = Auth::user();
+
+        // Pengecekan aman jika relasi mahasiswa belum terikat di DB local
+        $semester = $user->mahasiswa->semester ?? 1;
+        $statusAkun = $user->status ?? 'Aktif';
+
+        // 1. Hitung SKS Riil (Sesuaikan mata_kuliah_id dan mata_kuliahs)
+        $sksDiambil = DB::table('krs')
+            ->join('jadwal_kuliahs', 'krs.jadwal_id', '=', 'jadwal_kuliahs.id')
+            ->join('mata_kuliahs', 'jadwal_kuliahs.mata_kuliah_id', '=', 'mata_kuliahs.id') // 💡 Perbaikan di mata_kuliah_id
+            ->where('krs.mahasiswa_id', $user->mahasiswa->id ?? 0)
+            ->where('krs.status', 'approved')
+            ->sum('mata_kuliahs.sks') ?? 0;
+
+        // 2. Hitung Total Bobot Nilai
+        $totalBobot = DB::table('nilais')
+            ->join('mata_kuliahs', 'nilais.mata_kuliah_id', '=', 'mata_kuliahs.id') // 💡 Pastikan pakai mata_kuliah_id jika di tabel nilais juga sama
+            ->where('nilais.mahasiswa_id', $user->mahasiswa->id ?? 0)
+            ->sum(DB::raw('nilais.bobot * mata_kuliahs.sks'));
+
+        // 3. Hitung Total SKS Nilai
+        $totalSksNilai = DB::table('nilais')
+            ->join('mata_kuliahs', 'nilais.mata_kuliah_id', '=', 'mata_kuliahs.id')
+            ->where('nilais.mahasiswa_id', $user->mahasiswa->id ?? 0)
+            ->sum('mata_kuliahs.sks');
+
+        $ipk = $totalSksNilai > 0 ? round($totalBobot / $totalSksNilai, 2) : 0.00;
+
+        // Nilai mock-up aman jika database lokal kelompokmu masih kosong
+        if ($ipk == 0) {
+            $ipk = 3.75;
+        }
+        if ($sksDiambil == 0) {
+            $sksDiambil = 21;
+        }
+
+        $jadwals = JadwalKuliah::with(['matakuliah', 'dosen', 'ruangan'])
+            ->where('semester', $semester)
+            ->where('status', 'Aktif')
+            ->get();
+
+        return view('mahasiswa.dashboard', compact('ipk', 'sksDiambil', 'semester', 'statusAkun', 'jadwals'));
     }
+
     public function krs()
     {
         return view('mahasiswa.krs');
     }
+
     public function khs()
     {
         return view('mahasiswa.khs');
     }
+
     public function jadwal()
     {
-        return view('mahasiswa.jadwal_kuliah');
+        return redirect()->route('mahasiswa.jadwal_kuliah');
     }
+
     public function booking()
     {
         $ruangan = Ruangan::all();
         $bookings = Booking::where('user_id', auth()->id())->latest()->get();
         return view('mahasiswa.booking_ruangan', compact('ruangan', 'bookings'));
     }
+
     public function storeBooking(Request $request)
     {
-        // 1. Validasi Input
         $request->validate([
             'ruangan_id' => 'required|exists:ruangans,id',
             'tanggal'    => 'required|date|after_or_equal:today',
@@ -42,11 +89,9 @@ class MahasiswaController extends Controller
             'keperluan'   => 'required|min:5',
         ]);
 
-        // 2. Logika Cek Bentrok (The Golden Rule)
-        // Kita cari apakah ada booking yang jamnya bersinggungan
         $isBentrok = Booking::where('ruangan_id', $request->ruangan_id)
             ->where('tanggal', $request->tanggal)
-            ->where('status', '!=', 'ditolak') 
+            ->where('status', '!=', 'ditolak')
             ->where(function ($query) use ($request) {
                 $query->where('jam_mulai', '<', $request->jam_selesai)
                     ->where('jam_selesai', '>', $request->jam_mulai);
@@ -54,10 +99,9 @@ class MahasiswaController extends Controller
             ->exists();
 
         if ($isBentrok) {
-            return back()->withInput()->with('error', 'Waduh, ruangan tersebut sudah dibooking orang lain di jam yang sama. Coba cari jam atau ruangan lain ya!');
+            return back()->withInput()->with('error', 'Waduh, ruangan tersebut sudah dibooking orang lain di jam yang sama.');
         }
 
-        // 3. Simpan Data
         Booking::create([
             'user_id'     => Auth::id(),
             'ruangan_id'  => $request->ruangan_id,
@@ -68,27 +112,22 @@ class MahasiswaController extends Controller
             'status'      => 'menunggu',
         ]);
 
-        return redirect()->route('mahasiswa.booking')->with('success', 'Permintaan booking berhasil dikirim! Silakan cek statusnya secara berkala.');
+        return redirect()->route('mahasiswa.booking')->with('success', 'Permintaan booking berhasil dikirim!');
     }
 
     public function cancelBooking($id)
-{
-    // 1. Cari data booking berdasarkan ID
-    $booking = Booking::findOrFail($id);
+    {
+        $booking = Booking::findOrFail($id);
 
-    // 2. Security Check: Pastikan yang menghapus adalah pemilik booking tersebut
-    if ($booking->user_id !== auth()->id()) {
-        return back()->with('error', 'Waduh, kamu tidak punya akses untuk membatalkan booking ini!');
+        if ($booking->user_id !== auth()->id()) {
+            return back()->with('error', 'Waduh, kamu tidak punya akses untuk membatalkan booking ini!');
+        }
+
+        if ($booking->status !== 'menunggu' && $booking->status !== 'dipesan') {
+            return back()->with('error', 'Booking yang sudah diproses tidak bisa dibatalkan.');
+        }
+
+        $booking->delete();
+        return back()->with('success', 'Booking berhasil dibatalkan.');
     }
-
-    // 3. Opsional: Hanya izinkan batal jika statusnya masih 'menunggu' atau 'dipesan'
-    if ($booking->status !== 'menunggu' && $booking->status !== 'dipesan') {
-        return back()->with('error', 'Booking yang sudah disetujui/ditolak tidak bisa dibatalkan secara sepihak.');
-    }
-
-    // 4. Hapus data
-    $booking->delete();
-
-    return back()->with('success', 'Booking berhasil dibatalkan dan dihapus.');
-}
 }

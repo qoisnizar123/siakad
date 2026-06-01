@@ -253,7 +253,7 @@
 <body>
 
     <div class="sidebar">
-        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <h4><i class="fa-solid fa-graduation-cap me-4"></i>SIAKAD</h4>
         <div class="menu-title">Main Menu</div>
         <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
         <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>

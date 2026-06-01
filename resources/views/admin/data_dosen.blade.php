@@ -269,7 +269,7 @@
 <body>
 
     <div class="sidebar">
-        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <h4><i class="fa-solid fa-graduation-cap me-4"></i>SIAKAD</h4>
         <div class="menu-title">Main Menu</div>
         <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
         <a href="{{ route('admin.data_mahasiswa') }}"><i class="fa fa-users"></i>Data Mahasiswa</a>
@@ -384,9 +384,9 @@
                             <td>{{ $index + 1 }}</td>
                             <td>
                                 <div class="lecturer-profile">
-                                    <div class="lecturer-avatar">{{ substr($ds->nama, 0, 1) }}</div>
+                                    <div class="lecturer-avatar">{{ substr($ds->nama_dosen ?? 'D', 0, 1) }}</div>
                                     <div>
-                                        <div class="fw-semibold text-dark">{{ $ds->nama }}</div>
+                                        <div class="fw-semibold text-dark">{{ $ds->nama_dosen }}</div>
                                         <small class="text-muted">{{ $ds->email }}</small>
                                     </div>
                                 </div>

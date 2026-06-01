@@ -279,7 +279,7 @@
 <body>
 
     <div class="sidebar">
-        <h4><i class="fa-solid fa-graduation-cap me-2"></i>SIAKAD</h4>
+        <h4><i class="fa-solid fa-graduation-cap me-4"></i>SIAKAD</h4>
         <div class="menu-title">Main Menu</div>
         <a href="{{ route('admin.dashboard') }}"><i class="fa fa-home"></i>Dashboard</a>
         <a href="{{ route('admin.data_mahasiswa') }}" class="active"><i class="fa fa-users"></i>Data Mahasiswa</a>
@@ -352,7 +352,7 @@
             </div>
             <div class="col-md-3">
                 <div class="dashboard-card stat-card">
-                    <small class="text-muted">Mahasiswa Hack</small>
+                    <small class="text-muted">Mahasiswa Aktif</small>
                     <h3 class="mt-2 fw-bold text-success">{{ $mahasiswaAktif }}</h3>
                     <div class="icon bg-green"><i class="fa fa-user-check"></i></div>
                 </div>

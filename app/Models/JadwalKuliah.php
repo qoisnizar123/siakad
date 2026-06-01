@@ -23,7 +23,7 @@ class JadwalKuliah extends Model
     // Relasi ke Mata Kuliah
     public function matakuliah()
     {
-        return $this->belongsTo(Matakuliah::class, 'mata_kuliah_id');
+        return $this->belongsTo(MataKuliah::class, 'mata_kuliah_id');
     }
 
     // Relasi ke Dosen
