@@ -11,10 +11,14 @@ use Illuminate\Support\Facades\Hash;
 
 class DosenController extends Controller
 {
+    // === Fitur Manajemen Data Dosen ===
+    
+    // Tampilkan Daftar Dosen
     public function index()
     {
         $dosens = Dosen::with('prodi')->latest()->get();
         $prodis = DB::table('prodis')->get();
+        
         $totalDosen = $dosens->count();
         $dosenAktif = $dosens->where('status', 'Aktif')->count();
         $dosenCuti  = $dosens->where('status', 'Cuti')->count();
@@ -22,6 +26,7 @@ class DosenController extends Controller
         return view('admin.data_dosen', compact('dosens', 'prodis', 'totalDosen', 'dosenAktif', 'dosenCuti'));
     }
 
+    // Tambah Dosen Baru
     public function store(Request $request)
     {
         $request->validate([
@@ -44,13 +49,14 @@ class DosenController extends Controller
         $data['user_id']    = $user->id;
         $data['nama']       = $request->nama_dosen;
         $data['nama_dosen'] = $request->nama_dosen;
-        $data['jabatan']    = 'Dosen'; // OTOMATIS DISET 1 NILAI SAJA
+        $data['jabatan']    = 'Dosen'; // Otomatis diset 1 nilai saja
 
         Dosen::create($data);
 
         return redirect()->back()->with('success', 'Akun login baru otomatis aktif dengan password default: password123');
     }
 
+    // Update Data Dosen
     public function update(Request $request, $id)
     {
         $dosen = Dosen::findOrFail($id);
@@ -63,6 +69,7 @@ class DosenController extends Controller
             'status'     => 'required|string',
         ]);
 
+        // Update juga email di tabel users jika akun terhubung
         if ($dosen->user_id) {
             $user = User::find($dosen->user_id);
             if ($user) {
@@ -76,20 +83,25 @@ class DosenController extends Controller
         $data = $request->all();
         $data['nama']       = $request->nama_dosen;
         $data['nama_dosen'] = $request->nama_dosen;
-        $data['jabatan']    = 'Dosen'; // MENGUNCI JABATAN TETAP DOSEN
+        $data['jabatan']    = 'Dosen'; // Mengunci jabatan tetap dosen
 
         $dosen->update($data);
 
         return redirect()->back()->with('success', 'Data Dosen dan Akun Pengguna berhasil diperbarui!');
     }
 
+    // Hapus Data Dosen
     public function destroy($id)
     {
         $dosen = Dosen::findOrFail($id);
+        
+        // Hapus akun loginnya juga jika ada
         if ($dosen->user_id) {
             User::where('id', $dosen->user_id)->delete();
         }
+        
         $dosen->delete();
+        
         return redirect()->back()->with('success', 'Data Dosen berhasil dihapus dari sistem!');
     }
 }

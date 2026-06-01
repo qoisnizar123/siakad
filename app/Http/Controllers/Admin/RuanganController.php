@@ -8,59 +8,30 @@ use App\Models\Ruangan;
 
 class RuanganController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // === Fitur Manajemen Data Ruangan Kelas ===
+    
+    // (Jika Anda punya halaman view untuk index, letakkan di sini)
     public function index()
     {
-        //
+        // 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Tambah Ruangan Baru
     public function store(Request $request)
     {
-        // 1. Validasi super ketat agar database tidak "kotor"
+        // Validasi ketat agar database tidak "kotor"
         $request->validate([
             'nama_ruangan' => 'required|unique:ruangans,nama_ruangan|max:50',
             'kapasitas'    => 'required|integer|min:1',
             'lokasi'       => 'nullable|string'
         ]);
 
-        // 2. Simpan ke Database
         Ruangan::create($request->all());
 
         return back()->with('success', 'Ruangan baru berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    // Update Data Ruangan
     public function update(Request $request, $id)
     {
         $ruangan = Ruangan::findOrFail($id);
@@ -75,11 +46,12 @@ class RuanganController extends Controller
         return back()->with('success', 'Data ruangan berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Hapus Ruangan
     public function destroy(string $id)
     {
-        //
+        $ruangan = Ruangan::findOrFail($id);
+        $ruangan->delete();
+        
+        return back()->with('success', 'Ruangan berhasil dihapus.');
     }
 }

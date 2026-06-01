@@ -10,9 +10,12 @@ use Illuminate\Http\Request;
 
 class KrsAdminController extends Controller
 {
+    // === Fitur Validasi KRS Mahasiswa (Admin) ===
+    
+    // Tampilkan Data Pengajuan KRS
     public function index()
     {
-        // Load data KRS beserta seluruh relasi berlapisnya secara efisien
+        // Load data KRS beserta seluruh relasinya secara efisien
         $krsGrouped = Krs::with(['mahasiswa.prodi', 'jadwal.matakuliah'])
             ->get()
             ->groupBy('mahasiswa_id');
@@ -20,24 +23,26 @@ class KrsAdminController extends Controller
         $master_mahasiswa = Mahasiswa::where('status', 'Aktif')->get();
         $master_jadwal = JadwalKuliah::with('matakuliah')->where('status', 'Aktif')->get();
 
-        // 💡 KALKULASI STATISTIK BERDASARKAN ENUM BROWSER
+        // Kalkulasi Statistik
         $totalPengajuan = $krsGrouped->count();
         $disetujui      = 0;
         $menunggu       = 0;
 
         foreach ($krsGrouped as $krsItems) {
-            // Jika ada satu saja mata kuliah yang masih 'pending', status mahasiswa dianggap 'Menunggu'
+            // Jika ada satu saja mata kuliah yang 'pending', status mahasiswa dianggap 'Menunggu'
             if ($krsItems->contains('status', 'pending')) {
                 $menunggu++;
             } else {
                 $disetujui++;
             }
         }
-        $ditolak = 0; // Kolom cadangan statis karena opsi enum database hanya pending & approved
+        
+        $ditolak = 0; // Cadangan status
 
         return view('admin.krs_mahasiswa', compact('krsGrouped', 'master_mahasiswa', 'master_jadwal', 'totalPengajuan', 'disetujui', 'menunggu', 'ditolak'));
     }
 
+    // Admin Mendaftarkan Mahasiswa ke Kelas secara Manual
     public function store(Request $request)
     {
         $request->validate([
@@ -57,19 +62,19 @@ class KrsAdminController extends Controller
         Krs::create([
             'mahasiswa_id' => $request->mahasiswa_id,
             'jadwal_id'    => $request->jadwal_id,
-            'status'       => 'approved' // Jika admin yang menginputkan langsung, otomatis disetujui
+            'status'       => 'approved' // Jika admin yang menginputkan, otomatis disetujui
         ]);
 
         return redirect()->back()->with('success', 'Mata kuliah baru berhasil ditambahkan ke KRS Mahasiswa!');
     }
 
+    // Persetujuan KRS Massal oleh Admin
     public function updateStatus(Request $request, $mahasiswa_id)
     {
         $request->validate([
             'status' => 'required|in:pending,approved'
         ]);
 
-        // Persetujuan massal untuk seluruh mata kuliah milik mahasiswa tersebut
         Krs::where('mahasiswa_id', $mahasiswa_id)->update([
             'status' => $request->status
         ]);
@@ -77,10 +82,11 @@ class KrsAdminController extends Controller
         return redirect()->back()->with('success', 'Status validasi KRS mahasiswa berhasil diperbarui!');
     }
 
+    // Hapus/Reset Seluruh KRS Mahasiswa
     public function destroy($mahasiswa_id)
     {
-        // Bersihkan seluruh krs mahasiswa terpilih
         Krs::where('mahasiswa_id', $mahasiswa_id)->delete();
+        
         return redirect()->back()->with('success', 'Seluruh data KRS mahasiswa berhasil dihapus dari sistem!');
     }
 }

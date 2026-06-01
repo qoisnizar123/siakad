@@ -12,37 +12,32 @@ use Carbon\Carbon;
 
 class JadwalKuliahController extends Controller
 {
+    // === Fitur Manajemen Jadwal Kuliah ===
+    
+    // Tampilkan Daftar Jadwal
     public function index()
     {
-        // Ambil jadwal beserta relasinya
         $jadwal = JadwalKuliah::with(['matakuliah', 'dosen', 'ruangan'])->latest()->get();
 
-        // Ambil data induk untuk dropdown di modal
         $master_mk = Matakuliah::all();
-        $master_dosen = Dosen::all(); // Sesuaikan jika nama model dosen kamu berbeda
+        $master_dosen = Dosen::all(); 
         $master_ruangan = Ruangan::all();
 
-        // Kalkulasi Statistik Atas (Sesuai gambar UI)
+        // Kalkulasi Statistik
         $totalJadwal = $jadwal->count();
         $kelasAktif = $jadwal->where('status', 'Aktif')->count();
         $ruanganDigunakan = $jadwal->pluck('ruangan_id')->unique()->count();
 
-        // Deteksi hari ini dalam bahasa Indonesia untuk kartu "Jadwal Hari Ini"
         $hariIni = Carbon::now()->locale('id')->isoFormat('dddd');
         $jadwalHariIni = $jadwal->where('hari', $hariIni)->count();
 
         return view('admin.jadwal_kuliah', compact(
-            'jadwal',
-            'master_mk',
-            'master_dosen',
-            'master_ruangan',
-            'totalJadwal',
-            'kelasAktif',
-            'ruanganDigunakan',
-            'jadwalHariIni'
+            'jadwal', 'master_mk', 'master_dosen', 'master_ruangan', 
+            'totalJadwal', 'kelasAktif', 'ruanganDigunakan', 'jadwalHariIni'
         ));
     }
 
+    // Tambah Jadwal Baru
     public function store(Request $request)
     {
         $request->validate([
@@ -64,9 +59,11 @@ class JadwalKuliahController extends Controller
         return redirect()->back()->with('success', 'Jadwal Kuliah baru berhasil ditambahkan!');
     }
 
+    // Update Jadwal Kuliah
     public function update(Request $request, $id)
     {
         $j = JadwalKuliah::findOrFail($id);
+        
         $request->validate([
             'mata_kuliah_id' => 'required|exists:mata_kuliahs,id',
             'dosen_id'      => 'required|exists:dosens,id',
@@ -79,12 +76,15 @@ class JadwalKuliahController extends Controller
         ]);
 
         $j->update($request->all());
+        
         return redirect()->back()->with('success', 'Jadwal Kuliah berhasil diperbarui!');
     }
 
+    // Hapus Jadwal Kuliah
     public function destroy($id)
     {
         JadwalKuliah::findOrFail($id)->delete();
+        
         return redirect()->back()->with('success', 'Jadwal Kuliah berhasil dihapus!');
     }
 }

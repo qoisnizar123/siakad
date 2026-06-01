@@ -13,21 +13,21 @@ use Illuminate\Support\Facades\Schema;
 
 class DashboardController extends Controller
 {
+    // === Fitur Dashboard Admin ===
     public function index()
     {
-        // 1. HITUNG STATISTIK KARTU UTAMA
+        // 1. Hitung Statistik Kartu Utama
         $totalMahasiswa  = Mahasiswa::count();
         $totalDosen      = Dosen::count();
         $totalMatakuliah = Matakuliah::count();
 
-        // 💡 KUNCI 2: Bersihkan DB::ready dan panggil Schema secara langsung & aman
-        // Menggunakan safe-fallback jika tabel bookings belum dibuat kelompokmu agar tidak crash
+        // Safe-fallback jika tabel bookings belum dibuat agar tidak crash
         $totalBooking    = Schema::hasTable('bookings') ? DB::table('bookings')->count() : 32;
 
-        // 2. AMBIL AKTIVITAS AKADEMIK TERBARU (KRS LIVE FEED)
+        // 2. Ambil Aktivitas Akademik Terbaru (KRS Live Feed)
         $recentKrs = Krs::with('mahasiswa')->latest()->take(5)->get();
 
-        // 3. KUMPULKAN AGREGAT AKTIVITAS SISTEM
+        // 3. Kumpulkan Agregat Aktivitas Sistem
         $mhsBaruCount  = Mahasiswa::whereDate('created_at', today())->count();
         $nilaiInjected = Nilai::count();
         $totalUser     = DB::table('users')->count();
