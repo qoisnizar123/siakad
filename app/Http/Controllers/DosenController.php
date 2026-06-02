@@ -267,6 +267,8 @@ class DosenController extends Controller
             'kode_mk' => $request->kode_mk,
             'nama_mk' => $request->nama_mk,
             'sks' => $request->sks,
+            'semester' => $request->semester,
+            'prodi_id' => $dosen->prodi_id,
         ]);
 
         // 2. Hubungkan mata kuliah ke dosen sebagai kelas baru
