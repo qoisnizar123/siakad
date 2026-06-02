@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         // 1. Tabel Mata Kuliah
@@ -22,7 +19,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 2. Tabel Jadwal Kuliah (Pusat Relasi)
+        // 2. Tabel Jadwal Kuliah
         Schema::create('jadwal_kuliahs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('mata_kuliah_id')->constrained('mata_kuliahs')->onDelete('cascade');
@@ -36,7 +33,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        // 3. Tabel KRS (Bridge Mahasiswa & Jadwal)
+        // 3. Tabel KRS
         Schema::create('krs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('mahasiswa_id')->constrained('mahasiswas');
@@ -49,34 +46,15 @@ return new class extends Migration
         Schema::create('nilais', function (Blueprint $table) {
             $table->id();
             $table->foreignId('mahasiswa_id')->constrained('mahasiswas')->onDelete('cascade');
-            $table->foreignId('mata_kuliah_id')->constrained('mata_kuliahs')->onDelete('cascade'); // Menggunakan mata_kuliah_id sesuai standardisasi lokal kita
+            $table->foreignId('mata_kuliah_id')->constrained('mata_kuliahs')->onDelete('cascade');
             $table->integer('nilai_angka');
             $table->string('nilai_huruf', 2);
             $table->double('bobot', 4, 2);
-            $table->string('status', 50); // Lulus, Perbaikan, Remedial
-            $table->timestamps();
-        });
-
-        // 5. Tabel Absensi
-        Schema::create('absensis', function (Blueprint $table) {
-            $table->id();
-            
-            // Relasi ke tabel pertemuans yang baru saja kita buat di atas
-            $table->unsignedBigInteger('pertemuan_id');
-            $table->foreign('pertemuan_id')->references('id')->on('pertemuans')->onDelete('cascade');
-            
-            // Relasi ke tabel mahasiswa (pastikan nama tabel mahasiswamu benar)
-            $table->unsignedBigInteger('mahasiswa_id');
-            $table->foreign('mahasiswa_id')->references('id')->on('mahasiswas')->onDelete('cascade');
-            
-            // Pilihan status absensi sesuai UI kelompokmu
-            $table->enum('status_kehadiran', ['Hadir', 'Izin', 'Sakit', 'Alpha'])->default('Alpha');
-            $table->string('keterangan')->nullable(); // Kolom teks untuk keterangan tambahan
-            
+            $table->string('status', 50);
             $table->timestamps();
         });
         
-        // 6. Tabel KHS (Kartu Hasil Studi)
+        // 5. Tabel KHS 
         Schema::create('khs', function (Blueprint $table) {
             $table->id();
             $table->foreignId('mahasiswa_id')->constrained('mahasiswas')->onDelete('cascade');
@@ -88,11 +66,13 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('academic_core_tables');
+        // PERBAIKAN: Hapus tabel satu per satu dari urutan paling bawah
+        Schema::dropIfExists('khs');
+        Schema::dropIfExists('nilais');
+        Schema::dropIfExists('krs');
+        Schema::dropIfExists('jadwal_kuliahs');
+        Schema::dropIfExists('mata_kuliahs');
     }
 };
