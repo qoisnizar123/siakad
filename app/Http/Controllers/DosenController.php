@@ -277,6 +277,10 @@ class DosenController extends Controller
             'mata_kuliah_id' => $mk->id,
             'kelas' => $request->kelas,
             'semester' => $request->semester,
+            'ruangan_id' => 1,             
+            'hari' => 'Senin',             
+            'jam_mulai' => '08:00:00',     
+            'jam_selesai' => '10:00:00',
         ]);
 
         return redirect()->back()->with('success', 'Mata kuliah baru berhasil ditambahkan dan ditugaskan ke Anda.');
