@@ -7,9 +7,6 @@ use Illuminate\Database\Seeder;
 
 class AcademicSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $fakultas = \App\Models\Fakultas::create(['nama_fakultas' => 'Teknik']);
@@ -23,6 +20,7 @@ class AcademicSeeder extends Seeder
             'kode_mk' => 'IF101',
             'nama_mk' => 'Pemrograman Web (Laravel)',
             'sks' => 3,
+            'semester' => 1, // 💡 INI YANG KETINGGALAN
             'prodi_id' => $prodi->id
         ]);
     }
