@@ -14,9 +14,9 @@ class DatabaseSeeder extends Seeder
         // Kita panggil seeder yang sudah kita pecah-pecah sebelumnya
         // Ini jauh lebih rapi dan gampang dikelola
         $this->call([
-            UserSeeder::class,
             AcademicSeeder::class,
             RoomSeeder::class,
+            UserSeeder::class, 
         ]);
     }
 }
