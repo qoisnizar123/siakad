@@ -18,13 +18,5 @@ class AcademicSeeder extends Seeder
             'fakultas_id' => $fakultas->id,
             'nama_prodi' => 'Teknik Informatika'
         ]);
-
-        MataKuliah::create([
-            'kode_mk' => 'IF101',
-            'nama_mk' => 'Pemrograman Web (Laravel)',
-            'sks' => 3,
-            'semester' => 1,
-            'prodi_id' => $prodi->id
-        ]);
     }
 }
