@@ -14,28 +14,27 @@ use Illuminate\Support\Facades\DB;
 class MahasiswaController extends Controller
 {
     // === Fitur Dashboard Mahasiswa ===
-    public function index()
+    public function dashboard()
     {
         $mahasiswa = Mahasiswa::where('user_id', Auth::id())->first();
 
-        // Fallback jika akun belum terhubung dengan profil
         if (!$mahasiswa) {
             return view('mahasiswa.dashboard', [
-                'ipk' => 0,
-                'sksDiambil' => 0,
-                'semester' => 1,
-                'statusAkun' => 'Tidak Aktif',
-                'jadwals' => collect()
+                'ipk' => 0, 'sksDiambil' => 0, 'semester' => 1, 'statusAkun' => 'Tidak Aktif', 'jadwals' => collect()
             ]);
         }
 
-        // 1. Hitung SKS Diambil (Dari KRS)
-        $krs = Krs::with('matakuliah')->where('mahasiswa_id', $mahasiswa->id)->get();
+        // 💡 FIX: Ambil KRS pakai jadwal_id dan status 'approved'
+        $krs = Krs::with('jadwal.matakuliah')
+            ->where('mahasiswa_id', $mahasiswa->id)
+            ->where('status', 'approved') 
+            ->get();
+            
         $sksDiambil = $krs->sum(function($k) {
-            return $k->matakuliah->sks ?? 0;
+            return $k->jadwal->matakuliah->sks ?? 0;
         });
 
-        // 2. Hitung IPK (Dari Nilai)
+        // Hitung IPK
         $nilais = \App\Models\Nilai::with('matakuliah')->where('mahasiswa_id', $mahasiswa->id)->get();
         $totalSksNilai = 0;
         $totalMutu = 0;
@@ -47,21 +46,20 @@ class MahasiswaController extends Controller
             $bobot = $n->bobot ?? null;
             if (is_null($bobot)) {
                 if ($nilaiAngka >= 85) { $bobot = 4; }
-                elseif ($nilaiAngka >= 70) { $bobot = 3; }
-                elseif ($nilaiAngka >= 55) { $bobot = 2; }
-                elseif ($nilaiAngka >= 40) { $bobot = 1; }
+                elseif ($nilaiAngka >= 75) { $bobot = 3; }
+                elseif ($nilaiAngka >= 60) { $bobot = 2; }
+                elseif ($nilaiAngka >= 45) { $bobot = 1; }
                 else { $bobot = 0; }
             }
             $totalSksNilai += $sks;
             $totalMutu += ($bobot * $sks);
         }
-        
         $ipk = $totalSksNilai > 0 ? round($totalMutu / $totalSksNilai, 2) : 0.00;
 
-        // 3. Ambil Jadwal Kuliah (Max 5 untuk preview)
-        $mkIds = $krs->pluck('mata_kuliah_id');
+        // Preview Jadwal
+        $jadwalIds = $krs->pluck('jadwal_id');
         $jadwals = JadwalKuliah::with(['matakuliah', 'dosen', 'ruangan'])
-            ->whereIn('mata_kuliah_id', $mkIds)
+            ->whereIn('id', $jadwalIds)
             ->orderBy('hari', 'asc')
             ->limit(5)
             ->get();
@@ -73,8 +71,6 @@ class MahasiswaController extends Controller
     }
 
     // === Fitur KRS Mahasiswa ===
-    
-    // Halaman Pengisian KRS
     public function krs()
     {
         $mahasiswa = Mahasiswa::where('user_id', Auth::id())->first();
@@ -85,51 +81,62 @@ class MahasiswaController extends Controller
 
         $jadwals = JadwalKuliah::with(['matakuliah', 'dosen'])->orderBy('hari', 'asc')->get();
 
-        // Jadikan keyBy 'mata_kuliah_id' agar mudah dicek di Blade
-        $krsSaya = Krs::where('mahasiswa_id', $mahasiswa->id)->get()->keyBy('mata_kuliah_id');
+        // 💡 FIX: keyBy jadwal_id
+        $krsSaya = Krs::with('jadwal.matakuliah')
+            ->where('mahasiswa_id', $mahasiswa->id)
+            ->get()
+            ->keyBy('jadwal_id');
 
         $totalSksSaatIni = 0;
         foreach ($krsSaya as $krs) {
-            $totalSksSaatIni += $krs->matakuliah->sks ?? 0;
+            if ($krs->status == 'approved') {
+                $totalSksSaatIni += $krs->jadwal->matakuliah->sks ?? 0;
+            }
         }
 
         return view('mahasiswa.krs', compact('mahasiswa', 'jadwals', 'krsSaya', 'totalSksSaatIni'));
     }
 
-    // Proses Simpan Pengajuan KRS
-    public function storeKrs(Request $request)
+   public function storeKrs(Request $request)
     {
+        // 1. Validasi Input Standar Laravel
         $request->validate([
-            'mata_kuliah_id' => 'required|array',
+            'jadwal_id'   => 'required|array',
+            'jadwal_id.*' => 'exists:jadwal_kuliahs,id'
         ], [
-            'mata_kuliah_id.required' => 'Anda harus memilih minimal satu mata kuliah untuk diajukan.'
+            'jadwal_id.required' => 'Anda harus menceklis minimal satu jadwal mata kuliah.'
         ]);
 
         $mahasiswa = Mahasiswa::where('user_id', Auth::id())->first();
 
-        // Validasi SKS Maksimal
-        $krsSaya = Krs::with('matakuliah')->where('mahasiswa_id', $mahasiswa->id)->get();
+        // 2. Kalkulasi SKS Saat ini (Dari KRS yang sudah ada)
+        $krsSaya = Krs::with('jadwal.matakuliah')->where('mahasiswa_id', $mahasiswa->id)->get();
         $sksSaatIni = $krsSaya->sum(function($krs) {
-            return $krs->matakuliah->sks ?? 0;
+            return $krs->jadwal->matakuliah->sks ?? 0;
         });
 
-        $sksTambahan = \App\Models\Matakuliah::whereIn('id', $request->mata_kuliah_id)->sum('sks');
+        // 3. Kalkulasi Tambahan SKS (Dari form yang baru disubmit)
+        $jadwalsDitambah = JadwalKuliah::with('matakuliah')->whereIn('id', $request->jadwal_id)->get();
+        $sksTambahan = $jadwalsDitambah->sum(function($j) {
+            return $j->matakuliah->sks ?? 0;
+        });
 
+        // 4. Proteksi Batas SKS
         if (($sksSaatIni + $sksTambahan) > 24) {
             return redirect()->back()->withErrors(['Batas SKS Terlampaui! Total SKS Anda melebihi batas maksimal 24 SKS.']);
         }
 
-        // Proses Simpan
-        foreach ($request->mata_kuliah_id as $mk_id) {
+        // 5. Simpan ke Database
+        foreach ($request->jadwal_id as $j_id) {
             Krs::firstOrCreate([
                 'mahasiswa_id' => $mahasiswa->id,
-                'mata_kuliah_id' => $mk_id,
+                'jadwal_id'    => $j_id, 
             ], [
-                'status' => 'Menunggu' 
+                'status'       => 'pending' 
             ]);
         }
 
-        return redirect()->back()->with('success', 'KRS berhasil diajukan! Silakan tunggu persetujuan dari Dosen bersangkutan.');
+        return redirect()->back()->with('success', 'KRS berhasil diajukan! Silakan tunggu persetujuan dari Dosen.');
     }
 
     // === Fitur KHS & Penilaian ===
@@ -149,7 +156,6 @@ class MahasiswaController extends Controller
         $totalMutu = 0;
         $totalMataKuliah = $nilais->count();
 
-        // Kalkulasi Mutu & Grade Otomatis
         foreach ($nilais as $n) {
             $sks = $n->matakuliah->sks ?? 0;
             $nilaiAngka = $n->nilai_angka ?? $n->nilai ?? 0; 
@@ -159,9 +165,9 @@ class MahasiswaController extends Controller
 
             if (is_null($bobot) || is_null($grade)) {
                 if ($nilaiAngka >= 85) { $bobot = 4; $grade = 'A'; }
-                elseif ($nilaiAngka >= 70) { $bobot = 3; $grade = 'B'; }
-                elseif ($nilaiAngka >= 55) { $bobot = 2; $grade = 'C'; }
-                elseif ($nilaiAngka >= 40) { $bobot = 1; $grade = 'D'; }
+                elseif ($nilaiAngka >= 75) { $bobot = 3; $grade = 'B'; }
+                elseif ($nilaiAngka >= 60) { $bobot = 2; $grade = 'C'; }
+                elseif ($nilaiAngka >= 45) { $bobot = 1; $grade = 'D'; }
                 else { $bobot = 0; $grade = 'E'; }
             }
 
@@ -192,21 +198,22 @@ class MahasiswaController extends Controller
             return redirect()->back()->with('error', 'Data mahasiswa tidak ditemukan.');
         }
 
-        // Ambil ID mata kuliah yang terdaftar di KRS
-        $krsSaya = Krs::with('matakuliah')
+        // 💡 FIX: Ambil jadwal dari KRS yang sudah di-approve dosen
+        $krsSaya = Krs::with('jadwal.matakuliah')
             ->where('mahasiswa_id', $mahasiswa->id)
+            ->where('status', 'approved') 
             ->get();
-        $mkIds = $krsSaya->pluck('mata_kuliah_id');
+            
+        $jadwalIds = $krsSaya->pluck('jadwal_id');
 
-        // Tarik jadwal hanya untuk mata kuliah di KRS
         $jadwals = JadwalKuliah::with(['matakuliah', 'dosen', 'ruangan'])
-            ->whereIn('mata_kuliah_id', $mkIds)
+            ->whereIn('id', $jadwalIds)
             ->orderBy('hari', 'asc')
             ->orderBy('jam_mulai', 'asc')
             ->get();
 
         $totalSks = $krsSaya->sum(function($krs) {
-            return $krs->matakuliah->sks ?? 0;
+            return $krs->jadwal->matakuliah->sks ?? 0;
         });
 
         $semesterMahasiswa = $mahasiswa->semester ?? 1;
@@ -222,7 +229,6 @@ class MahasiswaController extends Controller
         return view('mahasiswa.booking_ruangan', compact('ruangan', 'bookings'));
     }
 
-    // Proses Pemesanan Ruangan
     public function storeBooking(Request $request)
     {
         $request->validate([
@@ -253,19 +259,18 @@ class MahasiswaController extends Controller
             'jam_mulai'   => $request->jam_mulai,
             'jam_selesai' => $request->jam_selesai,
             'keperluan'   => $request->keperluan,
-            'status'      => 'menunggu',
+            'status'      => 'menunggu', 
         ]);
 
         return redirect()->route('mahasiswa.booking')->with('success', 'Permintaan booking berhasil dikirim!');
     }
 
-    // Proses Pembatalan Pemesanan
     public function cancelBooking($id)
     {
         $booking = Booking::findOrFail($id);
 
         if ($booking->user_id !== auth()->id()) {
-            return back()->with('error', 'Waduh, kamu tidak punya akses untuk membatalkan booking ini!');
+            return back()->with('error', 'Akses ditolak!');
         }
 
         if ($booking->status !== 'menunggu' && $booking->status !== 'dipesan') {

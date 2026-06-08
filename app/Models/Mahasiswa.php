@@ -29,4 +29,8 @@ class Mahasiswa extends Model
     {
         return $this->belongsTo(Prodi::class, 'prodi_id');
     }
+    public function absensi()
+    {
+        return $this->hasMany(\App\Models\Absensi::class, 'mahasiswa_id');
+    }
 }

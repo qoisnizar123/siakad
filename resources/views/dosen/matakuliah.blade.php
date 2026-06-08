@@ -11,17 +11,76 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
-        .sidebar { width: 240px; height: 100vh; position: fixed; background: #1e3a8a; color: white; padding: 20px; }
-        .sidebar h5 { margin-bottom: 30px; }
-        .sidebar a { display: block; color: white; padding: 10px; border-radius: 6px; text-decoration: none; margin-bottom: 5px; font-size: 14px; }
-        .sidebar a:hover { background: rgba(255, 255, 255, 0.1); }
-        .main { margin-left: 240px; padding: 20px; }
-        .topbar { background: white; border-radius: 10px; padding: 15px 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); }
-        .card-box { background: white; border-radius: 10px; padding: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); }
-        .table thead { background: #1e3a8a; color: white; font-size: 13px; }
-        .table td { font-size: 13px; vertical-align: middle; }
-        .badge-active { background: #16a34a; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+        }
+
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            position: fixed;
+            background: #1e3a8a;
+            color: white;
+            padding: 20px;
+        }
+
+        .sidebar h5 {
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .sidebar a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .main {
+            margin-left: 240px;
+            padding: 20px;
+        }
+
+        .topbar {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-box {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .table thead {
+            background: #1e3a8a;
+            color: white;
+            font-size: 13px;
+        }
+
+        .table td {
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        .badge-active {
+            background: #16a34a;
+        }
     </style>
 </head>
 
@@ -35,7 +94,7 @@
         <a href="{{ route('dosen.absensi') }}"><i class="fa fa-clipboard-check me-2"></i> Absensi</a>
         <a href="{{ route('dosen.nilai') }}"><i class="fa fa-graduation-cap me-2"></i> Input Nilai</a>
         <a href="{{ route('dosen.jadwal') }}"><i class="fa fa-calendar-day me-2"></i> Jadwal Mengajar</a>
-        
+
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
         </form>
@@ -65,7 +124,7 @@
         <div class="card-box">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h6 class="mb-0 fw-semibold text-dark"><i class="fa-solid fa-book text-primary me-2"></i>Daftar Mata Kuliah</h6>
-                
+
                 <button class="btn btn-primary btn-sm rounded-3 px-3" data-bs-toggle="modal" data-bs-target="#tambahMkModal">
                     <i class="fa fa-plus me-1"></i> Tambah Mata Kuliah
                 </button>
@@ -78,7 +137,6 @@
                         <th width="100">Kode</th>
                         <th class="text-start">Mata Kuliah</th>
                         <th width="70">SKS</th>
-                        <th width="100">Kelas</th>
                         <th width="130">Semester</th>
                         <th width="90">Status</th>
                         <th width="110">Aksi</th>
@@ -91,7 +149,6 @@
                         <td class="fw-bold text-secondary">{{ $j->matakuliah->kode_mk ?? '-' }}</td>
                         <td class="text-start fw-semibold text-dark">{{ $j->matakuliah->nama_mk ?? 'N/A' }}</td>
                         <td>{{ $j->matakuliah->sks ?? 0 }}</td>
-                        <td>{{ $j->kelas ?? '-' }}</td>
                         <td>Semester {{ $j->semester ?? '-' }}</td>
                         <td><span class="badge badge-active text-white px-2 py-1">Aktif</span></td>
                         <td>
@@ -115,7 +172,7 @@
     </div>
 
     <div class="modal fade" id="tambahMkModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content rounded-4 border-0 shadow">
                 <div class="modal-header border-0 pb-0">
                     <h5 class="modal-title fw-bold text-dark"><i class="fa-solid fa-book-medical text-primary me-2"></i> Buka Kelas Mata Kuliah</h5>
@@ -124,6 +181,7 @@
                 <form action="{{ route('dosen.matakuliah.store') }}" method="POST">
                     @csrf
                     <div class="modal-body pt-3">
+
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label class="form-label small fw-semibold text-muted">Kode MK</label>
@@ -140,10 +198,6 @@
                                 <input type="number" name="sks" class="form-control" placeholder="1-4" min="1" max="6" required>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <label class="form-label small fw-semibold text-muted">Nama Kelas</label>
-                                <input type="text" name="kelas" class="form-control" placeholder="Misal: IF-3A" required>
-                            </div>
-                            <div class="col-md-4 mb-3">
                                 <label class="form-label small fw-semibold text-muted">Semester</label>
                                 <select name="semester" class="form-select" required>
                                     <option value="1">1</option>
@@ -157,6 +211,43 @@
                                 </select>
                             </div>
                         </div>
+
+                        <hr class="text-muted opacity-25 my-3">
+                        <h6 class="fw-bold mb-3 small text-primary"><i class="fa-solid fa-clock me-1"></i> Pengaturan Jadwal & Ruangan</h6>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-semibold text-muted">Ruangan</label>
+                                <select name="ruangan_id" class="form-select" required>
+                                    <option value="">-- Pilih Ruangan --</option>
+                                    <option value="1">Lab Komputer 1</option>
+                                    <option value="2">Lab Komputer 2</option>
+                                    <option value="3">Ruang Teori A</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-semibold text-muted">Hari</label>
+                                <select name="hari" class="form-select" required>
+                                    <option value="">-- Pilih Hari --</option>
+                                    <option value="Senin">Senin</option>
+                                    <option value="Selasa">Selasa</option>
+                                    <option value="Rabu">Rabu</option>
+                                    <option value="Kamis">Kamis</option>
+                                    <option value="Jumat">Jumat</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-semibold text-muted">Jam Mulai</label>
+                                <input type="time" name="jam_mulai" class="form-control" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label small fw-semibold text-muted">Jam Selesai</label>
+                                <input type="time" name="jam_selesai" class="form-control" required>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="modal-footer border-0">
                         <button type="button" class="btn btn-light btn-sm px-3 rounded-3" data-bs-dismiss="modal">Batal</button>
@@ -170,4 +261,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

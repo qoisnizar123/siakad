@@ -68,22 +68,16 @@
 
         <!-- STATISTIC -->
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card-box text-center py-4">
                     <h3 class="text-primary fw-bold">{{ $totalJadwal }}</h3>
                     <small class="fw-semibold text-muted">Total Jadwal Mengajar</small>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="card-box text-center py-4">
                     <h3 class="text-success fw-bold">{{ $jadwalHariIniCount }}</h3>
                     <small class="fw-semibold text-muted">{{ $judulJadwalBawah }}</small>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card-box text-center py-4">
-                    <h3 class="text-warning fw-bold">{{ $kelasOnlineCount }}</h3>
-                    <small class="fw-semibold text-muted">Kelas Online</small>
                 </div>
             </div>
         </div>
@@ -142,7 +136,7 @@
                         </td>
                         <td class="text-start fw-semibold text-dark">{{ $j->matakuliah->nama_mk ?? 'N/A' }}</td>
                         <td>{{ $j->kelas ?? '-' }}</td>
-                        <td><i class="fa fa-door-open text-muted me-1"></i> {{ $j->ruangan ?? 'N/A' }}</td>
+                        <td><i class="fa fa-door-open text-muted me-1"></i> {{ $j->ruangan->nama_ruangan ?? 'Belum ada ruangan' }}</td>
                         <td>
                             <span class="badge {{ $j->metode == 'Offline' ? 'bg-primary' : 'bg-success' }} text-white px-2 py-1">
                                 {{ $j->metode ?? 'Offline' }}

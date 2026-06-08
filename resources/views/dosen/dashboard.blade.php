@@ -119,7 +119,7 @@
                             {{ $j->jam_mulai ? \Carbon\Carbon::parse($j->jam_mulai)->format('H:i') : '--:--' }} - 
                             {{ $j->jam_selesai ? \Carbon\Carbon::parse($j->jam_selesai)->format('H:i') : '--:--' }}
                         </td>
-                        <td>{{ $j->ruangan ?? 'N/A' }}</td>
+                        <td>{{ $j->ruangan->nama_ruangan ?? 'N/A' }}</td>
                         <td>
                             <span class="badge {{ $j->metode == 'Offline' ? 'bg-primary' : 'bg-success' }} text-white">
                                 {{ $j->metode ?? 'Offline' }}

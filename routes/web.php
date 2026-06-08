@@ -120,7 +120,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
 Route::middleware(['auth', 'role:mahasiswa'])->prefix('mahasiswa')->group(function () {
 
     // 🏁 Fitur 1: Dashboard Utama Mahasiswa
-    Route::get('/dashboard', [MahasiswaController::class, 'index'])->name('mahasiswa.dashboard');
+    Route::get('/dashboard', [MahasiswaController::class, 'dashboard'])->name('mahasiswa.dashboard');
 
     // 📅 Fitur 2: Jadwal Kuliah
     Route::get('/jadwal', [MahasiswaController::class, 'jadwalKuliah'])->name('mahasiswa.jadwal_kuliah');
