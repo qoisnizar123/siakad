@@ -208,14 +208,14 @@
                 <tbody>
                     @forelse($krsRecords as $index => $krs)
                     @php
-                        // Logika Inisial Avatar (Mengambil huruf pertama dari nama)
-                        $namaLengkap = $krs->mahasiswa->nama_mahasiswa ?? $krs->mahasiswa->nama ?? 'U';
-                        $inisial = substr($namaLengkap, 0, 1);
-                        
-                        // Konversi Warna Badge
-                        if($krs->status == 'Disetujui') { $badge = 'bg-success'; }
-                        elseif($krs->status == 'Ditolak') { $badge = 'bg-danger'; }
-                        else { $badge = 'bg-warning text-dark'; }
+                    // Logika Inisial Avatar (Mengambil huruf pertama dari nama)
+                    $namaLengkap = $krs->mahasiswa->nama_mahasiswa ?? $krs->mahasiswa->nama ?? 'U';
+                    $inisial = substr($namaLengkap, 0, 1);
+
+                    // Konversi Warna Badge
+                    if($krs->status == 'Disetujui') { $badge = 'bg-success'; }
+                    elseif($krs->status == 'Ditolak') { $badge = 'bg-danger'; }
+                    else { $badge = 'bg-warning text-dark'; }
                     @endphp
                     <tr>
                         <td class="text-center">{{ $index + 1 }}</td>
@@ -230,7 +230,7 @@
                         </td>
                         <td class="text-secondary fw-medium">{{ $krs->mahasiswa->nim ?? '-' }}</td>
                         <td>{{ $krs->mahasiswa->program_studi ?? 'Informatika' }}</td>
-                        <td><span class="badge bg-primary">{{ $krs->matakuliah->nama_mk ?? '-' }}</span></td>
+                        <td>{{ $krs->jadwal->matakuliah->nama_mk ?? '-' }}</td>
                         <td>
                             <span class="badge {{ $badge }}">{{ $krs->status ?? 'Menunggu' }}</span>
                         </td>
@@ -244,7 +244,7 @@
                                         <i class="fa fa-check"></i>
                                     </button>
                                 </form>
-                                
+
                                 <!-- Tombol Reject -->
                                 <form action="{{ route('dosen.mahasiswa.reject', $krs->id) }}" method="POST">
                                     @csrf

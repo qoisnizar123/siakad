@@ -82,7 +82,6 @@
 
 <body>
 
-    <!-- SIDEBAR -->
     <div class="sidebar">
         <h5><i class="fa fa-graduation-cap me-2"></i>SIAKAD</h5>
         <a href="{{ route('mahasiswa.dashboard') }}"><i class="fa fa-home me-2"></i> Dashboard</a>
@@ -126,7 +125,7 @@
         <form action="{{ route('mahasiswa.krs.store') }}" method="POST">
             @csrf
             <div class="card-box">
-                <h6 class="mb-3 fw-semibold">Pilih Mata Kuliah Tersedia</h6>
+                <h6 class="mb-3 fw-semibold text-primary"><i class="fa fa-list-check me-2"></i> Pilih Mata Kuliah Tersedia</h6>
 
                 <table class="table table-bordered text-center shadow-sm">
                     <thead>
@@ -140,35 +139,46 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php $adaTersedia = false; @endphp
                         @forelse($jadwals as $jadwal)
-                        @php
-                        // Cek apakah mahasiswa sudah mengambil mata kuliah ini sebelumnya
-                        $isDiambil = $krsSaya->has($jadwal->id);
-                        $statusKrs = $isDiambil ? $krsSaya[$jadwal->id]->status : null;
-                        @endphp
-                        <tr>
-                            <td>
-                                @if($isDiambil)
-                                <span class="badge {{ $statusKrs == 'Disetujui' ? 'bg-success' : ($statusKrs == 'Ditolak' ? 'bg-danger' : 'bg-warning text-dark') }} w-100 py-2">
-                                    {{ $statusKrs }}
-                                </span>
-                                @else
-                                <input type="checkbox" name="jadwal_id[]" value="{{ $jadwal->id }}" class="jadwal-checkbox" data-sks="{{ $jadwal->matakuliah->sks ?? 0 }}">
-                                @endif
-                            </td>
-                            <td class="fw-bold text-secondary">{{ $jadwal->matakuliah->kode_mk ?? '-' }}</td>
-                            <td class="text-start fw-semibold text-dark">{{ $jadwal->matakuliah->nama_mk ?? 'N/A' }}</td>
-                            <td>{{ $jadwal->matakuliah->sks ?? 0 }}</td>
-                            <td class="text-start"><i class="fa fa-user-tie text-muted me-1"></i> {{ $jadwal->dosen->nama_dosen ?? 'N/A' }}</td>
-                            <td>
-                                {{ $jadwal->hari }}, {{ $jadwal->jam_mulai ? \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') : '--' }}
-                            </td>
-                        </tr>
+                            @php
+                            // Cek apakah mahasiswa sudah mengambil mata kuliah ini sebelumnya
+                            $krsMhs = $krsSaya->where('jadwal_id', $jadwal->id)->first();
+                            $statusKrs = $krsMhs ? $krsMhs->status : null;
+                            @endphp
+
+                            @if($statusKrs != 'approved')
+                                @php $adaTersedia = true; @endphp
+                                <tr>
+                                    <td>
+                                        @if($statusKrs == 'pending')
+                                            <span class="badge bg-warning text-dark w-100 py-2">pending</span>
+                                        @elseif($statusKrs == 'Ditolak')
+                                            <span class="badge bg-danger w-100 py-2">Ditolak</span>
+                                        @else
+                                            <input type="checkbox" name="jadwal_id[]" value="{{ $jadwal->id }}" class="jadwal-checkbox" data-sks="{{ $jadwal->matakuliah->sks ?? 0 }}">
+                                        @endif
+                                    </td>
+                                    <td class="fw-bold text-secondary">{{ $jadwal->matakuliah->kode_mk ?? '-' }}</td>
+                                    <td class="text-start fw-semibold text-dark">{{ $jadwal->matakuliah->nama_mk ?? 'N/A' }}</td>
+                                    <td>{{ $jadwal->matakuliah->sks ?? 0 }}</td>
+                                    <td class="text-start"><i class="fa fa-user-tie text-muted me-1"></i> {{ $jadwal->dosen->nama_dosen ?? 'N/A' }}</td>
+                                    <td>
+                                        {{ $jadwal->hari }}, {{ $jadwal->jam_mulai ? \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') : '--' }}
+                                    </td>
+                                </tr>
+                            @endif
                         @empty
-                        <tr>
-                            <td colspan="6" class="text-muted py-4">Belum ada jadwal kuliah yang dibuka untuk semester ini.</td>
-                        </tr>
+                            <tr>
+                                <td colspan="6" class="text-muted py-4">Belum ada jadwal kuliah yang dibuka untuk semester ini.</td>
+                            </tr>
                         @endforelse
+
+                        @if(!empty($jadwals) && count($jadwals) > 0 && !$adaTersedia)
+                            <tr>
+                                <td colspan="6" class="text-muted py-4">Semua mata kuliah yang tersedia sudah Anda ambil dan disetujui.</td>
+                            </tr>
+                        @endif
                     </tbody>
                 </table>
 
@@ -184,13 +194,59 @@
             </div>
         </form>
 
+        <div class="card-box mt-4 border-top border-success border-4">
+            <h6 class="mb-3 fw-semibold text-success"><i class="fa fa-circle-check me-2"></i> Mata Kuliah Disetujui</h6>
+            
+            <table class="table table-bordered text-center shadow-sm">
+                <thead>
+                    <tr>
+                        <th width="50">No</th>
+                        <th width="100">Kode</th>
+                        <th class="text-start">Mata Kuliah</th>
+                        <th width="70">SKS</th>
+                        <th>Dosen</th>
+                        <th width="180">Jadwal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php 
+                        $no = 1; 
+                        $adaDisetujui = false; 
+                    @endphp
+                    
+                    @foreach($krsSaya as $krs)
+                        @if($krs->status == 'approved')
+                            @php $adaDisetujui = true; @endphp
+                            <tr>
+                                <td>{{ $no++ }}</td>
+                                <td class="fw-bold text-secondary">{{ $krs->jadwal->matakuliah->kode_mk ?? '-' }}</td>
+                                <td class="text-start fw-semibold text-dark">{{ $krs->jadwal->matakuliah->nama_mk ?? 'N/A' }}</td>
+                                <td>{{ $krs->jadwal->matakuliah->sks ?? 0 }}</td>
+                                <td class="text-start"><i class="fa fa-user-tie text-muted me-1"></i> {{ $krs->jadwal->dosen->nama_dosen ?? 'N/A' }}</td>
+                                <td>
+                                    {{ $krs->jadwal->hari ?? '-' }}, 
+                                    {{ $krs->jadwal->jam_mulai ? \Carbon\Carbon::parse($krs->jadwal->jam_mulai)->format('H:i') : '--:--' }}
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+
+                    @if(!$adaDisetujui)
+                        <tr>
+                            <td colspan="6" class="text-muted py-4">Belum ada mata kuliah yang disetujui oleh Dosen.</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const checkboxes = document.querySelectorAll('.jadwal-checkbox');
             const totalText = document.getElementById('total-sks-ditambahkan');
-            const btnSimpan = document.getElementById('btnSimpan'); // 💡 Sudah disesuaikan dengan HTML kamu
+            const btnSimpan = document.getElementById('btnSimpan');
 
             function hitungSks() {
                 let totalSks = 0;
@@ -198,7 +254,6 @@
 
                 checkboxes.forEach(function(box) {
                     if (box.checked) {
-                        // 💡 Dibikin lebih aman agar tidak jadi NaN (Not a Number)
                         let sks = parseInt(box.getAttribute('data-sks'));
                         totalSks += (isNaN(sks) ? 0 : sks);
                         jumlahDicentang++;
@@ -206,7 +261,7 @@
                 });
 
                 if (totalText) {
-                    totalText.textContent = totalSks; // 💡 Pakai textContent agar lebih reaktif
+                    totalText.textContent = totalSks;
                 }
 
                 if (btnSimpan) {

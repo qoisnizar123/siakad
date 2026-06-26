@@ -119,7 +119,6 @@
                         <th width="100">Hari</th>
                         <th width="130">Jam</th>
                         <th class="text-start">Mata Kuliah</th>
-                        <th width="100">Kelas</th>
                         <th width="150">Ruangan</th>
                         <th width="100">Metode</th>
                         <th width="120">Aksi</th>
@@ -135,7 +134,6 @@
                             {{ $j->jam_selesai ? \Carbon\Carbon::parse($j->jam_selesai)->format('H:i') : '--:--' }}
                         </td>
                         <td class="text-start fw-semibold text-dark">{{ $j->matakuliah->nama_mk ?? 'N/A' }}</td>
-                        <td>{{ $j->kelas ?? '-' }}</td>
                         <td><i class="fa fa-door-open text-muted me-1"></i> {{ $j->ruangan->nama_ruangan ?? 'Belum ada ruangan' }}</td>
                         <td>
                             <span class="badge {{ $j->metode == 'Offline' ? 'bg-primary' : 'bg-success' }} text-white px-2 py-1">
@@ -171,9 +169,8 @@
                     <div>
                         <strong class="text-dark fs-6">{{ $jHariIni->matakuliah->nama_mk ?? 'N/A' }}</strong><br>
                         <small class="text-muted">
-                            <i class="fa fa-users me-1"></i> Kelas {{ $jHariIni->kelas ?? '-' }} &bull; 
                             <i class="fa fa-clock me-1"></i> {{ $jHariIni->jam_mulai ? \Carbon\Carbon::parse($jHariIni->jam_mulai)->format('H:i') : '--:--' }} - {{ $jHariIni->jam_selesai ? \Carbon\Carbon::parse($jHariIni->jam_selesai)->format('H:i') : '--:--' }} &bull; 
-                            <i class="fa fa-location-dot me-1"></i> {{ $jHariIni->ruangan ?? 'N/A' }}
+                            <i class="fa fa-door-open me-1"></i> {{ $jHariIni->ruangan->nama_ruangan ?? 'Belum ada ruangan' }}
                         </small>
                     </div>
                     <!-- Tombol Timer (Tanpa tag a yang membungkus) -->
@@ -210,22 +207,16 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label small fw-semibold text-muted">Kelas</label>
-                                <input type="text" name="kelas" class="form-control" placeholder="Misal: IF-3A" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label small fw-semibold text-muted">Hari</label>
-                                <select name="hari" class="form-select" required>
-                                    <option value="Senin">Senin</option>
-                                    <option value="Selasa">Selasa</option>
-                                    <option value="Rabu">Rabu</option>
-                                    <option value="Kamis">Kamis</option>
-                                    <option value="Jumat">Jumat</option>
-                                    <option value="Sabtu">Sabtu</option>
-                                </select>
-                            </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Hari</label>
+                            <select name="hari" class="form-select" required>
+                                <option value="Senin">Senin</option>
+                                <option value="Selasa">Selasa</option>
+                                <option value="Rabu">Rabu</option>
+                                <option value="Kamis">Kamis</option>
+                                <option value="Jumat">Jumat</option>
+                                <option value="Sabtu">Sabtu</option>
+                            </select>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3">

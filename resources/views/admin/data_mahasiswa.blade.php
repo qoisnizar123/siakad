@@ -515,15 +515,15 @@
                     <div class="modal-body p-4">
                         <div class="mb-3">
                             <label class="form-label small fw-semibold text-muted">NIM Mahasiswa</label>
-                            <input type="text" name="nim" class="form-control rounded-3" placeholder="Contoh: 2216156001" required>
+                            <input type="text" name="nim" class="form-control rounded-3" placeholder="Contoh: 1234567890" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-semibold text-muted">Nama Lengkap</label>
-                            <input type="text" name="nama_mahasiswa" class="form-control rounded-3" placeholder="Contoh: Muhamad Hanif" required>
+                            <input type="text" name="nama_mahasiswa" class="form-control rounded-3" placeholder="Contoh: Mahasiswa Baru" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-semibold text-muted">Email Aktif / Student</label>
-                            <input type="email" name="email" class="form-control rounded-3" placeholder="Contoh: hanif@student.ac.id" required>
+                            <input type="email" name="email" class="form-control rounded-3" placeholder="Contoh: mahasiswa@siakad.com" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label small fw-semibold text-muted">Program Studi</label>

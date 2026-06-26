@@ -102,7 +102,6 @@
                 <thead>
                     <tr>
                         <th class="text-start">Mata Kuliah</th>
-                        <th>Kelas</th>
                         <th>Hari</th>
                         <th>Jam</th>
                         <th>Ruangan</th>
@@ -113,7 +112,6 @@
                     @forelse($jadwals as $j)
                     <tr>
                         <td class="fw-semibold text-dark text-start">{{ $j->matakuliah->nama_mk ?? 'N/A' }}</td>
-                        <td>Kelas {{ $j->kelas ?? '-' }}</td>
                         <td class="fw-bold text-primary">{{ $j->hari }}</td>
                         <td>
                             {{ $j->jam_mulai ? \Carbon\Carbon::parse($j->jam_mulai)->format('H:i') : '--:--' }} - 

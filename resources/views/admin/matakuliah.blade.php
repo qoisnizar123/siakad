@@ -11,242 +11,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f1f5f9;
-        }
-
-        /* SIDEBAR */
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background: #1e3a8a;
-            color: white;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .sidebar h4 {
-            font-weight: 700;
-            margin-bottom: 30px;
-        }
-
-        .sidebar .menu-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            opacity: .7;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            text-decoration: none;
-            padding: 12px 14px;
-            border-radius: 10px;
-            margin-bottom: 6px;
-            font-size: 14px;
-            transition: .3s;
-        }
-
-        .sidebar a:hover {
-            background: rgba(255, 255, 255, 0.12);
-        }
-
-        .sidebar a.active {
-            background: rgba(255, 255, 255, 0.18);
-        }
-
-        .sidebar i {
-            width: 20px;
-        }
-
-        /* MAIN */
-        .main {
-            margin-left: 250px;
-            padding: 25px;
-        }
-
-        /* TOPBAR */
-        .topbar {
-            background: white;
-            border-radius: 14px;
-            padding: 18px 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .search-box {
-            position: relative;
-            width: 320px;
-        }
-
-        .search-box input {
-            border: 1px solid #dbe3ef;
-            border-radius: 10px;
-            padding: 10px 15px 10px 40px;
-            width: 100%;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .search-box input:focus {
-            border-color: #1e3a8a;
-            box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
-        }
-
-        .search-box i {
-            position: absolute;
-            top: 12px;
-            left: 14px;
-            color: #64748b;
-        }
-
-        /* CARD */
-        .dashboard-card {
-            background: white;
-            border-radius: 14px;
-            padding: 22px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card .icon {
-            position: absolute;
-            right: 20px;
-            top: 20px;
-            width: 55px;
-            height: 55px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-        }
-
-        .bg-blue {
-            background: rgba(59, 130, 246, 0.15);
-            color: #2563eb;
-        }
-
-        .bg-green {
-            background: rgba(34, 197, 94, 0.15);
-            color: #16a34a;
-        }
-
-        .bg-orange {
-            background: rgba(249, 115, 22, 0.15);
-            color: #ea580c;
-        }
-
-        .bg-purple {
-            background: rgba(168, 85, 247, 0.15);
-            color: #9333ea;
-        }
-
-        /* BUTTON */
-        .btn-primary {
-            background: #1e3a8a;
-            border: none;
-            border-radius: 10px;
-            padding: 10px 16px;
-            font-size: 14px;
-        }
-
-        .btn-primary:hover {
-            background: #172554;
-        }
-
-        .btn-action {
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* TABLE */
-        .table thead {
-            background: #1e3a8a;
-            color: white;
-            font-size: 13px;
-        }
-
-        .table td {
-            font-size: 13px;
-            vertical-align: middle;
-        }
-
-        .table tbody tr:hover {
-            background: #f8fafc;
-        }
-
-        /* BADGE */
-        .badge-status {
-            padding: 6px 10px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .badge-active {
-            background: #dcfce7;
-            color: #166534;
-        }
-
-        .badge-nonactive {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        @media(max-width: 991px) {
-            .sidebar {
-                width: 220px;
-            }
-
-            .main {
-                margin-left: 220px;
-            }
-        }
-
-        @media(max-width: 768px) {
-            .sidebar {
-                position: relative;
-                width: 100%;
-                height: auto;
-            }
-
-            .main {
-                margin-left: 0;
-                padding: 15px;
-            }
-
-            .topbar {
-                flex-direction: column;
-                align-items: start;
-                gap: 15px;
-            }
-
-            .search-box {
-                width: 100%;
-            }
-        }
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; }
+        .sidebar { width: 250px; height: 100vh; position: fixed; top: 0; left: 0; background: #1e3a8a; color: white; padding: 20px; overflow-y: auto; }
+        .sidebar h4 { font-weight: 700; margin-bottom: 30px; }
+        .sidebar .menu-title { font-size: 11px; text-transform: uppercase; opacity: .7; margin-top: 20px; margin-bottom: 10px; }
+        .sidebar a { display: flex; align-items: center; gap: 10px; color: white; text-decoration: none; padding: 12px 14px; border-radius: 10px; margin-bottom: 6px; font-size: 14px; transition: .3s; }
+        .sidebar a:hover { background: rgba(255, 255, 255, 0.12); }
+        .sidebar a.active { background: rgba(255, 255, 255, 0.18); }
+        .sidebar i { width: 20px; }
+        .main { margin-left: 250px; padding: 25px; }
+        .topbar { background: white; border-radius: 14px; padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+        .search-box { position: relative; width: 320px; }
+        .search-box input { border: 1px solid #dbe3ef; border-radius: 10px; padding: 10px 15px 10px 40px; width: 100%; font-size: 14px; outline: none; }
+        .search-box input:focus { border-color: #1e3a8a; box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1); }
+        .search-box i { position: absolute; top: 12px; left: 14px; color: #64748b; }
+        .dashboard-card { background: white; border-radius: 14px; padding: 22px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); margin-bottom: 20px; }
+        .stat-card { position: relative; overflow: hidden; }
+        .stat-card .icon { position: absolute; right: 20px; top: 20px; width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+        .bg-blue { background: rgba(59, 130, 246, 0.15); color: #2563eb; }
+        .bg-green { background: rgba(34, 197, 94, 0.15); color: #16a34a; }
+        .bg-orange { background: rgba(249, 115, 22, 0.15); color: #ea580c; }
+        .bg-purple { background: rgba(168, 85, 247, 0.15); color: #9333ea; }
+        .btn-primary { background: #1e3a8a; border: none; border-radius: 10px; padding: 10px 16px; font-size: 14px; }
+        .btn-primary:hover { background: #172554; }
+        .btn-action { width: 34px; height: 34px; border-radius: 8px; border: none; display: inline-flex; align-items: center; justify-content: center; }
+        .table thead { background: #1e3a8a; color: white; font-size: 13px; }
+        .table td { font-size: 13px; vertical-align: middle; }
+        .table tbody tr:hover { background: #f8fafc; }
+        .badge-status { padding: 6px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+        .badge-active { background: #dcfce7; color: #166534; }
+        @media(max-width: 991px) { .sidebar { width: 220px; } .main { margin-left: 220px; } }
+        @media(max-width: 768px) { .sidebar { position: relative; width: 100%; height: auto; } .main { margin-left: 0; padding: 15px; } .topbar { flex-direction: column; align-items: start; gap: 15px; } .search-box { width: 100%; } }
     </style>
 </head>
 
@@ -347,6 +142,7 @@
                             <th>Program Studi</th>
                             <th>SKS</th>
                             <th>Semester</th>
+                            <th>Jenis</th>
                             <th>Status</th>
                             <th width="120" class="text-center">Aksi</th>
                         </tr>
@@ -360,6 +156,11 @@
                             <td>{{ $mk->prodi->nama_prodi ?? $mk->prodi->nama ?? 'Teknik Informatika' }}</td>
                             <td><span class="fw-medium">{{ $mk->sks }} SKS</span></td>
                             <td><span class="badge bg-primary-subtle text-primary border-0 rounded px-2 py-1">Semester {{ $mk->semester }}</span></td>
+                            <td>
+                                <span class="badge {{ $mk->jenis_mk == 'Wajib' ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning' }}">
+                                    {{ $mk->jenis_mk ?? 'Wajib' }}
+                                </span>
+                            </td>
                             <td>
                                 <span class="badge-status badge-active">Aktif</span>
                             </td>
@@ -419,6 +220,13 @@
                                                     <input type="number" name="semester" class="form-control rounded-3" min="1" max="8" value="{{ $mk->semester }}" required>
                                                 </div>
                                             </div>
+                                            <div class="mb-3">
+                                                <label class="form-label small fw-semibold text-muted">Jenis Mata Kuliah</label>
+                                                <select name="jenis_mk" class="form-select" required>
+                                                    <option value="Wajib" {{ $mk->jenis_mk == 'Wajib' ? 'selected' : '' }}>Wajib</option>
+                                                    <option value="Pilihan" {{ $mk->jenis_mk == 'Pilihan' ? 'selected' : '' }}>Pilihan</option>
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="modal-footer border-0 px-4 pb-4 bg-light rounded-bottom-4">
                                             <button type="button" class="btn btn-light rounded-3 px-3 border" data-bs-dismiss="modal">Batal</button>
@@ -431,7 +239,7 @@
 
                         @empty
                         <tr>
-                            <td colspan="8" class="text-center py-4 text-muted">Belum ada kurikulum mata kuliah di database saat ini.</td>
+                            <td colspan="9" class="text-center py-4 text-muted">Belum ada kurikulum mata kuliah di database saat ini.</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -473,9 +281,16 @@
                                 <input type="number" name="sks" class="form-control rounded-3" min="1" max="6" placeholder="Beban SKS" required>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label small fw-semibold text-muted">SemesterTarget</label>
+                                <label class="form-label small fw-semibold text-muted">Semester Target</label>
                                 <input type="number" name="semester" class="form-control rounded-3" min="1" max="8" placeholder="Semester 1-8" required>
                             </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold text-muted">Jenis Mata Kuliah</label>
+                            <select name="jenis_mk" class="form-select" required>
+                                <option value="Wajib">Wajib</option>
+                                <option value="Pilihan">Pilihan</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer border-0 px-4 pb-4 bg-light rounded-bottom-4">

@@ -17,10 +17,12 @@ class MatakuliahController extends Controller
         $matakuliah = Matakuliah::with('prodi')->latest()->get();
         $prodis = DB::table('prodis')->get();
 
-        $totalMatakuliah = $matakuliah->count();
-        $totalSks = $matakuliah->sum('sks');
-        $wajib = $matakuliah->where('semester', '<=', 6)->count();
-        $pilihan = $matakuliah->where('semester', '>', 6)->count();
+        $totalMatakuliah = Matakuliah::count();
+        $totalSks = Matakuliah::sum('sks');
+        
+        // 💡 FIX: Menghitung langsung berdasarkan kolom jenis_mk di database!
+        $wajib = Matakuliah::where('jenis_mk', 'Wajib')->count();
+        $pilihan = Matakuliah::where('jenis_mk', 'Pilihan')->count();
 
         return view('admin.matakuliah', compact('matakuliah', 'totalMatakuliah', 'totalSks', 'wajib', 'pilihan', 'prodis'));
     }
@@ -34,6 +36,7 @@ class MatakuliahController extends Controller
             'nama_mk'  => 'required|string|max:100',
             'sks'      => 'required|integer|min:1|max:6',
             'semester' => 'required|integer|min:1|max:8',
+            'jenis_mk' => 'required|in:Wajib,Pilihan',
         ]);
 
         Matakuliah::create($request->all());
@@ -52,6 +55,7 @@ class MatakuliahController extends Controller
             'nama_mk'  => 'required|string|max:100',
             'sks'      => 'required|integer|min:1|max:6',
             'semester' => 'required|integer|min:1|max:8',
+            'jenis_mk' => 'required|in:Wajib,Pilihan',
         ]);
 
         $mk->update($request->all());

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('nama_mk');
             $table->integer('sks');
             $table->integer('semester');
+            $table->enum('jenis_mk', ['Wajib', 'Pilihan'])->default('Wajib');
             $table->foreignId('prodi_id')->constrained('prodis');
             $table->timestamps();
         });

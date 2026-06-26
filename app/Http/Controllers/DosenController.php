@@ -71,7 +71,7 @@ class DosenController extends Controller
         $totalJadwal = 0;
         $jadwalHariIniCount = 0;
 
-        $hariRealTime = \Carbon\Carbon::now()->locale('id')->isoFormat('dddd'); 
+        $hariRealTime = Carbon::now()->locale('id')->isoFormat('dddd'); 
         $filterHari = $request->input('hari', 'Semua Hari'); 
 
         if ($filterHari != 'Semua Hari') {
@@ -251,6 +251,7 @@ class DosenController extends Controller
             'nama_mk' => $request->nama_mk,
             'sks' => $request->sks,
             'semester' => $request->semester,
+            'jenis_mk' => $request->jenis_mk ?? 'Wajib',
             'prodi_id' => $dosen->prodi_id, 
         ]);
 

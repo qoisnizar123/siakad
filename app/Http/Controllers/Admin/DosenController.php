@@ -41,7 +41,7 @@ class DosenController extends Controller
         $user = User::create([
             'name'     => $request->nama_dosen,
             'email'    => $request->email,
-            'password' => Hash::make('password123'),
+            'password' => Hash::make('12345678'),
             'role'     => 'dosen',
         ]);
 
@@ -53,7 +53,7 @@ class DosenController extends Controller
 
         Dosen::create($data);
 
-        return redirect()->back()->with('success', 'Akun login baru otomatis aktif dengan password default: password123');
+        return redirect()->back()->with('success', 'Akun login baru otomatis aktif dengan password default: 12345678');
     }
 
     // Update Data Dosen

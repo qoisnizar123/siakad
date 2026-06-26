@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Booking;
+use App\Models\MataKuliah;
+use App\Models\Prodi;
 
 class AdminController extends Controller
 {
@@ -26,7 +28,20 @@ class AdminController extends Controller
 
     public function mataKuliah()
     {
-        return view('admin.matakuliah');
+        // 1. Ambil data untuk ditampilkan di tabel
+        $matakuliah = MataKuliah::with('prodi')->get();
+        $prodis = Prodi::all();
+
+        // 2. Hitung statistik LANGSUNG DARI DATABASE (Query Builder)
+        $totalMatakuliah = MataKuliah::count();
+        $wajib = MataKuliah::where('jenis_mk', 'Wajib')->count();
+        $pilihan = MataKuliah::where('jenis_mk', 'Pilihan')->count();
+        $totalSks = MataKuliah::sum('sks');
+
+        // 3. Lempar ke Blade
+        return view('admin.matakuliah', compact(
+            'matakuliah', 'prodis', 'totalMatakuliah', 'wajib', 'pilihan', 'totalSks'
+        ));
     }
 
     public function jadwalKuliah()
@@ -54,7 +69,7 @@ class AdminController extends Controller
     }
 
     // Memproses persetujuan atau penolakan
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(Request $request, int $id)
     {
         $request->validate([
             'status' => 'required|in:disetujui,ditolak'
